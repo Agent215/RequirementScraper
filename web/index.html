@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+index.html
+Abraham Schultz
+
+main page for test skeleton of webscraper site
+This contains a javascript to make ana ajax call to testJsp.jsp file
+That file contains a call to a java class OpenPythonTest.java.
+The OpenPythonTest.java calls a python script which 
+-->
+<html>
+    <head>
+        <title>TestCourseScraper</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>This is my test Scraper</div>
+        <div id="content"> test</div>
+        <script src="js/ajax2.js"></script>
+
+
+        <script>
+
+
+            var contentDOM = document.getElementById(content);
+
+            ajax2({
+                url: "webAPI/testJsp.jsp",
+                successFn: success,
+                errorId: "content"
+            });
+
+            // for now just log to console the list , just wanna test the principle 
+            function success(obj) {
+
+                // var obj = JSON.parse(hreq.responseText); // this already done by function ajax2...
+                console.log(obj);
+                document.getElementById("content").innerHTML = "" + obj;
+
+            } // end of function success
+
+        </script>
+    </body>
+
+
+</html>
