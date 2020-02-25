@@ -8,7 +8,7 @@ public facing pages.
 - The python script in this case uses the beautiful soup module to scrape the data for a specific course from temples public facing website.
 - It then returns the data in in java string. The GSON library for java is used to serialize the java string to JSON format.
 - This is then read using a an ajax call and a javascript parsing function.
-- Then this is data is displayed via HTML DOM elements.
+- Then this data is displayed via HTML DOM elements.
 
 ## Potential improvements
 - add database that java string writes to instead of sending via JSON imeidiatly. 
