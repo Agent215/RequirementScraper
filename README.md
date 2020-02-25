@@ -10,7 +10,7 @@ public facing pages.
 - This is then read using a an ajax call and a javascript parsing function.
 - Then this is data is displayed via HTML DOM elements.
 
-## Potential improvments
+## Potential improvements
 - add database that java string writes to instead of sending via JSON imeidiatly. 
 - Java functions to query the database
 - bootstrap for slick UI
