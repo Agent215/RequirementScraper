@@ -3,7 +3,7 @@
 // Make an ajax call to the given url, then if the call was successful, 
 // call the Success Callback fn, otherwise, set an error message into the 
 // DOM element that has id 'errorId'.
-function ajax2 (params){
+function ajax (params){
     
     // expecting params properties url, successFn, and errorId
     if (!params || !params.url || !params.successFn || !params.errorId) {
