@@ -33,9 +33,9 @@ public class OpenPythonTest {
     public static StringDataList runScraper() {
 
         StringDataList list = new StringDataList();
+        
         try {
-            
-            
+
             String relativePath = "";
 
             final int PATHMOD = 36; // number of chars to remove to build path
@@ -58,8 +58,6 @@ public class OpenPythonTest {
             final File f = new File(OpenPythonTest.class.getProtectionDomain().getCodeSource().getLocation().getPath());
             // build absoulte path
             String Path = f.getAbsolutePath();
-            // the actual location of the class  that executes is not where we want to look for the python script.
-            // so i remove that.
             Path = Path.substring(0, f.getAbsolutePath().length() - PATHMOD);
             Path += relativePath;
             System.out.println("absolute path of built path " + Path);
