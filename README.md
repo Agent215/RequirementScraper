@@ -20,9 +20,10 @@ public facing pages.
 ***Building***
 - In order to build for now this needs to run using an apache server.
 - This can be done by using netbeans version 8.2.0, a full download comes with apache and glassfish.
-- make sure you have the java web plugin installed and active.
+- make sure you have the Java Web and EE plugin installed and active.
 - in order for the python script to run you need to have at least python 3.7 installed on your machine
 - Also you need to install the beautfuilSoup module for python. Do this by opening a terminal and typing: pip install BeautifulSoup4
+- you also need to install the request module for python. Do this by opening a terminal and typing : pip install requests
 - dowload the following jar files [Gson Jar](http://cis-linux2.temple.edu/~sallyk/cis3308/resources/gson-2.6.2.jar) ,  [java SQL jar](http://cis-linux2.temple.edu/~sallyk/cis3308/resources/mysql-connector-java-5.1.14-bin.jar)
 - then with netbeans open right click on the libraries directory and click add jar, find the location where your Jar files are and select them one at a time.
 ~~- To run the python script you must go to line 45 in the OpenPythonTest file, located in the /src/java/python/ directory and change the absolute path to match the location on your machine. Once this is running on a permenant server it will not need to be changed.~~
