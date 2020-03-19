@@ -29,23 +29,25 @@ public class OpenPythonTest {
      * @param args the command line arguments
      * @return
      */
-    public static StringDataList runScraper() {
+      public static StringDataList runScraper() {
         StringDataList list = new StringDataList();
         try {
 
+            final int PATHMOD = 36; // number of chars to remove to build path
+          
             // add a list to return the data as list of strings for
             // easy parsing to json
             // if this is on a server then we can use an absolute path 
             String relativePath = "\\testScraper.py"; // this should always stay the same
-            // absolute path should change depending no machine
-            // once this lives on a server we can just have it stay the same.
-            String Abspath;
-            // path = System.getProperty("user.dir");
-            // if you want to run this on your machien you will need to change the abolute path
-            Abspath = "C:\\Users\\brahm\\Documents\\NetBeansProjects\\webScraperWebTest\\web\\WEB-INF" + relativePath;
-            System.out.println("this is the path for python scraper " + Abspath);
+            // get location of class in project on machine.
+            final File f = new File(OpenPythonTest.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+            // build absoulte path
+            String Path = f.getAbsolutePath();
+            Path = Path.substring(0, f.getAbsolutePath().length() - PATHMOD);
+            Path += relativePath;
+            System.out.println("absolute path of built path " + Path);
             // use the process method to run python at at runtime
-            Process p = Runtime.getRuntime().exec("python " + Abspath);
+            Process p = Runtime.getRuntime().exec("python " + Path);
             //create buffered input that gets input for python output
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             // read in first line of input to return string
@@ -72,6 +74,6 @@ public class OpenPythonTest {
             return list;
         }
 
-    } // end main
+    } // end run Scraper
 
 } // end OpenPythonTest.java
