@@ -36,7 +36,7 @@ public class OpenPythonTest {
         try {
             
             
-            String relativePath = "\\testScraper.py";
+            String relativePath = "";
 
             final int PATHMOD = 36; // number of chars to remove to build path
 
@@ -45,10 +45,10 @@ public class OpenPythonTest {
                 relativePath = "\\testScraper.py";
                 System.out.println("This is running on Windows");
             } else if (isMac()) {
-                relativePath = "//testScraper.py";
+                relativePath = "/testScraper.py";
                 System.out.println("This running on a Mac");
             } else if (isUnix()) {
-                relativePath = "//testScraper.py";
+                relativePath = "/testScraper.py";
                 System.out.println("This is Unix or Linux");
             } else {
                 System.out.println("This Os is not supported!!");
