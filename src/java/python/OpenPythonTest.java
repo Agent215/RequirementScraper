@@ -34,28 +34,32 @@ public class OpenPythonTest {
 
         StringDataList list = new StringDataList();
         try {
+            
+            
+            String relativePath = "\\testScraper.py";
 
             final int PATHMOD = 36; // number of chars to remove to build path
 
             // check os to format path with correct backslash
             if (isWindows()) {
-                String relativePath = "\\testScraper.py";
+                relativePath = "\\testScraper.py";
                 System.out.println("This is running on Windows");
             } else if (isMac()) {
-                String relativePath = "//testScraper.py";
+                relativePath = "//testScraper.py";
                 System.out.println("This running on a Mac");
             } else if (isUnix()) {
-                String relativePath = "//testScraper.py";
+                relativePath = "//testScraper.py";
                 System.out.println("This is Unix or Linux");
             } else {
                 System.out.println("This Os is not supported!!");
             }
 
-            String relativePath = "\\testScraper.py"; // this should always stay the same
             // get location of class in project on machine.
             final File f = new File(OpenPythonTest.class.getProtectionDomain().getCodeSource().getLocation().getPath());
             // build absoulte path
             String Path = f.getAbsolutePath();
+            // the actual location of the class  that executes is not where we want to look for the python script.
+            // so i remove that.
             Path = Path.substring(0, f.getAbsolutePath().length() - PATHMOD);
             Path += relativePath;
             System.out.println("absolute path of built path " + Path);
