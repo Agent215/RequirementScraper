@@ -15,7 +15,7 @@ public facing pages.
 - Java functions to query the database
 - bootstrap for slick UI
 - seleanium automated testing
-- path variable for python script should be relative
+~~- path variable for python script should be relative
 
 ***Building***
 - In order to build for now this needs to run using an apache server.
@@ -25,8 +25,6 @@ public facing pages.
 - Also you need to install the beautfuilSoup module for python. Do this by opening a terminal and typing: pip install BeautifulSoup4
 - dowload the following jar files [Gson Jar](http://cis-linux2.temple.edu/~sallyk/cis3308/resources/gson-2.6.2.jar) ,  [java SQL jar](http://cis-linux2.temple.edu/~sallyk/cis3308/resources/mysql-connector-java-5.1.14-bin.jar)
 - then with netbeans open right click on the libraries directory and click add jar, find the location where your Jar files are and select them one at a time.
-- To run the python script you must go to line 45 in the OpenPythonTest file, located in the /src/java/python/ directory and change the absolute path to match the location on your machine. Once this is running on a permenant server it will not need to be changed.
+~~- To run the python script you must go to line 45 in the OpenPythonTest file, located in the /src/java/python/ directory and change the absolute path to match the location on your machine. Once this is running on a permenant server it will not need to be changed.
 
-**NOTE**
-The program will not work if the path variable is incorrect. 
 
