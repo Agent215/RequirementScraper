@@ -22,7 +22,7 @@ public facing pages.
 - This can be done by using netbeans version 8.2.0, a full download comes with apache and glassfish.
 - make sure you have the Java Web and EE plugin installed and active.
 - in order for the python script to run you need to have at least python 3.7 installed on your machine
-- Also you need to install the beautfuilSoup module for python. Do this by opening a terminal and typing: pip install BeautifulSoup4
+- Also you need to install the beautfuilSoup module for python. Do this by opening a terminal and typing: sudo pip install bs4
 - you also need to install the request module for python. Do this by opening a terminal and typing : pip install requests
 - dowload the following jar files [Gson Jar](http://cis-linux2.temple.edu/~sallyk/cis3308/resources/gson-2.6.2.jar) ,  [java SQL jar](http://cis-linux2.temple.edu/~sallyk/cis3308/resources/mysql-connector-java-5.1.14-bin.jar)
 - then with netbeans open right click on the libraries directory and click add jar, find the location where your Jar files are and select them one at a time.
