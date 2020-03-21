@@ -1,6 +1,5 @@
 # Graduation Requirement Auditor Visualizer (GRAV)
 
-## Project Abstract
 
 [Trello Board](https://trello.com/b/a38R5Uay/grav)
 
@@ -10,6 +9,10 @@
 - An T Nguyen
 - Rathanank Anthony Onn
 - Zachary Joseph Essel
+
+
+## Project Abstract
+
 **Use Case Diagram**
 
 ![Use Case Image](https://github.com/3296Spring2020/individual-subject-proposal-Agent215/raw/master/GraduationAuditor.png)
