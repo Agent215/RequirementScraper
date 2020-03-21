@@ -62,7 +62,7 @@ public class OpenPythonTest {
             Path += relativePath;
             System.out.println("absolute path of built path " + Path);
             // use the process method to run python at at runtime
-            Process p = Runtime.getRuntime().exec("python " + Path);
+            Process p = Runtime.getRuntime().exec("python3 " + Path);
             //create buffered input that gets input for python output
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             // read in first line of input to return string
