@@ -18,8 +18,8 @@ userLogin = driver.find_element_by_id('username')
 passLogin = driver.find_element_by_id('password')
 
 # add you TU login and pass here. we will need to get this from the user and pass it here
-userLogin.send_keys("tuk85386")
-passLogin.send_keys("!Alamo2020")
+userLogin.send_keys("")
+passLogin.send_keys("")
 
 driver.find_element_by_name("_eventId_proceed").click()
 # wait for elements to load
@@ -28,13 +28,13 @@ driver.implicitly_wait(6)
 iframe = driver.find_element_by_xpath("//iframe[1]")
 #switch to that doc
 driver.switch_to_frame(iframe)
-
 driver.find_element_by_xpath("//form[1]/div/fieldset/div/button").click()
 # wait for elements to load
-driver.implicitly_wait(30)
 driver.switch_to.default_content()
-runAudit = driver.find_element_by_id('runAudit')
-runAudit.click()
+element = WebDriverWait(driver, 20).until(
+ EC.presence_of_element_located((By.ID, "runAudit")))
+#runAudit = driver.find_element_by_id('runAudit')
+element.click()
 driver.implicitly_wait(6)
 # get in to actual DARS data display page, we can scrape after this
 driver.find_element_by_xpath("//tbody[1]/tr[2]/td[10]/a").click()
