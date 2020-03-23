@@ -5,7 +5,7 @@
 * [Team Members](#Team-Members)
 * [Vision Statement](#Vision-Statement)
 * [Personas](#Personas)
-* [Feature List](#-Feature-List)
+* [Feature List](#Feature-List)
 
 ## Trello Board
 [Trello Board](https://trello.com/b/a38R5Uay/grav)
