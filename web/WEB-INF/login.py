@@ -11,19 +11,24 @@ from selenium.webdriver.support import expected_conditions as EC
 from urllib.request import urlopen as uReq
 #get the beautifulSoup module and name as soup
 from bs4 import BeautifulSoup as soup
+import sys
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
+#driver = webdriver.Chrome(ChromeDriverManager().install())  
+#use the above this if you are having trouble adding web driver to path variable
+driver = webdriver.Chrome()
 
 driver.get("http://dars.temple.edu")
 
+tuName = sys.argv[1]
+passW = sys.argv[2]
 # wait for elements to load
 driver.implicitly_wait(6)
 userLogin = driver.find_element_by_id('username')
 passLogin = driver.find_element_by_id('password')
 
 # add you TU login and pass here. we will need to get this from the user and pass it here
-userLogin.send_keys("tuk85386")
-passLogin.send_keys("!Alamo2020")
+userLogin.send_keys(tuName)
+passLogin.send_keys(passW)
 
 driver.find_element_by_name("_eventId_proceed").click()
 # wait for elements to load
@@ -35,14 +40,16 @@ try:
 	#switch to that doc
     driver.switch_to_frame(iframe)
     driver.find_element_by_xpath("//form[1]/div/fieldset/div/button").click()
+    driver.switch_to.default_content()
 except:
-    print("")
-# wait for elements to load
-driver.switch_to.default_content()
-element = WebDriverWait(driver, 20).until(
+    pass
+# wait for elements to driver.switch_to.default_content()
+
+#driver.switch_to.default_content()
+runAudit = WebDriverWait(driver, 20).until(
 EC.presence_of_element_located((By.ID, "runAudit")))
 #runAudit = driver.find_element_by_id('runAudit')
-element.click()
+runAudit.click()
 driver.implicitly_wait(6)
 # get in to actual DARS data display page, we can scrape after this
 driver.find_element_by_xpath("//tbody[1]/tr[2]/td[10]/a").click()
@@ -71,18 +78,23 @@ def Remove(duplicate):
         if num not in final_list: 
             final_list.append(num) 
     return final_list 
+#print(Remove(courseList)) 
 
+removedList = []
+removedList = Remove(courseList)
 
 # print list with duplicates removed
-print(Remove(courseList)) 
+for course in removedList:
+    print(course)
 
 #example of picking just one course and getting its data.
 #exampleCourse = tableRows[20]
 #someCourse = exampleCourse.td.next.next.next.next
 #print(someCourse)
-print(len(tableRows))
+print("number of courses completed: " + str(len(removedList)))
 #close page connection
 driver.close()
+sys.exit()
 
 
 
