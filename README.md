@@ -47,6 +47,13 @@ Kongloo the third, age 28, is a CIS major at Temple University. He was born and 
 Being born in the early 90's and not haven't much access to the internet or even technology growing up, Kongloo always appreciated the simple things and aesthetics. While at his old school he felt comfortable navigating through the degree requirements because of how simple but yet informative it was to him. When transferring to Temple and seeing this new thing called DARS, he had questions that DARS could not answer. 
 
 4.
+_Bill, an older student in a non-technical major_
+
+Bill, age 42, a freshmen Business Management major at Temple University. He is going to college for the first time after not being able to afford to go at a young age, now he is trying to gain skills to be able to run a business. Growing up he didn’t have access to computers due to the high cost of the equipment and the rural nature of his hometown. All his life he was a blue collar worker doing a lot of construction jobs.
+
+Due to his lack of experience with computers, navigating around all of the online resources is challenging to him. All he wants to do is to easily access the information he’s looking for without having to jump through many hoops. The user interface needs to be simple to help him understand what he’s required to do to graduate and DARS really isn’t suiting his needs with the rather confusing layout.
+
+
 5.
 
 ## Feature List
