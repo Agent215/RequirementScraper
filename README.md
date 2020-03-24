@@ -40,6 +40,11 @@ Maria, age 34, is a CST advisor for Temple University in Philadelphia, a world h
 As a millennial, Maria has grown up around computers.  She also has more recent experiences with different degree tracking software such as dars and degreeworks from her time as a student.  She wouldn't consider herself a computer expert but she can generally navigate most systems confidently.  She's interested in GRAV because she would like a tool for advisors to clearly show students their remaining classes without resorting to paper printouts.
 
 3.
+_Kongloo III, a CIS transfer student_
+
+Kongloo the third, age 28, is a CIS major at Temple University. He was born and raised in philadelphia, and went to South Philadelphia High for his High School education. His dad works full time doing landscaping, and his mother works part time at a factory. He is the first to get a high school diploma in his familt and the first to go to college also. Kongloo also works full time at retail to support the family and his 5 other siblings. He feels like he's always been the underdog because he's never had great resources but he wants to try his best to support everyone. Kongloo has a great appreciation for video games, as it has gotten him get through tough times.
+
+Being born in the early 90's and not haven't much access to the internet or even technology growing up, Kongloo always appreciated the simple things and aesthetics. While at his old school he felt comfortable navigating through the degree requirements because of how simple but yet informative it was to him. When transferring to Temple and seeing this new thing called DARS, he had questions that DARS could not answer. 
 4.
 5.
 
