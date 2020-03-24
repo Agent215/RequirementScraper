@@ -29,7 +29,11 @@ Our product provides a simple and intuitive way to know what you need to do to g
 
 He has been frustrated with Dars as it can sometimes feel cumbersome and takes time to visually parse. As a user with a busy schedule and limited time he wants to be able to quickly get a sense for what courses he may need to take, and how many more requirements he may need to fulfill in order to graduate. 
 
-2.
+2. Maria, a CST advisor
+Maria, age 34, is a CST advisor for Temple University in Philadelphia, a world heritage city in the United States.  She advises undergraduate students in Computer & Information Sciences, Mathematics, and Physics.  She was born in Aquascalientes, Mexico, where her mother runs a hotel.  Her father works for a telecom company installing fiberoptic cable.  She came to Philadelphia for college and earned a degree in communications from Penn.  She stayed for her love of American football; she bleeds green for the birds every Sunday.  After a brief stint working in marketing for a large fashion house, she returned to school to get her Masters in Education before joining Temple.
+
+As a millennial, Maria has grown up around computers.  She also has more recent experiences with different degree tracking software such as dars and degreeworks from her time as a student.  She wouldn't consider herself a computer expert but she can generally navigate most systems confidently.  She's interested in GRAV because she would like a tool for advisors to clearly show students their remaining classes without resorting to paper printouts.
+
 3.
 4.
 5.
