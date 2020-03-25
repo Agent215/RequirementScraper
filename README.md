@@ -1,6 +1,15 @@
 # Graduation Requirement Auditor Visualizer (GRAV)
 
+## Table of Contents
+* [Project Board](#Trello-Board)
+* [Team Members](#Team-Members)
+* [Vision Statement](#Vision-Statement)
+* [Personas](#Personas)
+* [Feature List](#Feature-List)
+* [Build Instructions](#build-instructions)
+* [Instructions to run](#Instructions-to-run)
 
+## Trello Board
 [Trello Board](https://trello.com/b/a38R5Uay/grav)
 
 ## Team Members 
@@ -10,8 +19,54 @@
 - Rathanank Anthony Onn
 - Zachary Joseph Essel
 
+## Vision Statement
+For Students, Teachers and Advisors who need a quick and easy way to visualize a students progress towards graduation. The GRAV system is a web based service that allows users to view in one screen at a glance what requirements have been fulfilled and what requirements still need work. 
 
-## Project Abstract
+Unlike Temples current system (DARS), GRAV will be much more streamlined visually and consolidated to the most basic information needed to see general progress. Only if the user wants, will more details be displayed. 
+Our product provides a simple and intuitive way to know what you need to do to graduate. 
+
+## Personas
+
+1. 
+_Corey, CIS student_
+
+Corey Vanderis sophomore CIS major at temple univeristy, he is 19 years old. He was born in Mt. Airy in Philadelphia and went to Central Highschool. On the weekends he works as a busboy at a bar in Center city. He is taking intro to programming, Physics II , English II and calculus. Corey is interested in web development and has some experience with writing simple server side code as well as client side code.
+
+He has been frustrated with Dars as it can sometimes feel cumbersome and takes time to visually parse. As a user with a busy schedule and limited time he wants to be able to quickly get a sense for what courses he may need to take, and how many more requirements he may need to fulfill in order to graduate. 
+
+2. 
+_Maria, a CST advisor_
+
+Maria, age 34, is a CST advisor for Temple University in Philadelphia, a world heritage city in the United States.  She advises undergraduate students in Computer & Information Sciences, Mathematics, and Physics.  She was born in Aquascalientes, Mexico, where her mother runs a hotel.  Her father works for a telecom company installing fiberoptic cable.  She came to Philadelphia for college and earned a degree in communications from Penn.  She stayed for her love of American football; she bleeds green for the birds every Sunday.  After a brief stint working in marketing for a large fashion house, she returned to school to get her Masters in Education before joining Temple.
+
+As a millennial, Maria has grown up around computers.  She also has more recent experiences with different degree tracking software such as dars and degreeworks from her time as a student.  She wouldn't consider herself a computer expert but she can generally navigate most systems confidently.  She's interested in GRAV because she would like a tool for advisors to clearly show students their remaining classes without resorting to paper printouts.
+
+3.
+_Kongloo III, a CIS transfer student_
+
+Kongloo the third, age 28, is a CIS major at Temple University. He was born and raised in philadelphia, and went to South Philadelphia High for his High School education. His dad works full time doing landscaping, and his mother works part time at a factory. He is the first to get a high school diploma in his familt and the first to go to college also. Kongloo also works full time at retail to support the family and his 5 other siblings. He feels like he's always been the underdog because he's never had great resources but he wants to try his best to support everyone. Kongloo has a great appreciation for video games, as it has gotten him get through tough times.
+
+Being born in the early 90's and not haven't much access to the internet or even technology growing up, Kongloo always appreciated the simple things and aesthetics. While at his old school he felt comfortable navigating through the degree requirements because of how simple but yet informative it was to him. When transferring to Temple and seeing this new thing called DARS, he had questions that DARS could not answer. 
+
+4.
+_Bill, an older student in a non-technical major_
+
+Bill, age 42, a freshmen Business Management major at Temple University. He is going to college for the first time after not being able to afford to go at a young age, now he is trying to gain skills to be able to run a business. Growing up he didn’t have access to computers due to the high cost of the equipment and the rural nature of his hometown. All his life he was a blue collar worker doing a lot of construction jobs.
+
+Due to his lack of experience with computers, navigating around all of the online resources is challenging to him. All he wants to do is to easily access the information he’s looking for without having to jump through many hoops. The user interface needs to be simple to help him understand what he’s required to do to graduate and DARS really isn’t suiting his needs with the rather confusing layout.
+
+
+5.
+
+## Feature List
+- A feature that allows users to view list of graduation requirements for Their major
+- A feature that allows users to login using temple credentials and view courses taken (in green)
+- Feature to log off and log back in as another student. 
+- A feature to view the requirements yet to be fulfilled (in red)
+- A feature that allows users to click on a requirement and display a detailed course list to fulfill course requirement. 
+- A feature to view as a gantt chart the courses needed to graduate. 
+- A feature to view as a pie chart total progress towards graduation.
+
 
 **Use Case Diagram**
 
@@ -21,50 +76,88 @@
 
 ![Website Wireframe](https://github.com/3296Spring2020/individual-subject-proposal-Agent215/raw/master/Gantt%20Chart.png)
 
-- This project stems from frustration with the current Temple tool for viewing and planning what courses you need to take to graduate. The current System “DARS” has fairley comprehensive data, but can be overwhelming in its scope. Additionally it is not easy to parse visually. Users find themselves scrolling up and down many times. This project aims to resolve this issue. Ideally the user should be able to view in one screen at a glance all the basic graduation requirements that have been fulfilled, and yet to be fulfilled. Only if the user wants to inspect general requirements more closely, by clicking a requirement,  would the information "bubble forward". A simple green for complete, and red for incomplete would be the first step. but more advanced methods for visulations suchs as gant charts or flow charts could be implemented. 
-
-## Project Relevance
-- This project will tie in to the courses educational goals in multiple ways. This project will require tying together various disparate technologies and making sure they work together. The goal will be to use a Test Driven Development strategy to create requirements from user stories and use cases before hand. This combined with classic scrum techniques ( utilizing  trello ), should direct and maintain organization within the team. In order for the server side code to function we may need to use a multithreaded aproach. The net result of this should be a full stack project, that utilizes various back end components to asynchronously populate a custom designed and user friendly GUI.
-## Conceptual Design
-- Primarily this will be a web scraper written in python  that grabs already existing data from Temples public and private pages. The python module beautifulsoup seems very well suited to parsing HTML. This can be combined with an automated testing software called selenium to have the python login to a user's account and grab the relevant private data from HTML Dom elements. There will need to be a database component that is queried.This database could be accessed via inline SQL statement written in Java. This data will need to be accessed in an asynchronous manner, not dissimilar to Remote Procedure Calls (RPC). This could be done using Ajax and JSON to grab and format the data. This data will need to be displayed via front end code (HTML and CSS) for the end user. The Java components could be placed in “.jsp” files and accessed from javascript via the GSON library for Java.
-
-- For my contribution, I would like to work with the python and web scraping components. Ideally I would focus on parsing  Temples public facing course requirements pages into some usable format (preferably JSON). This would be accomplished as mentioned above using pythons beautifulsoup module in combination with selenium automated web testing module for python.
-
-## Background
-[link to open source skeleteon code](https://github.com/Agent215/webScraperPage)
-
-***Building***
-- In order to build for now this needs to run using an apache server.
-- This can be done by using netbeans version 8.2.0, a full download comes with apache and glassfish.
-- make sure you have the java web plugin installed and active.
-- in order for the python script to run you need to have at least python 3.7 installed on your machine
-- Also you need to install the beautfuilSoup module for python. Do this by opening a terminal and typing: pip install BeautifulSoup4
-- dowload the following jar files [Gson Jar](http://cis-linux2.temple.edu/~sallyk/cis3308/resources/gson-2.6.2.jar) ,  [java SQL jar](http://cis-linux2.temple.edu/~sallyk/cis3308/resources/mysql-connector-java-5.1.14-bin.jar)
-- then with netbeans open right click on the libraries directory and click add jar, find the location where your Jar files are and select them one at a time.
-- To run the python script you must go to line 30 in the OpenPythonTest file, located in the /src/java/python/ directory and change the absolute path to match the location on your machine. Once this is running on a permenant server it will not need to be changed.
-
-**Running**
-- you can run in netbeans by clicking "run project" with the project package selected
-- you can also right click on the index.html file and select "run file" to run. 
-- hit f12 to inspect console messages
-
-**note**
-- if you are getting a permission error then it is likely that you dont have python or beatufilsoup installed correctly.
-- another common error could be null data, or not able to exec python script. This could be because the path to the python script is incorrect. 
 
 
-## Required Resources
-**Group members competencies**
-- A front end developer who understands javascript HTML css, and JSON. 
-- Database admin who can design and create the database. This could also include setting up the server.
-- Java programmer who can help write backend code to query database, and clean scraped data.
-- Python programer who can use beautifulsoup and selenium to parse necessary data from temples webpages..
+## build instructions 
 
-**Hardware and software resource required**
-- netbeans IDE ( or any other equivalent modern IDE that can run glassfish and apache.)
-- GSON library
-- mySQL-connector library
-- selenium automated web testing module for python
-- beautifulsoup module for python
-- mySQL 
-- Microsoft azure? Or some other free and easy hosting solution? A VM would work fine.
+The following dependecies should be installed in the virtual environment
+
+**dependencies**
+- python selenium
+- python requests module
+- python beautifulsoup module 
+- chromedriver
+- webdriver manager
+- flask 
+
+**Steps to build** 
+<br>
+Download the chromedriver for use with selinum <br>
+[chromedriver downloads](https://chromedriver.chromium.org/downloads)
+<br>
+Next you should make a direcotory like
+~~~
+C:/webDriver/bin
+~~~
+and add the exe to this 
+<br>
+Add this directory to your system environment Path variable. 
+
+- instal virtual environment by typing in a terminal :
+~~~
+python -m pip install --user virtualenv
+~~~
+- create a virtual environment in root directory by typing in a terminal:
+~~~
+python3 -m venv venv
+~~~
+- open virtual environment  on windows like so :
+~~~
+venv\Scripts\activate
+~~~
+or if you are on mac
+~~~
+source venv/bin/activate
+~~~
+Now install dependencies :
+~~~
+pip install flask
+pip install selenium
+pip install webdriver_manager
+pip install beautifulsoup4
+~~~
+or if beautifulsoup gives problems 
+~~~
+pip install bs4
+~~~
+while in root directory of project path for main python script  <br>
+if on windows
+~~~
+set FLASK_APP=flaskGrav.py
+~~~
+<br> 
+if on mac
+
+~~~
+export FLASK_APP=flaskGrav.py
+~~~
+
+## Instructions to run
+while in root directory of project
+~~~
+flask run
+~~~
+you should get output somthing like this
+~~~
+(venv) C:\Users\brahm\Documents\flaskGrav>flask run
+ * Tip: There are .env or .flaskenv files present. Do "pip install python-dotenv" to use them.
+ * Serving Flask app "flaskGrav.py"
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
+~~~
+
+Copy the url in to your browser to display site.
