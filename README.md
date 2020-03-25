@@ -87,7 +87,7 @@ The following dependecies should be installed in the virtual environment
 - python requests module
 - python beautifulsoup module 
 - chromedriver
-- chromedriver_magnager
+- webdriver manager
 - flask 
 
 **Steps to build** 
@@ -119,7 +119,7 @@ Now install dependencies :
 ~~~
 pip install flask
 pip install selenium
-pip install chromedriver_manager
+pip install webdriver_manager
 pip install pip install beautifulsoup4
 ~~~
 or if beautifulsoup gives problems 
