@@ -103,7 +103,7 @@ and add the exe to this
 <br>
 Add this directory to your system environment Path variable. 
 
--create a virtual environment in root directory by typing in a terminal:
+- create a virtual environment in root directory by typing in a terminal:
 ~~~
 python3 -m venv venv
 ~~~
