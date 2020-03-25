@@ -120,11 +120,11 @@ Now install dependencies :
 pip install flask
 pip install selenium
 pip install webdriver_manager
-pip install pip install beautifulsoup4
+pip install beautifulsoup4
 ~~~
 or if beautifulsoup gives problems 
 ~~~
-pip install pip install bs4
+pip install bs4
 ~~~
 while in root directory of project path for main python script  <br>
 if on windows
