@@ -20,7 +20,7 @@ def DarsScrape():
 	#tuName = sys.argv[1]
 	#passW = sys.argv[2]
 	# wait for elements to load
-	driver.implicitly_wait(6)
+	driver.implicitly_wait(3)
 	userLogin = driver.find_element_by_id('username')
 	passLogin = driver.find_element_by_id('password')
 
@@ -30,7 +30,7 @@ def DarsScrape():
 
 	driver.find_element_by_name("_eventId_proceed").click()
 	# wait for elements to load
-	driver.implicitly_wait(6)
+	driver.implicitly_wait(3)
 	# try and enter two factor auth if needed
 	try:
 		#there is another doc embedded inside the main html doc, its inside an html iframe
@@ -48,11 +48,11 @@ def DarsScrape():
 	EC.presence_of_element_located((By.ID, "runAudit")))
 	#runAudit = driver.find_element_by_id('runAudit')
 	runAudit.click()
-	driver.implicitly_wait(6)
-	# get in to actual DARS data display page, we can scrape after this
+	driver.implicitly_wait(3)
+	# check if there is an audit already, if not then make a new one
 	driver.find_element_by_xpath("//tbody[1]/tr[2]/td[10]/a").click()
-
-	driver.implicitly_wait(2)
+	
+	driver.implicitly_wait(1)
 	# wait for url to load and get current url
 	source = driver.page_source
 	# copy page reached from selenium 
