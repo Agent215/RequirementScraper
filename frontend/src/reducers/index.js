@@ -1,8 +1,8 @@
-import credentials from "./credentials";
+import user from "./user";
 import logged_in from "./loggedIn";
 import courses from "./courses";
 import {combineReducers} from "redux";
 
 export default combineReducers({
-    credentials, logged_in, courses
+    user, logged_in, courses
 });
