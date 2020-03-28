@@ -2,7 +2,7 @@ import axios from "axios"
 import { API } from "../actions/types"
 import {apiError, apiStart, apiEnd, accessDenied} from "../actions/api";
 
-export default const apiMiddleware = ({ dispatch }) => next => action => {
+export default ({ dispatch }) => next => action => {
     next(action);
 
     if (action.type !== API) return;
