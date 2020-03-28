@@ -5,6 +5,7 @@ import './App.scss';
 import {LoggedInState} from "./reducers/loggedIn";
 import Navigation from "./components/navigation";
 import Home from "./pages/home";
+import Footer from "./components/footer";
 
 class App extends React.Component {
     render() {
@@ -18,6 +19,7 @@ class App extends React.Component {
                 <Route exact path="/"><Home /></Route>
                 <Redirect from="/" to="/" /> {/* Redirects all non-matching routes to the home page */}
             </Switch>
+            <Footer />
         </Router>
     }
 }
