@@ -16,8 +16,8 @@ class Home extends React.Component {
                 </Container>
             </Jumbotron>
             <Container fluid>
-                <Row>
-                    <Col>
+                <Row xs={1} md={3}>
+                    <Col className="mb-3 mb-md-0">
                         <Card>
                             <Card.Img variant="top" src="https://picsum.photos/1920/1080" />
                             <Card.Body>
@@ -29,7 +29,7 @@ class Home extends React.Component {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col>
+                    <Col className="mb-3 mb-md-0">
                         <Card>
                             <Card.Img variant="top" src="https://picsum.photos/1920/1080" />
                             <Card.Body>
@@ -41,7 +41,7 @@ class Home extends React.Component {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col>
+                    <Col className="mb-3 mb-md-0">
                         <Card>
                             <Card.Img variant="top" src="https://picsum.photos/1920/1080" />
                             <Card.Body>
