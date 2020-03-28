@@ -27,25 +27,17 @@ const requiredReducer = (state = [], action) => {
 
 const initalState = { completed: [], required: [], loading: false };
 
-export default (state, action) => {
-    if (state === undefined) state = initalState;
-    const newState = {
-        completed: completedReducer(state.completed, action),
-        required: requiredReducer(state.required, action),
-        loading: state.loading || true
-    };
+export default (state = initalState, action) => {
+    state.completed = completedReducer(state.completed, action);
+    state.required = requiredReducer(state.required, action);
 
     const isAPI = action.payload === FETCH_COMPLETED || action.payload === FETCH_REQUIREMENTS;
     switch (action.type) {
         case API_START:
-            if (isAPI)
-                newState.loading = true;
-            break;
+            return isAPI ? Object.assign({}, state, { loading: true }) : state;
         case API_END:
-            if (isAPI)
-                newState.loading = false;
-            break;
+            return isAPI ? Object.assign({}, state, { loading: false }) : state;
+        default:
+            return state;
     }
-
-    return newState;
 };
