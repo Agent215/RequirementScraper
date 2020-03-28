@@ -14,7 +14,7 @@ class NavbarRouteLink extends React.Component {
 
 class Navigation extends React.Component {
     render() {
-        return <Navbar bg="light" expand="lg">
+        return <Navbar bg="cherry" expand="lg" variant="dark">
             <Link to="/" className="navbar-brand">GRAV</Link>
             <Navbar.Toggle aria-controls="navbar-nav" />
             <Navbar.Collapse id="navbar-nav">
@@ -30,7 +30,11 @@ class Navigation extends React.Component {
                 <NavbarRouteLink to="/dashboard/courses">Courses</NavbarRouteLink>
                 <NavbarRouteLink to="/dashboard/requirements">Requirements</NavbarRouteLink>
             </ul>
-            <Nav><Nav.Link onClick={() =>  this.props.doLogOut()}>Logout</Nav.Link></Nav>
+            <Nav>
+                <Nav.Item><hr className="border-top" /></Nav.Item>
+                <Nav.Item className="navbar-text">Logged in as: {this.props.user.username}</Nav.Item>
+                <Nav.Link onClick={() =>  this.props.doLogOut()}>Logout</Nav.Link>
+            </Nav>
         </>
     }
 
@@ -39,4 +43,4 @@ class Navigation extends React.Component {
     }
 }
 
-export default connect(({ logged_in }) => ({ logged_in }), {doLogOut})(Navigation);
+export default connect(({ logged_in, user }) => ({ logged_in, user }), {doLogOut})(Navigation);
