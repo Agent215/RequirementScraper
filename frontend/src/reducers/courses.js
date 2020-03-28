@@ -1,4 +1,11 @@
-import {API_END, FETCH_COMPLETED, FETCH_REQUIREMENTS, SET_COMPLETED, SET_REQUIREMENTS} from "../actions/types";
+import {
+    API_END,
+    API_START,
+    FETCH_COMPLETED,
+    FETCH_REQUIREMENTS,
+    SET_COMPLETED,
+    SET_REQUIREMENTS
+} from "../actions/types";
 
 const completedReducer = (state = [], action) => {
     switch (action.type) {
@@ -18,7 +25,10 @@ const requiredReducer = (state = [], action) => {
     }
 };
 
+const initalState = { completed: [], required: [], loading: false };
+
 export default (state, action) => {
+    if (state === undefined) state = initalState;
     const newState = {
         completed: completedReducer(state.completed, action),
         required: requiredReducer(state.required, action),
