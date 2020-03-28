@@ -12,22 +12,22 @@ def index():  # for now this justs runs the testing script
     return  jsonify(courses=DarsScrape())
 
 #add a user and password to databse
-@app.route('/api/signup', methods=['GET', 'POST'])
-def signup():
-    return "sign up content coming soon"
+@app.route('/api/credentials', methods=['POST'])
+def credentials():
+    return "credentials content coming soon"
 
 #take user logged in and get all courses taken
-@app.route('/api/getCourses/<user_id>', methods=['GET', 'POST'])
-def getCourses():
+@app.route('/api/courses/<user_id>', methods=['GET'])
+def getCourses(user_id):
        return  jsonify(courses=DarsScrape())
 
 #take user and get course requrirements
-@app.route('/api/getRequirements', methods=['GET', 'POST'])
-def getRequirements():
+@app.route('/api/requirements/<user_id>', methods=['GET'])
+def getRequirements(user_id):
       return "getRequirements content coming soon"
 
 #return all users in db
-@app.route('/api/getUsers')
+@app.route('/api/users')
 def getUsers():
     return "getUsers content coming soon"
     
