@@ -1,8 +1,10 @@
-import {SEND_CREDENTIALS, SET_USER} from "./types";
+import {CLEAR_USER, SEND_CREDENTIALS, SET_USER} from "./types";
 import {fetchAction} from "./api";
 import {loggedIn} from "./loggedIn";
 
 export const setUser = (user_id, username, password) => ({ type: SET_USER, user_id, username, password });
+
+export const clearUser = () => ({ type: CLEAR_USER });
 
 export const sendCredentialsCompleted = (user_id, username, password) => (dispatch) => {
     dispatch(setUser(user_id, username, password));

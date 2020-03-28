@@ -3,14 +3,13 @@ import './App.css';
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import {connect} from "react-redux";
-import {loggedOut} from "./actions/loggedIn";
 import {Nav, Navbar} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {LoggedInState} from "./reducers/loggedIn";
+import {doLogOut} from "./actions/loggedIn";
 
 class App extends Component {
     render() {
@@ -27,9 +26,9 @@ class App extends Component {
             </Navbar>
             <Switch>
                 <Route path="/login"></Route>
+                <Route path="/"></Route>
             </Switch>
         </>);
-
     }
 
     renderLoggedIn() {
@@ -44,15 +43,16 @@ class App extends Component {
                         <Nav.Link href="/dashboard/requirements">Requirements</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link onClick={() =>  this.props.loggedOut()}>Logout</Nav.Link>
+                        <Nav.Link onClick={() =>  this.props.doLogOut()}>Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
             <Switch>
                 <Route path="/dashboard"></Route>
+                <Route path="/"></Route>
             </Switch>
         </>);
     }
 }
 
-export default connect(({ logged_in }) => ({ logged_in }), {loggedOut})(App);
+export default connect(({ logged_in }) => ({ logged_in }), {doLogOut})(App);

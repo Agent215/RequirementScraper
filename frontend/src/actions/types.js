@@ -2,6 +2,7 @@ export const LOG_IN = "LOG_IN";
 export const LOGGING_IN = "LOGGING_IN";
 export const LOG_OUT = "LOG_OUT";
 export const SET_USER = "SET_USER";
+export const CLEAR_USER = "CLEAR_USER";
 export const SEND_CREDENTIALS = "SEND_CREDENTIALS";
 export const FETCH_REQUIREMENTS = "FETCH_REQUIREMENTS";
 export const SET_REQUIREMENTS = "SET_REQUIREMENTS";
