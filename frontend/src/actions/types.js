@@ -22,3 +22,4 @@ export const SET_COMPLETED = "SET_COMPLETED";
 
 // Theme Actions
 export const SET_THEME = "SET_THEME";
+export const TOGGLE_DARK = "TOGGLE_DARK";

@@ -10,6 +10,13 @@ import Footer from "./components/footer";
 class App extends React.Component {
     render() {
         const loggedIn = this.props.logged_in === LoggedInState.LOGGED_IN;
+        if (this.props.theme.dark) {
+            document.body.classList.add("bg-dark");
+            document.body.classList.add("text-light");
+        } else {
+            document.body.classList.remove("bg-dark");
+            document.body.classList.remove("text-light");
+        }
 
         return <Router>
             <Navigation />
@@ -24,4 +31,4 @@ class App extends React.Component {
     }
 }
 
-export default connect(({ logged_in }) => ({ logged_in }))(App);
+export default connect(({ logged_in, theme }) => ({ logged_in, theme }))(App);

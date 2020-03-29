@@ -4,8 +4,9 @@ import {Card, Col, Container, Jumbotron, Row} from "react-bootstrap";
 
 class Home extends React.Component {
     render() {
+        const bg = this.props.theme.dark ? "bg-secondary" : "bg-gray";
         return <>
-            <Jumbotron fluid className="text-center">
+            <Jumbotron fluid className={["text-center", bg]}>
                 <Container>
                     <h1>Graduation Requirement Auditor Visualizer</h1>
                     <p>
@@ -18,7 +19,7 @@ class Home extends React.Component {
             <Container fluid>
                 <Row xs={1} md={3}>
                     <Col className="mb-3 mb-md-0">
-                        <Card>
+                        <Card className={bg}>
                             <Card.Img variant="top" src="https://picsum.photos/1920/1080" />
                             <Card.Body>
                                 <Card.Title>Requirements at a Glance</Card.Title>
@@ -30,7 +31,7 @@ class Home extends React.Component {
                         </Card>
                     </Col>
                     <Col className="mb-3 mb-md-0">
-                        <Card>
+                        <Card className={bg}>
                             <Card.Img variant="top" src="https://picsum.photos/1920/1080" />
                             <Card.Body>
                                 <Card.Title>Completed Courses</Card.Title>
@@ -42,7 +43,7 @@ class Home extends React.Component {
                         </Card>
                     </Col>
                     <Col className="mb-3 mb-md-0">
-                        <Card>
+                        <Card className={bg}>
                             <Card.Img variant="top" src="https://picsum.photos/1920/1080" />
                             <Card.Body>
                                 <Card.Title>Pie Graphs</Card.Title>
@@ -60,4 +61,4 @@ class Home extends React.Component {
     }
 }
 
-export default connect(null, null)(Home);
+export default connect(({ theme }) => ({ theme }), null)(Home);

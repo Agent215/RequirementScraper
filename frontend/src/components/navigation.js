@@ -14,7 +14,7 @@ class NavbarRouteLink extends React.Component {
 
 class Navigation extends React.Component {
     render() {
-        return <Navbar bg={this.props.theme} expand="lg" variant="dark">
+        return <Navbar bg={this.props.theme.primary} expand="lg" variant="dark">
             <Link to="/" className="navbar-brand">GRAV</Link>
             <Navbar.Toggle aria-controls="navbar-nav" />
             <Navbar.Collapse id="navbar-nav">
