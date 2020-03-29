@@ -13,59 +13,71 @@ from insertUser import insertUser
 def index():  # for now this justs runs the testing script
     return  jsonify(courses=DarsScrape())
 
-#add a user and password to databse
-@app.route('/api/signup', methods=['GET', 'POST'])
-def signup():
-    return "sign up content coming soon"
+# =========== #
+# User Routes #
+# =========== #
+
+# take user credentials and check them in the database or insert if they're not in the database
+@app.route('/api/login', methods=['POST'])
+def login():
+    return "login content coming soon"
+
+#get user credentials from frontend to insert in to db
+@app.route('/api/user', methods=['PUT'])
+def put_user_credentials():
+    return insertUser()
 
 #take user logged in and get all courses taken
-@app.route('/api/getCourses/<user_id>', methods=['GET', 'POST'])
-def getCourses():
+@app.route('/api/user/<user_id>/courses')
+def get_user_courses(user_id):
        return  jsonify(courses=DarsScrape())
 
 #take user and get course requrirements
-@app.route('/api/getRequirements', methods=['GET', 'POST'])
-def getRequirements():
+@app.route('/api/user/<user_id>/requirements')
+def get_user_requirements(user_id):
       return "getRequirements content coming soon"
 
 #return all users in db
-@app.route('/api/getUsers')
-def getUsers():
+@app.route('/api/users')
+def get_all_users():
     return "getUsers content coming soon"
-    
-#take users and scrape all courses
-@app.route('/api/scrapeCourses')
-def scrapeCourses():
-    return  jsonify(courses=DarsScrape())
 
-#take user and scrape all courses requirements for them
-@app.route('/api/scrapeReqs')
-def scrapeReqs():
-    return  "scrapeReqs content coming soon"
-    
-#get user credentials from frontend to insert in to db
-@app.route('/api/insertUser', methods=['GET', 'POST'])
-def apiInsertUser():
-    return insertUser()
 
-    
-#take courses from scraped data and insert in to db
-@app.route('/api/insertCourses')
-def insertCourses():
-    return  "insertCourses content coming soon"
-
-#take requirements from scraped data and insert in to db
-@app.route('/api/isnertReqs')
-def insertReqs():
-    return  "insertReqs content coming soon"
+# ============== #
+# Courses Routes #
+# ============== #
 
 #readCourses from database and return as json
-@app.route('/api/readCourse')
-def readCourses():
+@app.route('/api/courses')
+def get_all_courses():
     return  "readCourse content coming soon"
-           
+
+#take courses from scraped data and insert in to db
+@app.route('/api/courses', methods=['PUT'])
+def put_all_courses():
+    return  "insertCourses content coming soon"
+
+#take users and scrape all courses
+@app.route('/api/courses/scrape')
+def scrape_courses():
+    return  jsonify(courses=DarsScrape())
+
+# =================== #
+# Requirements Routes #
+# =================== #
+
 #readReqs from database and return as json
-@app.route('/api/readReqs')
-def readReqs():
+@app.route('/api/requirements')
+def get_all_requirements():
     return  "readReqs content coming soon"
+
+#take requirements from scraped data and insert in to db
+@app.route('/api/requirements', methods=['PUT'])
+def insert_all_requirements():
+    return  "insertReqs content coming soon"
+
+#take user and scrape all courses requirements for them
+@app.route('/api/requirements/scrape')
+def scrape_requirements():
+    return  "scrapeReqs content coming soon"
         
