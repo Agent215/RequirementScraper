@@ -41,9 +41,8 @@ def testScrape():
 
 	returnList.append(crn)
 	returnList.append(name)
-
-	return returnList
 	print (len(containers))
-
+	return returnList
+	
 if __name__ == "__main__":
     print(testScrape())
