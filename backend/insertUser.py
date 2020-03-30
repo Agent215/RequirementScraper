@@ -14,9 +14,13 @@ def insertUser():
     cur = mysql.connection.cursor()
     TU_ID = request.json['username']
     passW =request.json['password']
-    # TODO we should check if TU_ID is already taken
-    cur.execute("INSERT INTO Users(TU_ID, password) VALUES (%s, %s)", (TU_ID, passW))
+    #check if TU_ID is already taken
+    cur.execute("SELECT TU_ID FROM Users WHERE TU_ID = %s",(TU_ID,))
     id = cur.lastrowid
+    if (id == None):
+        # if we cant find that id, then let take the input and insert as new database row
+        cur.execute("INSERT INTO Users(TU_ID, password) VALUES (%s, %s)", (TU_ID, passW))
+        id = cur.lastrowid
     mysql.connection.commit()
     cur.close()
     return jsonify({ "user_id": id, "error": None })
