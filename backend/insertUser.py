@@ -2,6 +2,7 @@ from flask_mysqldb import MySQL
 from flask import request
 from flask import jsonify
 from app import app
+import sys
 
 app.config['MYSQL_USER'] = 'sql9329694'
 app.config['MYSQL_PASSWORD'] = '9lDUwG3eJI'
@@ -15,15 +16,24 @@ def insertUser():
     TU_ID = request.json['username']
     passW =request.json['password']
     #check if TU_ID is already taken
-    cur.execute("SELECT TU_ID FROM Users WHERE TU_ID = %s",(TU_ID,))
-    id = cur.lastrowid
-    if (id == None):
-        # if we cant find that id, then let take the input and insert as new database row
-        cur.execute("INSERT INTO Users(TU_ID, password) VALUES (%s, %s)", (TU_ID, passW))
+    try:
+        cur.execute("SELECT TU_ID FROM Users WHERE TU_ID = %s",(TU_ID,))
         id = cur.lastrowid
+        e = ""
+    except:
+        e = sys.exc_info()[0]
+    if (id == None):
+        try:
+        # if we cant find that id, then let take the input and insert as new database row
+            cur.execute("INSERT INTO Users(TU_ID, password) VALUES (%s, %s)", (TU_ID, passW))
+            id = cur.lastrowid
+            e = ""
+        except:
+            e = sys.exc_info()[0]
+
     mysql.connection.commit()
     cur.close()
-    return jsonify({ "user_id": id, "error": None })
+    return jsonify({ "user_id": id, "error": e })
 
 if __name__ == "__main__":
     print(insertUser())
