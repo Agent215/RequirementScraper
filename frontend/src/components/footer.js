@@ -19,7 +19,7 @@ class ThemePicker extends React.Component {
     render() {
         return <div id="theme-picker">
             <small className="mr-2">Select your theme:</small>
-            { Object.entries(Themes).map(([name, theme]) => <ThemeItem name={name} theme={theme}/>) }
+            { Object.entries(Themes).map(([name, theme]) => <ThemeItem key={name} name={name} theme={theme}/>) }
         </div>
     }
 }

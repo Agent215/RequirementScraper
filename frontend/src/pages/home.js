@@ -1,6 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Card, Col, Container, Jumbotron, Row} from "react-bootstrap";
+import ThemedButton from "../components/button";
+import {sendCredentials} from "../actions/user";
 
 class Home extends React.Component {
     render() {
@@ -14,6 +16,7 @@ class Home extends React.Component {
                         visualizing you graduation requirements easier to understand. With a very simple and intuitive interface
                         you'll find that it is much easier to understand than the existing systems.
                     </p>
+                    <ThemedButton onClick={() => this.props.sendCredentials("test_user2", "test_password") }>Test Login</ThemedButton>
                 </Container>
             </Jumbotron>
             <Container fluid>
@@ -61,4 +64,4 @@ class Home extends React.Component {
     }
 }
 
-export default connect(({ theme }) => ({ theme }), null)(Home);
+export default connect(({ theme }) => ({ theme }), { sendCredentials })(Home);

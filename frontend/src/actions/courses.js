@@ -10,5 +10,5 @@ export const fetchCompleted = (user_id) => (dispatch) => {
     getCompletedCourses(user_id)
         .then(data => dispatch(setCompleted(data)))
         .then(() => dispatch(fetchCompletedDone()))
-        .error(err => dispatch(fetchCompletedError(err)));
+        .catch(err => dispatch(fetchCompletedError(err)));
 };
