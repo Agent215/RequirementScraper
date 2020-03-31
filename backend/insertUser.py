@@ -27,7 +27,8 @@ def insertUser():
             mysql.connection.commit()
         cur.close()
     except:
-        print('error here')
+          e ="Unexpected error:" + sys.exc_info()[0]
+          print(e)
 		
     id = TU_ID	
     return jsonify({ "user_id": id, "error": e })
