@@ -12,28 +12,47 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 def insertUser():
+    e = None
     cur = mysql.connection.cursor()
-    TU_ID = request.json['username']
-    passW =request.json['password']
+    #TU_ID = request.json['username']
+    #passW =request.json['password']
     #check if TU_ID is already taken
+    #cur = mysql.connection.cursor() #connection to the db
+    #TU_ID = request.json['username']
+    #passW =request.json['password']
+    TU_ID = "tug4361"
+    passW = 'wdsswew'
+    # TODO we should check if userId is already taken
+	#get a list of current user in the database
+    user_list = read_db()
     try:
-        cur.execute("SELECT TU_ID FROM Users WHERE TU_ID = %s",(TU_ID,))
-        id = cur.lastrowid
-        e = ""
-    except:
-        e = sys.exc_info()[0]
-    if (id == None):
-        try:
-        # if we cant find that id, then let take the input and insert as new database row
+        if(TU_ID in user_list):
+            print("Users in db exists")
+            return 'Not inserted'
+        else:
             cur.execute("INSERT INTO Users(TU_ID, password) VALUES (%s, %s)", (TU_ID, passW))
-            id = cur.lastrowid
-            e = ""
-        except:
-            e = sys.exc_info()[0]
-
-    mysql.connection.commit()
-    cur.close()
+            mysql.connection.commit()
+        cur.close()
+    except:
+        print('error here')
+		
+    id = TU_ID	
     return jsonify({ "user_id": id, "error": e })
+
+
+def read_db():
+    cur = mysql.connection.cursor()
+    select_ID_query = 'SELECT TU_ID FROM Users'
+    cur.execute(select_ID_query)
+    records = cur.fetchall()
+    #print("Total number of rows: ", cur.rowcount)
+    id_list = []
+    for row in records:
+        #print(row.get('TU_ID'))
+        id_list.append(row.get('TU_ID'))
+    #print(id_list) #get the list of unique id
+    cur.close()	
+    return id_list
 
 if __name__ == "__main__":
     print(insertUser())
