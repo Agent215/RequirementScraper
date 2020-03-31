@@ -14,15 +14,8 @@ mysql = MySQL(app)
 def insertUser():
     e = None
     cur = mysql.connection.cursor()
-    #TU_ID = request.json['username']
-    #passW =request.json['password']
-    #check if TU_ID is already taken
-    #cur = mysql.connection.cursor() #connection to the db
-    #TU_ID = request.json['username']
-    #passW =request.json['password']
-    TU_ID = "tug4361"
-    passW = 'wdsswew'
-    # TODO we should check if userId is already taken
+    TU_ID = request.json['username']
+    passW =request.json['password']
 	#get a list of current user in the database
     user_list = read_db()
     try:

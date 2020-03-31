@@ -5,13 +5,14 @@ from flask import Flask
 from testScrape import testScrape
 from DarsScrape import DarsScrape
 from insertUser import insertUser
-from insertUser import read_db
+
+
 #default page loaded
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    #return  jsonify(courses=DarsScrape())
-    return insertUser()
+    return  jsonify(courses=DarsScrape())
+
 # =========== #
 # User Routes #
 # =========== #
