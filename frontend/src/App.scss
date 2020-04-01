@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  margin-bottom: $footer-height; /* Margin bottom by footer height */
+  margin-bottom: calc(#{$footer-height} + 1em); /* Margin bottom by footer height plus a small gap */
 }
 
 footer {
