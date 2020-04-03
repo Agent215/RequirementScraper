@@ -2,13 +2,10 @@ from flask_mysqldb import MySQL
 from flask import request
 from flask import jsonify
 from app import app
+from DarsScrape import DarsScrape
 import sys
 
-app.config['MYSQL_USER'] = 'sql9329694'
-app.config['MYSQL_PASSWORD'] = '9lDUwG3eJI'
-app.config['MYSQL_HOST'] = 'sql9.freemysqlhosting.net'
-app.config['MYSQL_DB'] = 'sql9329694'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
 mysql = MySQL(app)
 
 def insertUser():
@@ -33,6 +30,39 @@ def insertUser():
     id = TU_ID	
     return jsonify({ "user_id": id, "error": e })
 
+# function to insert courses to database
+def insertCourses():
+    e = None  # hold errors 
+    courseList = None
+    cur = mysql.connection.cursor()
+    TU_ID = request.json['username']   # grab username/TUID from frontend, hardcode this if you need to test
+    user_list = read_db()
+    try:
+        if(TU_ID in user_list):  # check if user exists
+            print("Users in db exists")
+            cur.execute("SELECT FROM Users password WHERE TU_ID = %s " , (TU_ID)) # look for user password
+            pw_list = []
+            for row in pw_list:
+                pw_list.append(row.get('password'))  # store password
+    except IOError as e:
+        print(e)
+    web_user_id = "12"
+    try:
+        #scrape courses using credentials gathered from above
+        courseList = DarsScrape(TU_ID,pw_list[0])
+        print(courseList)
+        #for each course returned insert into databse associate with user
+        for course in courseList:
+            print(course)
+            cur.execute("INSERT INTO Takes(web_user_id,CRN) VALUES (%s, %s)", ( int(web_user_id),str(course)))
+            mysql.connection.commit()
+        cur.close()
+    except IOError as e:
+        print(e)
+        cur.close()
+
+    return jsonify(courseList)
+    
 
 def read_db():
     cur = mysql.connection.cursor()

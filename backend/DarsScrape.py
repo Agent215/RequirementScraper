@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
-def DarsScrape():
+def DarsScrape(tuid, passW):
 
 	returnList = []
 	#driver = webdriver.Chrome(ChromeDriverManager().install())  
@@ -25,8 +25,8 @@ def DarsScrape():
 	passLogin = driver.find_element_by_id('password')
 
 	# add you TU login and pass here. we will need to get this from the user and pass it here
-	userLogin.send_keys("tuk85386")
-	passLogin.send_keys("!Alamo2020")
+	userLogin.send_keys(tuid)
+	passLogin.send_keys(passW)
 
 	driver.find_element_by_name("_eventId_proceed").click()
 	# wait for elements to load

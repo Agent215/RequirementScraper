@@ -4,14 +4,21 @@ from flask import Flask
 
 from testScrape import testScrape
 from DarsScrape import DarsScrape
-from insertUser import insertUser
+from insertUser import insertUser, insertCourses
 
+
+app.config['MYSQL_USER'] = 'sql9329694'
+app.config['MYSQL_PASSWORD'] = '9lDUwG3eJI'
+app.config['MYSQL_HOST'] = 'sql9.freemysqlhosting.net'
+app.config['MYSQL_DB'] = 'sql9329694'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 #default page loaded
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    return  jsonify(courses=DarsScrape())
+    return "GRAV BACKEND"
+    
 
 # =========== #
 # User Routes #
@@ -26,11 +33,6 @@ def login():
 @app.route('/api/user', methods=['PUT'])
 def put_user_credentials():
     return insertUser()
-
-#take user logged in and get all courses taken
-@app.route('/api/user/<user_id>/courses')
-def get_user_courses(user_id):
-       return  jsonify(courses=DarsScrape())
 
 #take user and get course requrirements
 @app.route('/api/user/<user_id>/requirements')
@@ -55,12 +57,7 @@ def get_all_courses():
 #take courses from scraped data and insert in to db
 @app.route('/api/courses', methods=['PUT'])
 def put_all_courses():
-    return  "insertCourses content coming soon"
-
-#take users and scrape all courses
-@app.route('/api/courses/scrape')
-def scrape_courses():
-    return  jsonify(courses=DarsScrape())
+    return insertCourses()
 
 # =================== #
 # Requirements Routes #
