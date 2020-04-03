@@ -23,8 +23,7 @@ def insertUser():
             cur.execute("INSERT INTO Users(TU_ID, password) VALUES (%s, %s)", (TU_ID, passW))
             mysql.connection.commit()
         cur.close()
-    except:
-          e ="Unexpected error:" + sys.exc_info()[0]
+    except IOError as e:
           print(e)
 		
     id = TU_ID	
@@ -35,21 +34,22 @@ def insertCourses():
     e = None  # hold errors 
     courseList = None
     cur = mysql.connection.cursor()
-    TU_ID = request.json['username']   # grab username/TUID from frontend, hardcode this if you need to test
+    TU_ID = request.json['username']  # grab username/TUID from frontend, hardcode this if you need to test
     user_list = read_db()
+   
     try:
         if(TU_ID in user_list):  # check if user exists
             print("Users in db exists")
-            cur.execute("SELECT FROM Users password WHERE TU_ID = %s " , (TU_ID)) # look for user password
-            pw_list = []
-            for row in pw_list:
-                pw_list.append(row.get('password'))  # store password
+            cur.execute("SELECT password, web_user_id FROM Users WHERE TU_ID = %s " , [TU_ID]) # look for user password
+            results = cur.fetchall()
+            # grab the userid and pass word
+            pw = results[0].get('password')
+            web_user_id = results[0].get('web_user_id')
     except IOError as e:
         print(e)
-    web_user_id = "12"
     try:
         #scrape courses using credentials gathered from above
-        courseList = DarsScrape(TU_ID,pw_list[0])
+        courseList = DarsScrape(TU_ID,pw)
         print(courseList)
         #for each course returned insert into databse associate with user
         for course in courseList:
