@@ -34,6 +34,11 @@ def insertCourses():
     e = None  # hold errors 
     courseList = None
     cur = mysql.connection.cursor()
+    # i think actually the tu_id should be passed as an argument. this function will be called in the 
+    # get courses endpoint. we first check if the user has courses, then if user has no courses,call this function
+    # passing the TU_id of the user to get courses for.
+    # if the user does have courses then we should not use this function, instead we should use the readcourses function
+    # that function reads and outputs the data as json
     TU_ID = request.json['username']  # grab username/TUID from frontend, hardcode this if you need to test
     user_list = read_db()
    
