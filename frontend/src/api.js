@@ -1,17 +1,16 @@
 import axios from "axios";
 
 export function login(username, password) {
-    return axios.post('/api/login', { username, password });
-}
-
-export function setUser(username, password) {
-    return axios.put("/api/user", { username, password });
+    return axios.post('/api/login', { username, password })
+        .then(response => response.data);
 }
 
 export function getCompletedCourses(user_id) {
-    return axios.get(`/api/user/${user_id}/courses`);
+    return axios.get(`/api/user/${user_id}/courses`)
+        .then(response => response.data);
 }
 
 export function getRequirements(user_id) {
-    return axios.get(`/api/user/${user_id}/requirements`);
+    return axios.get(`/api/user/${user_id}/requirements`)
+        .then(response => response.data);
 }

@@ -7,8 +7,7 @@ export const clearUser = () => ({ type: CLEAR_USER });
 
 export const sendCredentials = (username, password) => (dispatch) => {
     dispatch(loggingIn());
-    api.setUser(username, password)
-    //api.login(username, password)
+    api.login(username, password)
         .then(data => dispatch(setUser(data.user_id, username, password)))
         .then(() => dispatch(loggedIn()))
         .catch(err => {

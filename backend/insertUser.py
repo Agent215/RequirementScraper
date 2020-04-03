@@ -14,42 +14,44 @@ def insertUser():
     TU_ID = request.json['username']
     passW =request.json['password']
 	#get a list of current user in the database
-    user_list = read_db()
+    web_user_Id = None
     try:
-        if(TU_ID in user_list):
+        cur.execute("SELECT COUNT(*) AS count FROM Users WHERE TU_ID = %s", [TU_ID]) # Select the amount of users that match web_user_Id = %s
+        if cur.fetchone().get("count"):
             print("Users in db exists")
-            return 'Not inserted'
+            cur.execute("SELECT web_user_Id FROM Users WHERE TU_ID = %s", [TU_ID])
+            results = cur.fetchone()
+            web_user_Id = results.get("web_user_Id")
         else:
             cur.execute("INSERT INTO Users(TU_ID, password) VALUES (%s, %s)", (TU_ID, passW))
+            web_user_Id = cur.lastrowid
             mysql.connection.commit()
         cur.close()
     except IOError as e:
           print(e)
-		
-    id = TU_ID	
-    return jsonify({ "user_id": id, "error": e })
+
+    return jsonify({ "user_id": web_user_Id, "error": e })
 
 # function to insert courses to database
-def insertCourses():
+def insertCourses(web_user_id):
     e = None  # hold errors 
     courseList = None
     cur = mysql.connection.cursor()
-    # i think actually the tu_id should be passed as an argument. this function will be called in the 
-    # get courses endpoint. we first check if the user has courses, then if user has no courses,call this function
+    # we first check if the user has courses, then if user has no courses,call this function
     # passing the TU_id of the user to get courses for.
     # if the user does have courses then we should not use this function, instead we should use the readcourses function
     # that function reads and outputs the data as json
-    TU_ID = request.json['username']  # grab username/TUID from frontend, hardcode this if you need to test
-    user_list = read_db()
    
-    try:
-        if(TU_ID in user_list):  # check if user exists
+    try:# check if user exists
+        cur.execute("SELECT COUNT(*) AS count FROM Users WHERE web_user_Id = %s", [web_user_id]) # Select the amount of users that match web_user_Id = %s
+        if cur.fetchone().get("count"):
             print("Users in db exists")
-            cur.execute("SELECT password, web_user_id FROM Users WHERE TU_ID = %s " , [TU_ID]) # look for user password
-            results = cur.fetchall()
+            cur.execute("SELECT password, TU_ID FROM Users WHERE web_user_Id = %s " , [web_user_id]) # look for user password
+            results = cur.fetchone()
+
             # grab the userid and pass word
-            pw = results[0].get('password')
-            web_user_id = results[0].get('web_user_id')
+            pw = results.get('password')
+            TU_ID = results.get('TU_ID')
     except IOError as e:
         print(e)
     try:
