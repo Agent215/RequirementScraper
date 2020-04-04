@@ -16,7 +16,6 @@ class Home extends React.Component {
                         visualizing you graduation requirements easier to understand. With a very simple and intuitive interface
                         you'll find that it is much easier to understand than the existing systems.
                     </p>
-                    <ThemedButton onClick={() => this.props.sendCredentials("newguy", "test_password") }>Test Login</ThemedButton>
                 </Container>
             </Jumbotron>
             <Container fluid>
