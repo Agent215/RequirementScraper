@@ -141,6 +141,8 @@ pip install flask
 pip install selenium
 pip install webdriver_manager
 pip install beautifulsoup4
+pip install pycryptodome
+pip install flask_mysqldb
 ~~~
 or if beautifulsoup gives problems 
 ~~~
