@@ -23,6 +23,7 @@ def insertUser():
     TU_ID = request.json['username']
     passW =request.json['password']
     ciphertext, tag = cipher.encrypt_and_digest(passW.encode("utf8"))
+    nonce = cipher.nonce
 	#get a list of current user in the database
     web_user_Id = None
     try:
@@ -33,7 +34,7 @@ def insertUser():
             results = cur.fetchone()
             web_user_Id = results.get("web_user_Id")
         else:
-            cur.execute("INSERT INTO Users(TU_ID, password) VALUES (%s, %s)", (TU_ID, ciphertext))
+            cur.execute("INSERT INTO Users(TU_ID, password,tag,nonce) VALUES (%s, %s, %s, %s)", (TU_ID, ciphertext,tag, nonce))
             web_user_Id = cur.lastrowid
             mysql.connection.commit()
         cur.close()
@@ -69,12 +70,19 @@ def insertCourses(web_user_id):
             results = cur.fetchone()
             # grab the userid and pass word
             # decrypt password
-            pw = results.get('password').encode("utf8")
-            print (pw)
+            print("before encode")
+            print(results.get('password'))
+            pw = results.get('password').encode('utf8')
+            nonce = results.get('nonce')
+            tag = results.get('tag')
             print("this is the key: ")
             print(key)
-            cipher = AES.new(key, AES.MODE_EAX)
+            print("this is the password before decrypt")
+            print(pw)
+            cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
             pw = cipher.decrypt(pw)
+            pw.decode('utf8')
+            print("this is the password after decrypt")
             print(pw)
             TU_ID = results.get('TU_ID')
     except IOError as e:

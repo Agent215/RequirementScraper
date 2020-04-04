@@ -17,7 +17,7 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    testuser = 11# test user to pass to insert courses, 
+    testuser = 13# test user to pass to insert courses, 
     return insertCourses(testuser)
     #return "GRAV BACKEND"
 
