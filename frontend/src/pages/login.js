@@ -1,8 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Form, Card, Container, Row} from "react-bootstrap";
+import {Form, Card, Container, Row, Spinner} from "react-bootstrap";
 import {sendCredentials} from "../actions/user";
 import ThemedButton from "../components/button";
+import {LoggedInState} from "../reducers/loggedIn";
 
 class Login extends React.Component {
     constructor(props) {
@@ -31,6 +32,7 @@ class Login extends React.Component {
     };
 
     render() {
+        const loggingIn = this.props.logged_in === LoggedInState.LOGGING_IN;
         const text_color = this.props.theme.dark ? "text-muted-dark" : "text-muted";
         const bg = this.props.theme.dark ? "bg-secondary" : "bg-gray";
         return <Container>
@@ -51,11 +53,13 @@ class Login extends React.Component {
                         We encrypt your password before storing it in the database.
                     </Form.Text>
                 </Form.Group>
-                <ThemedButton block type="submit">Login</ThemedButton>
+                <ThemedButton block type="submit" disabled={loggingIn}>
+                    { loggingIn ? <><Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> Logging In...</> : "Login" }
+                </ThemedButton>
             </Form>
             </Card.Body></Card>
         </Container>
     }
 }
 
-export default connect(({ theme }) => ({ theme }), { sendCredentials })(Login);
+export default connect(({ theme, logged_in }) => ({ theme, logged_in }), { sendCredentials })(Login);
