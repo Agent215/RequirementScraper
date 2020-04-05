@@ -111,7 +111,9 @@ def insertALLCourses():
         cur = mysql.connection.cursor()
         for course in allcourses:
             print(course)
-            cur.execute("INSERT INTO courses(CRN,Name,Credits,Description) VALUES (%s, %s, %s, %s)", ( str(course["CRN"]),str(course["Name"]),int(course["Credit"]),str(course["Description"])))
+            cur.execute("INSERT INTO courses(CRN,Name,Credits,Description) VALUES \
+            (%s, %s, %s, %s)", ( str(course["CRN"]),str(course["Name"]),int(course["Credit"]) \
+            ,str(course["Description"])))
             mysql.connection.commit()
         cur.close()
     except IOError as e:
