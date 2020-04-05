@@ -7,6 +7,7 @@ import Navigation from "./components/navigation";
 import Home from "./pages/home";
 import Footer from "./components/footer";
 import Login from "./pages/login";
+import Dashboard from "./pages/dashboard/dashboard";
 
 class App extends React.Component {
     render() {
@@ -23,7 +24,7 @@ class App extends React.Component {
             <Navigation />
             <Switch>
                 <Route path="/login">{ loggedIn ? <Redirect to="/dashboard" /> : <Login />}</Route>
-                <Route path="/dashboard">{ loggedIn ? <div>{/* add dashboard page component */}</div> : <Redirect to="/login" />}</Route>
+                <Route path="/dashboard">{ loggedIn ? <Dashboard /> : <Redirect to="/login" />}</Route>
                 <Route exact path="/"><Home /></Route>
                 <Redirect from="/" to="/" /> {/* Redirects all non-matching routes to the home page */}
             </Switch>
