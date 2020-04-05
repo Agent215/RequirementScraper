@@ -23,3 +23,9 @@ export const SET_COMPLETED = "SET_COMPLETED";
 // Theme Actions
 export const SET_THEME = "SET_THEME";
 export const TOGGLE_DARK = "TOGGLE_DARK";
+
+// Deleting Actions
+export const DELETING = "DELETING";
+export const DELETE_SUCCESSFUL = "DELETE_SUCCESSFUL";
+export const DELETE_FAILED = "DELETE_FAILED";
+export const DELETE_RESET = "DELETE_RESET";

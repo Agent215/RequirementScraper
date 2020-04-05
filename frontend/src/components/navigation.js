@@ -33,6 +33,7 @@ class Navigation extends React.Component {
             <Nav>
                 <Nav.Item><hr className="border-top" /></Nav.Item>
                 <Nav.Item className="navbar-text">Logged in as: {this.props.user.username}</Nav.Item>
+                <NavbarRouteLink to="/dashboard/profile">Edit Profile</NavbarRouteLink>
                 <Nav.Link onClick={() =>  this.props.doLogOut()}>Logout</Nav.Link>
             </Nav>
         </>

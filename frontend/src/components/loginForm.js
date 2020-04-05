@@ -1,9 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Form, Card, Container, Row, Spinner} from "react-bootstrap";
-import {sendCredentials} from "../actions/user";
+import {Form, Row, Spinner} from "react-bootstrap";
 import ThemedButton from "../components/button";
-import {LoggedInState} from "../reducers/loggedIn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {Themes} from "../reducers/theme";
@@ -55,7 +53,6 @@ class LoginForm extends React.Component {
     };
 
     render() {
-        const loggingIn = this.props.logged_in === LoggedInState.LOGGING_IN;
         const text_color = this.props.theme.dark ? "text-muted-dark" : "text-muted";
         const outline = this.props.theme.dark ? "text-outline-dark" : "text-outline-light";
         const highContrast = this.props.theme.primary === Themes.Contrast;
@@ -91,8 +88,8 @@ class LoginForm extends React.Component {
                         </Form.Control.Feedback>
                 }
             </Form.Group>
-            <ThemedButton block type="submit" disabled={loggingIn}>
-                { loggingIn ? <><Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> Loading...</> : "Login" }
+            <ThemedButton block type="submit" disabled={this.props.loading}>
+                { this.props.loading ? <><Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> Loading...</> : "Login" }
             </ThemedButton>
         </Form>
     }
