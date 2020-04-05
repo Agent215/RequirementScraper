@@ -71,21 +71,17 @@ def insertCourses(web_user_id):
             results = cur.fetchone()
             # grab the userid and pass word
             # decrypt password
-            print(results.get('password'))
+            ciphertext = results.get('password')
             nonce = results.get('nonce')
             tag = results.get('tag')
             cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
-            pw = cipher.decrypt(pw)
+            pw = cipher.decrypt_and_verify(ciphertext, tag).decode('utf8')
             TU_ID = results.get('TU_ID')
-    except IOError as e:
-        print(e)
-    try:
+
         #scrape courses using credentials gathered from above
         courseList = DarsScrape(TU_ID,pw)
-        print(courseList)
         #for each course returned insert into databse associate with user
         for course in courseList:
-            print(course)
             cur.execute("INSERT INTO Takes(web_user_id,CRN) VALUES (%s, %s)", ( int(web_user_id),str(course)))
             mysql.connection.commit()
         cur.close()
