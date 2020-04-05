@@ -36,6 +36,7 @@ def insertUser():
     try:
         cur.execute("SELECT COUNT(*) AS count FROM Users WHERE TU_ID = %s", [TU_ID]) # Select the amount of users that match web_user_Id = %s
         if cur.fetchone().get("count"):
+            print("Users in db exists")
             cur.execute("SELECT web_user_Id FROM Users WHERE TU_ID = %s", [TU_ID])
             results = cur.fetchone()
             web_user_Id = results.get("web_user_Id")
@@ -65,18 +66,18 @@ def insertCourses(web_user_id):
     try:# check if user exists
         cur.execute("SELECT COUNT(*) AS count FROM Users WHERE web_user_Id = %s", [web_user_id]) # Select the amount of users that match web_user_Id = %s
         if cur.fetchone().get("count"):
+            print("Users in db exists")
             cur.execute("SELECT * FROM Users WHERE web_user_Id = %s " , [web_user_id]) # look for user password
             results = cur.fetchone()
             # grab the userid and pass word
             # decrypt password
+            ciphertext = results.get('password')
             nonce = results.get('nonce')
             tag = results.get('tag')
             cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
-            pw = cipher.decrypt(pw)
+            pw = cipher.decrypt_and_verify(ciphertext, tag).decode('utf8')
             TU_ID = results.get('TU_ID')
-    except IOError as e:
-        print(e)
-    try:
+
         #scrape courses using credentials gathered from above
         courseList = DarsScrape(TU_ID,pw)
         #for each course returned insert into databse associate with user

@@ -1,6 +1,7 @@
 from app import app
 from flask import jsonify
 from flask import Flask
+from flask import request
 
 from testScrape import testScrape
 from getAllCourses import getCIScourses
@@ -19,6 +20,7 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/index')
 def index():  # for now this justs runs the testing script
     return "GRAV BACKEND"
+    #return insertCourses(31)
    
     
 
@@ -26,6 +28,19 @@ def index():  # for now this justs runs the testing script
 @app.route('/api/login', methods=['POST'])
 def login():
     return insertUser()
+
+@app.route('/api/user/<user>', methods=['PATCH'])
+def update_user(user):
+    password = request.json["password"]
+    return "Update user content coming soon"
+
+@app.route('/api/user/<user>', methods=['DELETE'])
+def delete_user(user):
+    # Whether to delete the user credentials or just their course information
+    # if deleteUser is True, delete everything related to the user including their credentials
+    # if deleteUser if False, only delete the courses the user has taken
+    deleteUser = request.args["deleteUser"] if "deleteUser" in request.args else False
+    return "Delete user content coming soon"
 
 #take user and get course requrirements
 @app.route('/api/user/<user>/requirements')

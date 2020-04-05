@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Card, Col, Container, Jumbotron, Row} from "react-bootstrap";
-import ThemedButton from "../components/button";
 import {sendCredentials} from "../actions/user";
 
 class Home extends React.Component {
