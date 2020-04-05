@@ -6,6 +6,9 @@ from DarsScrape import DarsScrape
 from Crypto.Cipher import AES
 from base64 import b64encode, b64decode
 from Crypto.Random import get_random_bytes
+from getAllCourses import getCIScourses
+import json
+
 import sys
 
 
@@ -22,11 +25,11 @@ def insertUser():
     cipher = AES.new(key, AES.MODE_EAX)
     e = None
     cur = mysql.connection.cursor()
+    # grab username and password from front end
     TU_ID = request.json['username']
     passW =request.json['password']
     # encrypt password
     ciphertext, tag = cipher.encrypt_and_digest(passW.encode("utf8"))
-    print ("this is the ciphertext",ciphertext)
     nonce = cipher.nonce
 	#get a list of current user in the database
     web_user_Id = None
@@ -98,14 +101,26 @@ def read_db():
     select_ID_query = 'SELECT TU_ID FROM Users'
     cur.execute(select_ID_query)
     records = cur.fetchall()
-    #print("Total number of rows: ", cur.rowcount)
     id_list = []
     for row in records:
-        #print(row.get('TU_ID'))
         id_list.append(row.get('TU_ID'))
-    #print(id_list) #get the list of unique id
     cur.close()	
     return id_list
+
+# this function inserts all the possible CIS courses into the courses table
+def insertALLCourses():
+    allcourses = []
+    try:
+        allcourses = getCIScourses()
+        cur = mysql.connection.cursor()
+        for course in allcourses:
+            print(course)
+            cur.execute("INSERT INTO courses(CRN,Name,Credits,Description) VALUES (%s, %s, %s, %s)", ( str(course["CRN"]),str(course["Name"]),int(course["Credit"]),str(course["Description"])))
+            mysql.connection.commit()
+        cur.close()
+    except IOError as e:
+        print(e)
+    return jsonify(allcourses)
 
 if __name__ == "__main__":
     print(insertUser())

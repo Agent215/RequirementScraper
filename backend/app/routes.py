@@ -3,8 +3,9 @@ from flask import jsonify
 from flask import Flask
 
 from testScrape import testScrape
+from getAllCourses import getCIScourses
 from DarsScrape import DarsScrape
-from insertUser import insertUser, insertCourses
+from insertUser import insertUser, insertCourses ,insertALLCourses
 
 
 app.config['MYSQL_USER'] = 'sql9329694'
@@ -18,6 +19,8 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/index')
 def index():  # for now this justs runs the testing script
     return "GRAV BACKEND"
+   
+    
 
 # take user credentials and check them in the database or insert if they're not in the database
 @app.route('/api/login', methods=['POST'])
