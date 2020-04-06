@@ -91,6 +91,24 @@ def insertCourses(web_user_id):
 
     return jsonify(courseList)
     
+# returns true if user has courses false other wise
+def hasCourses(web_user_Id): 
+    cur = mysql.connection.cursor()
+    try:# check if user exists
+        cur.execute("SELECT COUNT(*) AS count FROM Takes WHERE web_user_Id = %s", [web_user_Id]) # Select the amount of users that match web_user_Id = %s
+        if cur.fetchone().get("count"):
+            cur.execute("SELECT * FROM Users WHERE web_user_Id = %s " , [web_user_Id]) # look for user password
+            results = cur.fetchone()
+            if len(results) > 0:
+                print("user has taken some courses")
+                return True
+            else: 
+                return False
+    except IOError as e:
+        print(e)
+    return False
+
+
 #this function will return a list of web_user_id in the Users table
 def read_db():
     cur = mysql.connection.cursor()
@@ -126,6 +144,7 @@ def deleteUser(web_id, deleteUser): #deleteUser is a boolean
     cur = mysql.connection.cursor()
     web_id_list = read_db() #Get a list of web user id
     print(web_id_list)
+    e = None
     if(deleteUser == True): #if deleteUser is true then delete everything related to this user
         if(web_id not in web_id_list):
             return 'User not in the database!'
@@ -134,8 +153,8 @@ def deleteUser(web_id, deleteUser): #deleteUser is a boolean
             mysql.connection.commit()
             cur.close()
             return 'DELETE ALL FROM USERS'
-        except:
-            print('Not delete yet')
+        except IOError as e:
+            print(e)
         cur.close()
         return 'from delete user function'
     else:#if deleteUser is false then we just delete the courses that they have taken
@@ -146,16 +165,17 @@ def deleteUser(web_id, deleteUser): #deleteUser is a boolean
             mysql.connection.commit()
             cur.close()
             return 'Delete all taken courses from users'
-        except:
-            print('Not inserted yet!!!')
+        except IOError as e:
+            print(e)
 			
         cur.close()
-        return 'another one!'
+        # if we reach here an error occured
+        return e
 
 #this function will return column of a table as a list
 #def read_db(column_name, table_name):	
 #this function will return a list with all the taken course of a given web_user_id
-def read_db2(web_id):
+def read_Courses(web_id):
     cur = mysql.connection.cursor()
     takenCourseList = []
     try:
