@@ -19,7 +19,7 @@ export const sendCredentials = (username, password) => (dispatch) => {
 
 export const editUserData = (user_id, username, password) => (dispatch) => {
     dispatch(loggingIn());
-    api.editUser(user_id, username, password)
+    api.editUser(user_id, password)
         .then(() => dispatch(setUser(user_id, username, password)))
         .then(() => dispatch(loggedIn()))
         .catch(err => {

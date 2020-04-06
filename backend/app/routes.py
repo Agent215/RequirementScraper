@@ -31,7 +31,6 @@ def login():
 
 @app.route('/api/user/<user>', methods=['PATCH'])
 def update_user(user):
-    username = request.json["username"]
     password = request.json["password"]
     return "Update user content coming soon"
 

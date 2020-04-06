@@ -10,13 +10,22 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props);
 
+        let username, password;
+        if (props.user !== null) {
+            username = props.user.username;
+            password = props.user.password;
+        } else {
+            username = '';
+            password = '';
+        }
+
         this.state = {
             username_valid: false,
             username_msg: "You need to fill out this field!",
-            username: '',
+            username,
             password_valid: false,
             password_msg: "You need to fill out this field!",
-            password: '',
+            password,
             submitted: false,
             validated: false
         }
@@ -27,12 +36,14 @@ class LoginForm extends React.Component {
     }
 
     onUsernameChange = (e) => {
+        e.preventDefault();
         const username = e.target.value;
         const valid = this.validateUsername(username);
         this.setState({ username, username_msg: valid ? "Looks good!" : "Invalid username, it should be like: tux00000", username_valid: valid });
     };
 
     onPasswordChange = (e) => {
+        e.preventDefault();
         const password = e.target.value;
         const valid = !(!password || 0 === password.length);
         this.setState({ password: e.target.value, password_msg: valid ? "Looks good!" : "You need to fill out this field!", password_valid: valid });
@@ -53,6 +64,7 @@ class LoginForm extends React.Component {
     };
 
     render() {
+        const disableUsername = this.props.disableUsername || false;
         const text_color = this.props.theme.dark ? "text-muted-dark" : "text-muted";
         const outline = this.props.theme.dark ? "text-outline-dark" : "text-outline-light";
         const highContrast = this.props.theme.primary === Themes.Contrast;
@@ -61,7 +73,7 @@ class LoginForm extends React.Component {
         return <Form noValidate validated={this.state.validated} onSubmit={this.onLogin}>
             <Form.Group as={Row}>
                 <Form.Label>AccessNet Username</Form.Label>
-                <Form.Control type="string" placeholder="tux00000" name="username" pattern="[Tt][Uu][a-zA-Z]\d{5}" onChange={this.onUsernameChange} required />
+                <Form.Control type="string" placeholder="tux00000" name="username" pattern="[Tt][Uu][a-zA-Z]\d{5}" onChange={this.onUsernameChange} required value={this.state.username} disabled={disableUsername} />
                 <Form.Text className={formTextClasses}>
                     This is the username you use to log into the portal.
                 </Form.Text>
@@ -75,7 +87,7 @@ class LoginForm extends React.Component {
             </Form.Group>
             <Form.Group as={Row}>
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Temple password" name="password" onChange={this.onPasswordChange} required />
+                <Form.Control type="password" placeholder="Temple password" name="password" onChange={this.onPasswordChange} required value={this.state.password} />
                 <Form.Text className={formTextClasses}>
                     We encrypt your password before storing it in the database.
                 </Form.Text>
@@ -89,10 +101,10 @@ class LoginForm extends React.Component {
                 }
             </Form.Group>
             <ThemedButton block type="submit" disabled={this.props.loading}>
-                { this.props.loading ? <><Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> Loading...</> : "Login" }
+                { this.props.loading ? <><Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> Loading...</> : "Submit" }
             </ThemedButton>
         </Form>
     }
 }
 
-export default connect(({ theme, logged_in }) => ({ theme, logged_in }), null)(LoginForm);
+export default connect(({ theme, logged_in, user }) => ({ theme, logged_in, user }), null)(LoginForm);
