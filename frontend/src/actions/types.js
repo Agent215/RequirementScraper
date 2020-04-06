@@ -29,3 +29,7 @@ export const DELETING = "DELETING";
 export const DELETE_SUCCESSFUL = "DELETE_SUCCESSFUL";
 export const DELETE_FAILED = "DELETE_FAILED";
 export const DELETE_RESET = "DELETE_RESET";
+
+// Message Actions
+export const ADD_MESSAGE = "ADD_MESSAGE";
+export const REMOVE_MESSAGE = "REMOVE_MESSAGE";
