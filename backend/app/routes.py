@@ -6,7 +6,7 @@ from flask import request
 from testScrape import testScrape
 from getAllCourses import getCIScourses
 from DarsScrape import DarsScrape
-from insertUser import insertUser, insertCourses ,insertALLCourses, deleteUser, read_db2
+from insertUser import insertUser, insertCourses ,insertALLCourses, deleteUser, read_db2, read_db
 
 
 app.config['MYSQL_USER'] = 'sql9329694'
@@ -19,9 +19,9 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    #return "GRAV BACKEND"
+    return "GRAV BACKEND"
     #return insertCourses(31)
-    return read_db2(31)
+    #return read_db2(31)
     
 
 # take user credentials and check them in the database or insert if they're not in the database
@@ -41,7 +41,7 @@ def delete_user(user):
     # if deleteUser is True, delete everything related to the user including their credentials
     # if deleteUser if False, only delete the courses the user has taken
     deleteUser = request.args["deleteUser"] if "deleteUser" in request.args else False
-    return "Delete user content coming soon"
+    return deleteUser(user, deleteUser)
 
 #take user and get course requrirements
 @app.route('/api/user/<user>/requirements')
@@ -51,5 +51,11 @@ def get_user_requirements(user):
 #take user and get course requrirements
 @app.route('/api/user/<user>/courses')
 def get_user_courses(user):
-    return insertCourses(int(user))
+    web_id_list = read_db()
+    #print(user)
+    #print(web_id_list)
+    if(int(user) in web_id_list):
+        return read_db2(user)
+    else:
+        return insertCourses(int(user))
         
