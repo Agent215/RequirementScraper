@@ -6,7 +6,7 @@ from flask import request
 from testScrape import testScrape
 from getAllCourses import getCIScourses
 from DarsScrape import DarsScrape
-from insertUser import insertUser, insertCourses ,insertALLCourses, deleteUser, read_db2
+from insertUser import insertUser, insertCourses ,insertALLCourses, deleteUser, read_Courses, hasCourses
 
 
 app.config['MYSQL_USER'] = 'sql9329694'
@@ -19,9 +19,8 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    #return "GRAV BACKEND"
-    #return insertCourses(31)
-    return read_db2(31)
+    return "GRAV BACKEND"
+   
     
 
 # take user credentials and check them in the database or insert if they're not in the database
@@ -51,5 +50,10 @@ def get_user_requirements(user):
 #take user and get course requrirements
 @app.route('/api/user/<user>/courses')
 def get_user_courses(user):
-    return insertCourses(int(user))
+    takenCourses = hasCourses(int(user))
+    if takenCourses:
+       return read_Courses(int(user))
+    else:
+        return insertCourses(int(user))
+    return "an unexpected error has occured"
         

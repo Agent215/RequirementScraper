@@ -91,6 +91,24 @@ def insertCourses(web_user_id):
 
     return jsonify(courseList)
     
+# returns true if user has courses false other wise
+def hasCourses(web_user_Id): 
+    cur = mysql.connection.cursor()
+    try:# check if user exists
+        cur.execute("SELECT COUNT(*) AS count FROM Takes WHERE web_user_Id = %s", [web_user_Id]) # Select the amount of users that match web_user_Id = %s
+        if cur.fetchone().get("count"):
+            cur.execute("SELECT * FROM Users WHERE web_user_Id = %s " , [web_user_Id]) # look for user password
+            results = cur.fetchone()
+            if len(results) > 0:
+                print("user has taken some courses")
+                return True
+            else: 
+                return False
+    except IOError as e:
+        print(e)
+    return False
+
+
 #this function will return a list of web_user_id in the Users table
 def read_db():
     cur = mysql.connection.cursor()
@@ -155,7 +173,7 @@ def deleteUser(web_id, deleteUser): #deleteUser is a boolean
 #this function will return column of a table as a list
 #def read_db(column_name, table_name):	
 #this function will return a list with all the taken course of a given web_user_id
-def read_db2(web_id):
+def read_Courses(web_id):
     cur = mysql.connection.cursor()
     takenCourseList = []
     try:
