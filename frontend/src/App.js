@@ -8,6 +8,7 @@ import Home from "./pages/home";
 import Footer from "./components/footer";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard/dashboard";
+import Messages from "./components/messages";
 
 class App extends React.Component {
     render() {
@@ -29,6 +30,7 @@ class App extends React.Component {
                 <Redirect from="/" to="/" /> {/* Redirects all non-matching routes to the home page */}
             </Switch>
             <Footer />
+            <Messages />
         </Router>
     }
 }

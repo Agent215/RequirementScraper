@@ -1,7 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Card, Col, Container, Jumbotron, Row} from "react-bootstrap";
-import {sendCredentials} from "../actions/user";
+import ThemedButton from "../components/button";
+import {addMessage} from "../actions/messages";
+import {faBell} from "@fortawesome/free-solid-svg-icons";
 
 class Home extends React.Component {
     render() {
@@ -15,6 +17,7 @@ class Home extends React.Component {
                         visualizing you graduation requirements easier to understand. With a very simple and intuitive interface
                         you'll find that it is much easier to understand than the existing systems.
                     </p>
+                    <ThemedButton onClick={() => this.props.addMessage("Test toast", "This is just a test of the message system.", faBell)}>Test toast</ThemedButton>
                 </Container>
             </Jumbotron>
             <Container fluid>
@@ -62,4 +65,4 @@ class Home extends React.Component {
     }
 }
 
-export default connect(({ theme }) => ({ theme }), { sendCredentials })(Home);
+export default connect(({ theme }) => ({ theme }), { addMessage })(Home);
