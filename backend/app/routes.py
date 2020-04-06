@@ -40,7 +40,7 @@ def delete_user(user):
     # if deleteUser is True, delete everything related to the user including their credentials
     # if deleteUser if False, only delete the courses the user has taken
     deleteUser = request.args["deleteUser"] if "deleteUser" in request.args else False
-    return "Delete user content coming soon"
+    return deleteUser(int(user), deleteUser)
 
 #take user and get course requrirements
 @app.route('/api/user/<user>/requirements')

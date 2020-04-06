@@ -144,6 +144,7 @@ def deleteUser(web_id, deleteUser): #deleteUser is a boolean
     cur = mysql.connection.cursor()
     web_id_list = read_db() #Get a list of web user id
     print(web_id_list)
+    e = None
     if(deleteUser == True): #if deleteUser is true then delete everything related to this user
         if(web_id not in web_id_list):
             return 'User not in the database!'
@@ -152,8 +153,8 @@ def deleteUser(web_id, deleteUser): #deleteUser is a boolean
             mysql.connection.commit()
             cur.close()
             return 'DELETE ALL FROM USERS'
-        except:
-            print('Not delete yet')
+        except IOError as e:
+            print(e)
         cur.close()
         return 'from delete user function'
     else:#if deleteUser is false then we just delete the courses that they have taken
@@ -164,11 +165,12 @@ def deleteUser(web_id, deleteUser): #deleteUser is a boolean
             mysql.connection.commit()
             cur.close()
             return 'Delete all taken courses from users'
-        except:
-            print('Not inserted yet!!!')
+        except IOError as e:
+            print(e)
 			
         cur.close()
-        return 'another one!'
+        # if we reach here an error occured
+        return e
 
 #this function will return column of a table as a list
 #def read_db(column_name, table_name):	
