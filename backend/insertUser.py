@@ -91,7 +91,7 @@ def insertCourses(web_user_id):
 
     return jsonify(courseList)
     
-
+#this function will return a list of web_user_id in the Users table
 def read_db():
     cur = mysql.connection.cursor()
     select_ID_query = 'SELECT web_user_id FROM Users'
@@ -151,9 +151,24 @@ def deleteUser(web_id, deleteUser): #deleteUser is a boolean
 			
         cur.close()
         return 'another one!'
-    
-	
-        
+
+#this function will return column of a table as a list
+#def read_db(column_name, table_name):	
+#this function will return a list with all the taken course of a given web_user_id
+def read_db2(web_id):
+    cur = mysql.connection.cursor()
+    takenCourseList = []
+    try:
+        select_query = 'SELECT * FROM Takes WHERE web_user_id = %s'
+        cur.execute(select_query, [web_id])
+        rows = cur.fetchall()
+        for row in rows:
+            takenCourseList.append(row.get('CRN'))
+        cur.close()
+    except:
+        print('Error reading or No such user exists in the database')
+		
+    return jsonify(takenCourseList)
 
 
 
