@@ -66,4 +66,8 @@ footer {
   position: fixed;
   top: 10px;
   right: 10px;
+
+  .alert {
+    max-width: 90vw;
+  }
 }

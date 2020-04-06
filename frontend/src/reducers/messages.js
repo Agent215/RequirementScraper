@@ -8,8 +8,9 @@ export default (state = initialState, action) => {
         case ADD_MESSAGE:
             return Object.assign({}, state, { [uuidv4()]: action.message });
         case REMOVE_MESSAGE:
-            delete state[action.messageId];
-            return state;
+            const newState = Object.assign({}, state);
+            delete newState[action.messageId];
+            return newState;
         default:
             return state;
     }
