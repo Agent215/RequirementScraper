@@ -78,13 +78,13 @@ def insertCourses(web_user_id):
             pw = cipher.decrypt_and_verify(ciphertext, tag).decode('utf8')
             TU_ID = results.get('TU_ID')
 
-        #scrape courses using credentials gathered from above
-        courseList = DarsScrape(TU_ID,pw)
-        #for each course returned insert into databse associate with user
-        for course in courseList:
-            cur.execute("INSERT INTO Takes(web_user_id,CRN) VALUES (%s, %s)", ( int(web_user_id),str(course)))
-            mysql.connection.commit()
-        cur.close()
+            #scrape courses using credentials gathered from above
+            courseList = DarsScrape(TU_ID,pw)
+            #for each course returned insert into databse associate with user
+            for course in courseList:
+                cur.execute("INSERT INTO Takes(web_user_id,CRN) VALUES (%s, %s)", ( int(web_user_id),str(course)))
+                mysql.connection.commit()
+            cur.close()
     except IOError as e:
         print(e)
         cur.close()
