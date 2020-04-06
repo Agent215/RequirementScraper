@@ -1,1 +1,11 @@
 /.idea/
+/venv/
+/build/
+/dist/
+/venv/
+.env
+*.pyc
+.idea
+__pycache__
+.vscode
+*.db

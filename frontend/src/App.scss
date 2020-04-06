@@ -1,0 +1,62 @@
+$theme-colors: (
+    "cherry": #9e1b34,
+    "contrast": #006270,
+    "gray": #eeeeee,
+    "muted-dark": #d6d6d6
+);
+$bg-color: #eee;
+$footer-height: 30px;
+$footer-content-height: 28px;
+
+@import "~bootstrap/scss/bootstrap";
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: calc(#{$footer-height} + 1em); /* Margin bottom by footer height plus a small gap */
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $footer-height; /* Set the fixed height of the footer here */
+  line-height: $footer-content-height; /* Vertically center the text there */
+}
+
+#theme-picker {
+  .theme {
+    min-height: 18px;
+    min-width: 18px;
+    margin: 0 2px;
+  }
+
+  display: inline;
+}
+
+#dark-mode-switch {
+  display: inline;
+
+  .custom-control {
+    display: inline;
+    line-height: $footer-content-height;
+    height: $footer-height;
+
+    label {
+      vertical-align: bottom;
+    }
+  }
+}
+
+.text-outline {
+  &-dark {
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  }
+
+  &-light {
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  }
+}

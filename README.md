@@ -57,6 +57,22 @@ Due to his lack of experience with computers, navigating around all of the onlin
 
 
 5.
+_Noah, an English major_
+
+Noah Onark is a retiring military veteran who's going back to college
+under the GI bill. He decided that he will go to Temple University this
+fall after 20 years of service and study English with the hope of becoming a teacher. 
+In his military careers, he worked mainly in the training department of the army and has little exposure to the computer. 
+Thus, he has limited knowledge of how to work around the computer and its application. In addition, he
+also works as a carpenter to support his daily life and family in addition going to college.
+
+Due to his limimted time and inexperience of using modern application, Noah has difficult time using the
+web application DARS to assess his requirement to graduate on time and become a teacher. Sometimes,
+DARS would not display data correctly or updated to the current curriculumn, leading Noah
+to have many unpleasant meetings with multiple advisors. In addition, Noah planned to study English and
+minor in political science but need to know the requirement to fulfill both conditions. The current DARS
+might not be suitable to help him achieve his goal on time.
+
 
 ## Feature List
 - A feature that allows users to view list of graduation requirements for Their major
@@ -125,6 +141,8 @@ pip install flask
 pip install selenium
 pip install webdriver_manager
 pip install beautifulsoup4
+pip install pycryptodome
+pip install flask_mysqldb
 ~~~
 or if beautifulsoup gives problems 
 ~~~
