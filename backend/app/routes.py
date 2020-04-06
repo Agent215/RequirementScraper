@@ -6,7 +6,7 @@ from flask import request
 from testScrape import testScrape
 from getAllCourses import getCIScourses
 from DarsScrape import DarsScrape
-from insertUser import insertUser, insertCourses ,insertALLCourses
+from insertUser import insertUser, insertCourses ,insertALLCourses, deleteUser
 
 
 app.config['MYSQL_USER'] = 'sql9329694'
@@ -19,9 +19,9 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    return "GRAV BACKEND"
+    #return "GRAV BACKEND"
     #return insertCourses(31)
-   
+	return deleteUser(72, True)
     
 
 # take user credentials and check them in the database or insert if they're not in the database

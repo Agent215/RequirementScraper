@@ -94,12 +94,12 @@ def insertCourses(web_user_id):
 
 def read_db():
     cur = mysql.connection.cursor()
-    select_ID_query = 'SELECT TU_ID FROM Users'
+    select_ID_query = 'SELECT web_user_id FROM Users'
     cur.execute(select_ID_query)
     records = cur.fetchall()
     id_list = []
     for row in records:
-        id_list.append(row.get('TU_ID'))
+        id_list.append(row.get('web_user_id'))
     cur.close()	
     return id_list
 
@@ -119,6 +119,43 @@ def insertALLCourses():
     except IOError as e:
         print(e)
     return jsonify(allcourses)
+
+#this function will delete user based on the web_user_id and the boolean option chosen by users
+#this function will delte the user or their taken course only, not future requirement course 
+def deleteUser(web_id, deleteUser): #deleteUser is a boolean
+    cur = mysql.connection.cursor()
+    web_id_list = read_db() #Get a list of web user id
+    print(web_id_list)
+    if(deleteUser == True): #if deleteUser is true then delete everything related to this user
+        if(web_id not in web_id_list):
+            return 'User not in the database!'
+        try:
+            cur.execute("DELETE FROM Users WHERE web_user_id = %s", [web_id])
+            mysql.connection.commit()
+            cur.close()
+            return 'DELETE ALL FROM USERS'
+        except:
+            print('Not delete yet')
+        cur.close()
+        return 'from delete user function'
+    else:#if deleteUser is false then we just delete the courses that they have taken
+        if(web_id not in web_id_list):
+            return 'User not in the database'
+        try:
+            cur.execute("DELETE FROM Takes WHERE web_user_id = %s", [web_id])
+            mysql.connection.commit()
+            cur.close()
+            return 'Delete all taken courses from users'
+        except:
+            print('Not inserted yet!!!')
+			
+        cur.close()
+        return 'another one!'
+    
+	
+        
+
+
 
 if __name__ == "__main__":
     print(insertUser())
