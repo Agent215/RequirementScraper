@@ -8,7 +8,7 @@ export const fetchCompletedError = (error) => ({ type: FETCH_COMPLETED_ERROR, er
 export const fetchCompleted = (user_id) => (dispatch) => {
     dispatch(fetchCompletedStart());
     getCompletedCourses(user_id)
-        .then(data => dispatch(setCompleted(data)))
+        .then(data => dispatch(setCompleted(Object.values(data))))
         .then(() => dispatch(fetchCompletedDone()))
         .catch(err => dispatch(fetchCompletedError(err)));
 };

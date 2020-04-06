@@ -11,7 +11,7 @@ class ThemedCard extends React.Component {
 
         const bg = this.props.theme.dark ? "bg-secondary" : "bg-gray";
 
-        const className = cardProps.hasOwnProperty("className") ? cardProps["className"] : [];
+        const className = cardProps.hasOwnProperty("className") ? cardProps["className"].slice() : [];
         className.push(bg);
         delete cardProps["className"];
 
