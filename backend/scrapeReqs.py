@@ -57,6 +57,8 @@ def scrapeReqs(tuid, passW):
 
     #reqHeaders = page_soup.findAll("span",{"class":["srTitle_substatusNO"]})
     reqHeaders = page_soup.findAll("div", {"class": ["reqHeaderTable"]})
+    pageTable = page_soup.find("whatever")
+    element = pageTable.findAll("tr", "")
    
 
     #return object
@@ -91,5 +93,5 @@ def scrapeReqs(tuid, passW):
     return jsonObj
 
 if __name__ == "__main__":
-    print(scrapeReqs("tuk85386", "!Alamo2020"))
+    print(scrapeReqs("", ""))
 

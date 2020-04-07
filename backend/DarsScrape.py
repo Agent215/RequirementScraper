@@ -2,6 +2,7 @@ from urllib.request import urlopen
 #get the beautifulSoup module and name as soup
 from bs4 import BeautifulSoup as soup
 from selenium import webdriver
+from flask import jsonify
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -64,10 +65,25 @@ def DarsScrape(tuid, passW):
 	# initialize empty list to hold courses
 	courseList = []
 
+
 	# add each course taken to a list
+	# there will be duplicates
 	for table in tableRows:
-	    tmp = table.td.next.next.next.next
-	    courseList.append(tmp)
+		courseDict = {}
+		#scrape course info
+		name = table.find("td", {"class":"descLine"}).text
+		crn = table.find("td", {"class": "course"}).text
+		term = table.find("td", {"class": "term"}).text
+		credit = table.find("td", {"class": "credit"}).text
+		grade = table.find("td", {"class": "grade"}).text
+		#add to dictionary
+		courseDict["Name"]  = name.strip()
+		courseDict["CRN"] = crn.strip()
+		courseDict["Term"] = term.strip()
+		courseDict["Credit"] = credit.strip()
+		courseDict["Grade"] = grade.strip()
+		#append to course list, will remove duplicates later
+		courseList.append(courseDict)
 
 	#function to remove duplicates
 	def Remove(duplicate): 
@@ -90,3 +106,4 @@ def DarsScrape(tuid, passW):
 	#close page connection
 	driver.close()
 	return removedList
+
