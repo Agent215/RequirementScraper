@@ -69,7 +69,7 @@ def insertCourses(web_user_id):
             print("Users in db exists")
             cur.execute("SELECT * FROM Users WHERE web_user_Id = %s " , [web_user_id]) # look for user password
             results = cur.fetchone()
-            # grab the userid and pass word
+            # grab the userid and password
             # decrypt password
             ciphertext = results.get('password')
             nonce = results.get('nonce')
@@ -82,7 +82,9 @@ def insertCourses(web_user_id):
             courseList = DarsScrape(TU_ID,pw)
             #for each course returned insert into databse associate with user
             for course in courseList:
-                cur.execute("INSERT INTO Takes(web_user_id,CRN) VALUES (%s, %s)", ( int(web_user_id),str(course)))
+                cur.execute("INSERT INTO Takes(web_user_id,CRN,grade,term,name,credits) VALUES (%s, %s, %s, %s , %s, %s)" \
+                    , ( int(web_user_id),str(course["CRN"]), str(course["Grade"]),str(course["Term"]) \
+                    ,str(course["Name"]),str(course["Credit"]))) 
                 mysql.connection.commit()
             cur.close()
     except IOError as e:
@@ -183,10 +185,17 @@ def read_Courses(web_id):
         cur.execute(select_query, [web_id])
         rows = cur.fetchall()
         for row in rows:
-            takenCourseList.append(row.get('CRN'))
+            courseDict = {}
+            courseDict["Name"]  = row.get('name')
+            courseDict["CRN"] = row.get('CRN')
+            courseDict["Term"] = row.get('term')
+            courseDict["Credit"] = row.get('credits')
+            courseDict["Grade"] = row.get('grade')
+            print("data",row.get('CRN'), row.get('Name'), row.get('term'), row.get('Credits'),row.get('grade'))
+            takenCourseList.append(courseDict)
         cur.close()
-    except:
-        print('Error reading or No such user exists in the database')
+    except IOError as e:
+        print(e)
 		
     return jsonify(takenCourseList)
 
