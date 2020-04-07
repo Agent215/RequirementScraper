@@ -6,5 +6,6 @@ from testScrape import testScrape
 from DarsScrape import DarsScrape
 from insertUser import insertUser
 from getAllCourses import getCIScourses
+from scrapeReqs import scrapeReqs
 #from insertCourses import insertCourses
 from app import routes

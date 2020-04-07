@@ -86,11 +86,6 @@ def DarsScrape(tuid, passW):
 	for course in removedList:
 	    print(course)
 
-
-	#example of picking just one course and getting its data.
-	#exampleCourse = tableRows[20]
-	#someCourse = exampleCourse.td.next.next.next.next
-	#print(someCourse)
 	print("number of courses completed: " + str(len(removedList)))
 	#close page connection
 	driver.close()

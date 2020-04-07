@@ -6,6 +6,7 @@ from flask import request
 from testScrape import testScrape
 from getAllCourses import getCIScourses
 from DarsScrape import DarsScrape
+from scrapeReqs import scrapeReqs
 
 from insertUser import insertUser, insertCourses ,insertALLCourses, deleteUser, read_Courses, hasCourses
 
@@ -21,7 +22,8 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    return "GRAV BACKEND"
+    #return "GRAV BACKEND"
+    return jsonify(scrapeReqs("tuk85386","!Alamo2020"))
     
 
 # take user credentials and check them in the database or insert if they're not in the database
@@ -29,6 +31,7 @@ def index():  # for now this justs runs the testing script
 def login():
     return insertUser()
 
+#this should call a function that takes a user ID and updates assoicated user password
 @app.route('/api/user/<user>', methods=['PATCH'])
 def update_user(user):
     password = request.json["password"]
