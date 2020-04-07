@@ -7,12 +7,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options  
+
+ 
 
 def scrapeReqs(tuid, passW):
 
+    chrome_options = Options()  
+    chrome_options.add_argument("--headless")
 	#driver = webdriver.Chrome(ChromeDriverManager().install())  
 	#use the above this if you are having trouble adding web driver to path variable
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(chrome_options=chrome_options)
 
     driver.get("http://dars.temple.edu")
 
@@ -57,9 +62,11 @@ def scrapeReqs(tuid, passW):
 
     #reqHeaders = page_soup.findAll("span",{"class":["srTitle_substatusNO"]})
     reqHeaders = page_soup.findAll("div", {"class": ["reqHeaderTable"]})
-    pageTable = page_soup.find("whatever")
-    element = pageTable.findAll("tr", "")
-   
+    subreqs = page_soup.findAll("span", {"class": ["srTitle_substatusNO"]})
+
+    for req in subreqs:
+        print(req.text)
+
 
     #return object
     jsonObj =[]
@@ -78,11 +85,6 @@ def scrapeReqs(tuid, passW):
             jsonObj.append(req)
             i+= 1
        
-
-    
-        
-
-
     #for header in reqHeaders:
     #    
     #    req["Title"] = header.text
@@ -93,5 +95,5 @@ def scrapeReqs(tuid, passW):
     return jsonObj
 
 if __name__ == "__main__":
-    print(scrapeReqs("", ""))
+    print(scrapeReqs("tuk85386", "!Alamo2020"))
 

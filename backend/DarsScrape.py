@@ -8,18 +8,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options 
 
 def DarsScrape(tuid, passW):
 
+	chrome_options = Options()  
+	chrome_options.add_argument("--headless")
 	returnList = []
-	#driver = webdriver.Chrome(ChromeDriverManager().install())  
-	#use the above this if you are having trouble adding web driver to path variable
-	driver = webdriver.Chrome()
+	driver = webdriver.Chrome(chrome_options=chrome_options)
 
 	driver.get("http://dars.temple.edu")
 
-	#tuName = sys.argv[1]
-	#passW = sys.argv[2]
 	# wait for elements to load
 	driver.implicitly_wait(3)
 	userLogin = driver.find_element_by_id('username')
