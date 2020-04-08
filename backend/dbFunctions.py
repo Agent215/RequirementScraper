@@ -2,11 +2,11 @@ from flask_mysqldb import MySQL
 from flask import request
 from flask import jsonify
 from app import app
-from DarsScrape import DarsScrape
+from scraping.CourseScrape import CourseScrape
 from Crypto.Cipher import AES
 from base64 import b64encode, b64decode
 from Crypto.Random import get_random_bytes
-from getAllCourses import getCIScourses
+from scraping.getAllCourses import getCIScourses
 import json
 
 import sys
@@ -79,7 +79,7 @@ def insertCourses(web_user_id):
             TU_ID = results.get('TU_ID')
 
             #scrape courses using credentials gathered from above
-            courseList = DarsScrape(TU_ID,pw)
+            courseList = CourseScrape(TU_ID,pw)
             #for each course returned insert into databse associate with user
             for course in courseList:
                 cur.execute("INSERT INTO Takes(web_user_id,CRN,grade,term,name,credits) VALUES (%s, %s, %s, %s , %s, %s)" \

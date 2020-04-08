@@ -3,12 +3,10 @@ from flask import jsonify
 from flask import Flask
 from flask import request
 
-from testScrape import testScrape
-from getAllCourses import getCIScourses
-from DarsScrape import DarsScrape
-from scrapeReqs import scrapeReqs
-
-from insertUser import insertUser, insertCourses ,insertALLCourses, deleteUser, read_Courses, hasCourses
+from scraping.getAllCourses import getCIScourses
+from scraping.CourseScrape import CourseScrape
+from scraping.scrapeReqs import scrapeReqs
+from dbFunctions import *
 
 
 
