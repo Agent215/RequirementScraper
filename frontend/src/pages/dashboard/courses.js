@@ -1,14 +1,18 @@
 import React from "react";
 import {connect} from "react-redux";
 import {fetchCompleted} from "../../actions/courses";
-import {Alert, Card, Container, Spinner} from "react-bootstrap";
+import {Alert, Card, Container, Spinner, Table} from "react-bootstrap";
 import ThemedCard from "../../components/card";
 
 class CourseItem extends React.Component {
     render() {
-        return <li>
-            { this.props.course }
-        </li>
+        return <tr>
+            <td>{ this.props.course.CRN }</td>
+            <td>{ this.props.course.Credit }</td>
+            <td>{ this.props.course.Grade }</td>
+            <td>{ this.props.course.Name }</td>
+            <td>{ this.props.course.Term }</td>
+        </tr>
     }
 }
 
@@ -46,9 +50,20 @@ class Courses extends React.Component {
     }
 
     loaded() {
-        return <ul>
-            { this.props.courses.completed.map(course => <CourseItem key={course} course={course} />) }
-        </ul>
+        return <Table striped bordered hover variant={this.props.theme.dark ? "dark" : "secondary"}>
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Credits</th>
+                    <th>Grade</th>
+                    <th>Name</th>
+                    <th>Term</th>
+                </tr>
+            </thead>
+            <tbody>
+                { Object.entries(this.props.courses.completed).map(([key, course]) => <CourseItem key={key} course={course} />) }
+            </tbody>
+        </Table>
     }
 
     error() {
@@ -61,4 +76,4 @@ class Courses extends React.Component {
     }
 }
 
-export default connect(({ user, courses }) => ({ user, courses }), { fetchCompleted })(Courses);
+export default connect(({ user, courses, theme }) => ({ user, courses, theme }), { fetchCompleted })(Courses);
