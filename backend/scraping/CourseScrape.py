@@ -11,6 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options 
 from scraping.darsLogin import darsLogin
 
+# scrape all courses taken by given userd
 def CourseScrape(tuid, passW):
 
 	source = darsLogin(tuid,passW)

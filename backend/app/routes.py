@@ -21,10 +21,8 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/index')
 def index():  # for now this justs runs the testing script
     return "GRAV BACKEND"
-   
-  
     
-
+   
 # take user credentials and check them in the database or insert if they're not in the database
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -44,7 +42,6 @@ def delete_user(user):
 
     doDeleteUser = request.args["deleteUser"] if "deleteUser" in request.args else False
     return deleteUser(int(user), doDeleteUser)
-
 
 #take user and get course requrirements
 @app.route('/api/user/<user>/requirements')
