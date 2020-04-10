@@ -42,7 +42,7 @@ def scrapeReqs(tuid, passW):
                     if subreq.select_one('.subreqTitle'):
                         sub = subreq.select_one('.subreqTitle').text
                         subDict = {}
-                        subDict["subrequirement"] =sub
+                        subDict["subrequirement"] = sub
                         subreqDict[key] = subDict
                         i += 1
                         print(sub)
@@ -64,14 +64,37 @@ def scrapeReqs(tuid, passW):
                                 takenDict[key] = crn
                                 k += 1 
                             subDict["Courses Taken"] = takenDict
-                            
+                            # if we have not completed the sub req then lets get our needs
                     if subreq.find("span", {"class": ["srTitle_substatusNO"]}):
                         print("we have not completed this subreq")
-                        needs = 0
+                        needs = 0  # count of course/ credits needs
+                        needs = subreq.find("table", {"class" :["subreqNeeds"]})
+                        if needs is not None:
+                            #check if we need a certain amount of credits or courses
+                            creditLabel = needs.find("td", {"class":"hourslabel"})
+                            courseLabel = needs.find("td", {"class":"countlabel"})
+                            if creditLabel is not None:
+                                needs = needs.select_one('.number').text +" " + creditLabel.text
+                            else:
+                                needs = needs.select_one('.number').text +" "+ courseLabel.text
+                        fromTable = subreq.find("table", {"class":"selectcourses"})
+                        if fromTable is not None:
+                            fromCourses = fromTable.findAll("span", {"class": "course"})
+                        # grab every course we can choose from to fufill sub requiremnt
                         fromDict = {}
-                        # if it is not satistfied then add the needs number as a key value pair
-                        # then add the courses you can select from as a sub dictionary within the subreq
-                        # also then add the courses you can select from 
+                        j = 0
+                        if (fromTable is not None) and (fromCourses is not None):
+                            for course in fromCourses:
+                                key = "Select From_" + str(j)
+                                dept = course["department"]
+                                num = course["number"]
+                                fromClass = str(dept) + str(num)
+                                if fromClass is not None:
+                                    fromDict[key] = fromClass
+                                j += 1
+
+                        subDict["Needs"] = needs
+                        subDict["Select From"] = fromDict
         else:
             pass
         reqDict["subrequirements"] = subreqDict
