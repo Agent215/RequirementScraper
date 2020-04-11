@@ -282,7 +282,7 @@ def hasRequirement(web_id):
         cur.close()
     except IOError as error:
         print (error)
-    if(row_count == 1): #since the web_user_id is a primary key, there can only be one!
+    if row_count == 1: #since the web_user_id is a primary key, there can only be one!
         return True
 	
     return False

@@ -45,11 +45,10 @@ def delete_user(user):
 @app.route('/api/user/<user>/requirements')
 def get_user_requirements(user):
     hasReq = hasRequirement(user)
-	if(hasReq == True):
+    if(hasReq == True):
         return readRequirement(user)
     else:
         return insertRequirement(user)
-    return "an unexpected error has occured"
 
 #take user and get course requrirements
 @app.route('/api/user/<user>/courses')
@@ -60,6 +59,5 @@ def get_user_courses(user):
        return read_Courses(int(user))
     else:
         return insertCourses(int(user))
-    return "an unexpected error has occured"
 
         
