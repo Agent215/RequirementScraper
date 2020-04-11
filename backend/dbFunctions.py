@@ -222,10 +222,6 @@ def updatePassword(user,passw):
         return e
     return "password changed"
 
-#this function will check if there is a requirement for this user
-def hasRequirment(web_id):
-    return False
-
 #this function will insert the requirement of a user into a requirement table
 def insertRequirement(web_id):
     error = None
@@ -244,7 +240,7 @@ def insertRequirement(web_id):
     pw = cipher.decrypt_and_verify(passW, tag).decode('utf8')
     # end encryption  stuff
     requiredList = scrapeReqs(Tu_id,pw)
-    data =  json.dumps(requiredList, sort_keys=True,indent=4, separators=(',', ': '))
+    data =  json.dumps(requiredList, sort_keys = True,indent=4, separators=(',', ': '))
     print("attempting to insert data: ",requiredList)
     try:
         insert_query = '''Insert into Requirement (Req_data, ProgramCode, web_user_id) VALUES (%s, %s, %s) '''
@@ -272,6 +268,24 @@ def readRequirement(web_id):
     print(data)
     cur.close()
     return data
+
+#this function will check if a user with requirement exists, if not then return false
+def hasRequirement(web_id):
+    cur = mysql.connection.cursor()
+    error = None
+    try:
+        checkQuery = 'Select web_user_id, COUNT(*) FROM Requirement GROUP BY web_user_id HAVING web_user_id = %s'
+        cur.execute(checkQuery, [web_id])
+        cur.fetchall()
+        row_count = cur.rowcount
+        mysql.connection.commit()
+        cur.close()
+    except IOError as error:
+        print (error)
+    if(row_count == 1): #since the web_user_id is a primary key, there can only be one!
+        return True
+	
+    return False
 
 
 if __name__ == "__main__":
