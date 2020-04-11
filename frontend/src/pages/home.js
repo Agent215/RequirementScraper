@@ -5,6 +5,19 @@ import ThemedButton from "../components/button";
 import {addMessage} from "../actions/messages";
 import {faBell} from "@fortawesome/free-solid-svg-icons";
 import CompletedCourses from "../img/completed_courses.png";
+import {Themes} from "../reducers/theme";
+import ReqsDarkDef from "../img/reqs_dark_default.png";
+import ReqsDarkCont from "../img/reqs_dark_contrast.png";
+import ReqsLightDef from "../img/reqs_light_default.png";
+import ReqsLightCont from "../img/reqs_light_contrast.png";
+import ThemedScreenshot from "../components/screenshot";
+
+const requirements_screenshots = [
+    { primary: Themes.Cherry, dark: true, src: ReqsDarkDef },
+    { primary: Themes.Contrast, dark: true, src: ReqsDarkCont },
+    { primary: Themes.Cherry, dark: false, src: ReqsLightDef },
+    { primary: Themes.Contrast, dark: false, src: ReqsLightCont }
+];
 
 class Home extends React.Component {
     render() {
@@ -25,7 +38,7 @@ class Home extends React.Component {
                 <Row xs={1} md={3}>
                     <Col className="mb-3 mb-md-0">
                         <Card className={bg}>
-                            <Card.Img variant="top" src="https://picsum.photos/1920/1080" />
+                            <ThemedScreenshot formats={requirements_screenshots} />
                             <Card.Body>
                                 <Card.Title>Requirements at a Glance</Card.Title>
                                 <Card.Text>
