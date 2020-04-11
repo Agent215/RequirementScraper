@@ -9,7 +9,10 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case SET_COMPLETED:
-            return Object.assign({}, state, {completed: action.completed});
+            const completed = [];
+            for (let i = 0; i < action.completed.length; i++)
+                completed.push(Object.assign({}, {index: i}, action.completed[i]));
+            return Object.assign({}, state, {completed});
         case FETCH_COMPLETED_DONE:
             return Object.assign({}, state, {loaded: true});
         case FETCH_COMPLETED_START:

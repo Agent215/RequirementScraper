@@ -1,58 +1,64 @@
 import React from "react";
 import {connect} from "react-redux";
 import {fetchCompleted} from "../../actions/courses";
-import {Alert, Container, Jumbotron, Spinner, Table} from "react-bootstrap";
+import {Alert, Container, Jumbotron, Spinner} from "react-bootstrap";
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import BootstrapTable from "react-bootstrap-table-next";
+import filterFactory, {numberFilter, textFilter} from "react-bootstrap-table2-filter";
 
-class CourseItem extends React.Component {
-    formatGrade(grade) {
-        switch (grade) {
-            case "RG":
-                return "Registered";
-            case "CR":
-                return "Credit (Credit/No-Credit)";
-            case "CD":
-                return "Credit D+, D, or D- (Credit/No-Credit)";
-            case "NC":
-                return "No Credit (Credit/No-Credit)";
-            case "AU":
-                return "Audit";
-            case "I":
-                return "Incomplete";
-            case "IC":
-                return "Incomplete (Credit/No-Credit)";
-            case "IP":
-                return "Incomplete (Pass/Fail)";
-            case "M":
-                return "Military Leave of Absence";
-            case "MG":
-                return "Grade Missing";
-            case "NR":
-                return "Grade Not Reported";
-            case "P":
-                return "Passed";
-            case "PI":
-                return "Permanent Incomplete";
-            case "W":
-                return "Withdrawn";
-            case "WE":
-                return "Excused Withdrawal";
-            case "WS":
-                return "Withdrawn from Semester (Historical)"
-            default:
-                return grade;
-        }
-    }
+const termMap = {
+  SP: .1, S1: .2, S2: .3, FL: .4
+};
 
-    render() {
-        return <tr>
-            <td>{ this.props.course.CRN }</td>
-            <td>{ this.props.course.Credit }</td>
-            <td>{ this.formatGrade(this.props.course.Grade) }</td>
-            <td>{ this.props.course.Name }</td>
-            <td>{ this.props.course.Term }</td>
-        </tr>
+const gradeMap = {
+    WS: 0, WE: 1, W: 2, PI: 3, M: 4, F: 5, NC: 6, "D-": 7, D: 8, "D+": 9, CD: 10, "C-": 11, C: 12, "C+": 13, "B-": 14,
+    B: 15, "B+": 16, "A-": 17, A: 18, S: 19, P: 20, CR: 21, NR: 22, MG: 23, IP: 24, IC: 25, I: 26, AU: 27, RG: 28
+};
+
+const gradeNameMap = {
+    WS: "Withdrawn Semester (Historical)", WE: "Excused Withdrawal", W: "Withdrawn", PI: "Permanently Incomplete",
+    M: "Military Leave of Absence", NC: "No Credit (Credit/No-Credit)", CD: "Credit D+, D, or D- (Credit/No-Credit)",
+    CR: "Credit (Credit/No-Credit)", P: "Passed (Pass/Fail)", S: "Satisfactory",  NR: "Grade Not Reported", MG: "Missing Grade",
+    IP: "Incomplete (Pass/Fail)", IC: "Incomplete (Credit/No-Credit)", I: "Incomplete", AU: "Audit", RG: "Registered"
+};
+
+const columns = [
+    {
+        dataField: 'CRN',
+        text: 'Course',
+        sort: true,
+        filter: textFilter()
+    },
+    {
+        dataField: 'Credit',
+        text: 'Credits',
+        sort: true,
+        filter: numberFilter()
+    },
+    {
+        dataField: 'Grade',
+        text: 'Grade',
+        sort: true,
+        sortValue: (cell) => gradeMap[cell],
+        sortFunc: (a, b, order) => order === "asc" ? a - b : b - a,
+        formatter: (cell) => gradeNameMap.hasOwnProperty(cell) ? gradeNameMap[cell] : cell,
+        filter: textFilter(),
+        filterValue: (cell) => gradeMap[cell]
+    },
+    {
+        dataField: 'Name',
+        text: 'Name',
+        sort: true,
+        filter: textFilter()
+    },
+    {
+        dataField: 'Term',
+        text: 'Term',
+        sort: true,
+        sortValue: (cell) => termMap[cell.substr(0, 2)] + parseInt(cell.substr(2)),
+        filter: textFilter()
     }
-}
+];
 
 class Courses extends React.Component {
     constructor(props) {
@@ -97,20 +103,7 @@ class Courses extends React.Component {
                 </p>
             </Jumbotron>
             <Container fluid>
-                <Table striped bordered hover variant="secondary">
-                    <thead>
-                    <tr>
-                        <th>Course</th>
-                        <th>Credits</th>
-                        <th>Grade</th>
-                        <th>Name</th>
-                        <th>Term</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    { Object.entries(this.props.courses.completed).map(([key, course]) => <CourseItem key={key} course={course} />) }
-                    </tbody>
-                </Table>
+                <BootstrapTable bootstrap4={true} keyField="index" columns={columns} data={this.props.courses.completed} striped bordered hover classes={"table-secondary"} filter={filterFactory()} />
             </Container>
         </>
     }
