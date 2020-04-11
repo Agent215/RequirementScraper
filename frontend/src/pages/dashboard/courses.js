@@ -39,11 +39,11 @@ const columns = [
         dataField: 'Grade',
         text: 'Grade',
         sort: true,
-        sortValue: (cell) => gradeMap[cell],
+        sortValue: cell => gradeMap[cell],
         sortFunc: (a, b, order) => order === "asc" ? a - b : b - a,
-        formatter: (cell) => gradeNameMap.hasOwnProperty(cell) ? gradeNameMap[cell] : cell,
+        formatter: cell => gradeNameMap.hasOwnProperty(cell) ? gradeNameMap[cell] : cell,
         filter: textFilter(),
-        filterValue: (cell) => gradeMap[cell]
+        filterValue: cell => gradeNameMap.hasOwnProperty(cell) ? gradeNameMap[cell] : cell
     },
     {
         dataField: 'Name',
@@ -55,7 +55,7 @@ const columns = [
         dataField: 'Term',
         text: 'Term',
         sort: true,
-        sortValue: (cell) => termMap[cell.substr(0, 2)] + parseInt(cell.substr(2)),
+        sortValue: cell => termMap[cell.substr(0, 2)] + parseInt(cell.substr(2)),
         filter: textFilter()
     }
 ];
