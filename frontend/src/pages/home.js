@@ -4,6 +4,7 @@ import {Card, Col, Container, Jumbotron, Row} from "react-bootstrap";
 import ThemedButton from "../components/button";
 import {addMessage} from "../actions/messages";
 import {faBell} from "@fortawesome/free-solid-svg-icons";
+import CompletedCourses from "../img/completed_courses.png";
 
 class Home extends React.Component {
     render() {
@@ -36,7 +37,7 @@ class Home extends React.Component {
                     </Col>
                     <Col className="mb-3 mb-md-0">
                         <Card className={bg}>
-                            <Card.Img variant="top" src="https://picsum.photos/1920/1080" />
+                            <Card.Img variant="top" src={CompletedCourses} />
                             <Card.Body>
                                 <Card.Title>Completed Courses</Card.Title>
                                 <Card.Text>

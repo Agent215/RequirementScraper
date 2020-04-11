@@ -27,8 +27,10 @@ class Courses extends React.Component {
 
 
     componentDidMount() {
-        this.props.fetchCompleted(this.props.user.user_id);
-        this.setState({ loading: true });
+        if (!this.props.courses.loaded) {
+            this.props.fetchCompleted(this.props.user.user_id);
+            this.setState({ loading: true });
+        }
     }
 
     render() {
