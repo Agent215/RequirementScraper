@@ -17,8 +17,8 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    return 'GRAV BACKEND'
-   
+    #return 'GRAV BACKEND'
+    return jsonify(scrapeReqs("tuk85386","!Alamo2020"))
    
     
      

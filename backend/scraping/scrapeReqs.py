@@ -32,6 +32,16 @@ def scrapeReqs(tuid, passW):
         reqDict["Title"]  = title.strip()
         print(title)
         body = req.find("div", {"class": ["reqBody"]}) 
+        reqTable = body.find("table",{"class" : "requirementTotals"})
+        reqNeed = reqTable.find("tr", {"class" : "reqNeeds"})
+        if reqNeed is not None:
+        #check if we need a certain amount of credits or courses
+            creditLabel = reqNeed.find("span", {"class":"hourslabel"})
+            courseLabel = reqNeed.find("span", {"class":"countlabel"})
+            if creditLabel is not None:
+                reqNeed = reqNeed.select_one('.number').text +" " + creditLabel.text
+            else:
+                reqNeed = reqNeed.select_one('.number').text +" "+ courseLabel.text
         if body is not None:
             subreqs = body.findAll("div", {"class": ["subrequirement"]})
             i = 0
@@ -94,8 +104,10 @@ def scrapeReqs(tuid, passW):
                                 if fromClass is not None:
                                     fromDict[key] = fromClass
                                 j += 1
-
-                        subDict["Needs"] = needs
+                        if needs is not None:
+                            subDict["Needs"] = needs
+                        else:
+                            subDict["Needs"] = reqNeed
                         subDict["SelectFrom"] = fromDict
                     #check if we are in progress for a req
                     if subreq.find("span", {"class": ["srTitle_substatusIP"]}):
