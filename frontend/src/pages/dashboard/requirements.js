@@ -14,7 +14,7 @@ class Course extends React.Component {
 class Subrequirement extends React.Component {
     render() {
         const completed = this.props.data.Needs;
-        const courses = Object.entries(completed ? this.props.data["Completed Courses"] : this.props.data["Select From"]);
+        const courses = Object.entries(completed ? this.props.data.CompletedCourses : this.props.data.SelectFrom);
 
         return <div className="subrequirement">
             <h3>{ this.props.title }</h3>
