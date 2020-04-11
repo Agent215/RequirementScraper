@@ -1,9 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {fetchRequirements} from "../../actions/requirements";
-import {Alert, Spinner, Table} from "react-bootstrap";
-import Alert from "react-bootstrap/esm/Alert";
-import Card from "react-bootstrap/esm/Card";
+import {Alert, Spinner} from "react-bootstrap";
 
 class Course extends React.Component {
     render() {
