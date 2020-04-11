@@ -221,6 +221,59 @@ def updatePassword(user,passw):
         return e
     return "password changed"
 
+#this function will check if there is a requirement for this user
+def hasRequirment(web_id):
+    return False
+
+#this function will insert the requirement of a user into a requirement table
+def insertRequirement(web_id, tuID, password):
+    cur = mysql.connection.cursor()
+    requiredList = jsonify(scrapeReqs(tuID, password))
+    #pickle_out = open('req', 'wb')
+    #pickle.dump(requiredList, pickle_out)
+    #pickle_out.close()
+    #binaryFile = convertToBinary('req')
+    #s =  json.dumps(requiredList)
+    #loaded = json.loads(s)
+    try:
+        insert_query = '''Insert into Requirement (Req_data, ProgramCode, web_user_id) VALUES (%s, %s, %s) '''
+        insert_data = (requiredList, 1, web_id)
+        cur.execute(insert_query, insert_data)
+        mysql.connection.commit()
+        print('Inserted Successfuly')
+        cur.close()
+        return 'It worked!'
+    except IOError as error:
+        print(error)
+        return 'oopsie poopsie'
+    finally:
+        cur.close()
+    print('****************************************')
+    #print(type(binaryFile))
+    print('****************************************')
+    return 'Hello';
+#this function will read the data from the requirement table and return the data
+def readRequirement(web_id):
+    cur = mysql.connection.cursor()
+    getQuery = 'Select * from Requirement where web_user_id = %s'
+    cur.execute(getQuery, [web_id])
+    rows = cur.fetchall()
+    print(rows[0])
+    cur.close()
+    return 'dont mind me!'
+	
+	
+def convertToBinary(fileName):
+    with open(fileName, 'rb') as file:
+        binaryData = file.read()
+    return binaryData
+
+
+
+	
+
+if __name__ == "__main__":
+    print(insertUser())
 
 
 if __name__ == "__main__":
