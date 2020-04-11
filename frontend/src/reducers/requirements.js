@@ -14,7 +14,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case SET_REQUIREMENTS:
-            return Object.assign({}, state, { requirements: action.requirements });
+            return Object.assign({}, state, { requirements: action.required });
         case FETCH_REQUIREMENTS_DONE:
             return Object.assign({}, state, { loaded: true });
         case FETCH_REQUIREMENTS_START:
