@@ -199,6 +199,28 @@ def read_Courses(web_id):
 		
     return jsonify(takenCourseList)
 
+def updatePassword(user,passw):
+    cur = mysql.connection.cursor()
+    e = None
+    file_in = open("encryptedKey.bin", "rb")
+    key = file_in.read()
+    file_in.close()
+    cipher = AES.new(key, AES.MODE_EAX)
+    ciphertext, tag = cipher.encrypt_and_digest(passw.encode("utf8"))
+    nonce = cipher.nonce
+    try:# check if user exists
+        cur.execute("SELECT COUNT(*) AS count FROM Users WHERE web_user_Id = %s", [user]) # Select the amount of users that match web_user_Id = %s
+        if cur.fetchone().get("count"):
+            print("Users in db exists")
+            cur.execute("SELECT * FROM Users WHERE web_user_Id = %s " , [user]) # look for user password
+            results = cur.fetchone()
+            web_user = results.get("web_user_id")
+            cur.execute("UPDATE Users SET password = %s,tag = %s,nonce= %s WHERE web_user_Id = %s" ,([ciphertext],[tag], [nonce], [web_user]))
+    except IOError as e:
+        print(e)
+        return e
+    return "password changed"
+
 
 
 if __name__ == "__main__":

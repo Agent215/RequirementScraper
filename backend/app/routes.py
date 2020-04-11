@@ -2,13 +2,10 @@ from app import app
 from flask import jsonify
 from flask import Flask
 from flask import request
-
 from scraping.getAllCourses import getCIScourses
 from scraping.CourseScrape import CourseScrape
 from scraping.scrapeReqs import scrapeReqs
 from dbFunctions import *
-
-
 
 app.config['MYSQL_USER'] = 'sql9329694'
 app.config['MYSQL_PASSWORD'] = '9lDUwG3eJI'
@@ -22,9 +19,9 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 def index():  # for now this justs runs the testing script
     return "GRAV BACKEND"
     
-   
     
-   
+    
+     
 # take user credentials and check them in the database or insert if they're not in the database
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -34,14 +31,13 @@ def login():
 @app.route('/api/user/<user>', methods=['PATCH'])
 def update_user(user):
     password = request.json["password"]
-    return "Update user content coming soon"
+    return updatePassword(user, password)
 
 @app.route('/api/user/<user>', methods=['DELETE'])
 def delete_user(user):
     # Whether to delete the user credentials or just their course information
     # if deleteUser is True, delete everything related to the user including their credentials
     # if deleteUser if False, only delete the courses the user has taken
-
     doDeleteUser = request.args["deleteUser"] if "deleteUser" in request.args else False
     return deleteUser(int(user), doDeleteUser)
 

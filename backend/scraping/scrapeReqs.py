@@ -17,8 +17,8 @@ def scrapeReqs(tuid, passW):
     # get Dars html code
     source = darsLogin(tuid,passW)
     page_soup = soup(source,"html.parser")
-
     jsonObj = []
+    e = None
     # get all requirements 
     requirements = page_soup.findAll("div", {"class": ["requirement"]})
     for req in requirements:
@@ -127,9 +127,10 @@ def scrapeReqs(tuid, passW):
     print ("lenght of list is ",len( jsonObj))
     returnObj = []
     # the last two items in the req list we dont care about, this should hold true for everyone
-    appendlen = len( jsonObj) -3
+    appendlen = len( jsonObj) -3  # need to get rid of this magic number
     for x in range(appendlen):
         returnObj.append(jsonObj[x])
+    
     return returnObj
 
 if __name__ == "__main__":
