@@ -38,7 +38,7 @@ def scrapeReqs(tuid, passW):
             for subreq in subreqs:
                 # get subreq titles
                 if subreq is not None:
-                    key = "subreq" +"_" + str(i)
+                    key = "subreq_" + str(i)
                     if subreq.select_one('.subreqTitle'):
                         sub = subreq.select_one('.subreqTitle').text
                         subDict = {}
@@ -58,13 +58,13 @@ def scrapeReqs(tuid, passW):
                             # add each course we completed to the taken dictionary
                             k = 0
                             for took in taken:
-                                key = "completed course_" + str(k)
+                                key = "completedCourse_" + str(k)
                                 crn = took.find("td", {"class":"course"}).text
                                 print(crn)
                                 takenDict[key] = crn
                                 k += 1 
-                            subDict["Courses Taken"] = takenDict
-                            # if we have not completed the sub req then lets get our needs
+                            subDict["CoursesTaken"] = takenDict
+                    # if we have not completed the sub req then lets get our needs
                     if subreq.find("span", {"class": ["srTitle_substatusNO"]}):
                         print("we have not completed this subreq")
                         needs = 0  # count of course/ credits needs
@@ -85,7 +85,7 @@ def scrapeReqs(tuid, passW):
                         j = 0
                         if (fromTable is not None) and (fromCourses is not None):
                             for course in fromCourses:
-                                key = "Select From_" + str(j)
+                                key = "SelectFrom_" + str(j)
                                 dept = course["department"]
                                 num = course["number"]
                                 fromClass = str(dept) + str(num)
@@ -94,17 +94,43 @@ def scrapeReqs(tuid, passW):
                                 j += 1
 
                         subDict["Needs"] = needs
-                        subDict["Select From"] = fromDict
+                        subDict["SelectFrom"] = fromDict
+                    #check if we are in progress for a req
+                    if subreq.find("span", {"class": ["srTitle_substatusIP"]}):
+                        print("this subreq is in progress")
+                        takenDict = {}
+                        ipDict = {}
+                        # if it is satistfied then add a dictionary of completed courses
+                        completed = subreq.find("table", {"class" :["completedCourses"]})
+                        if completed is not None:
+                            # check if there are any courses to add
+                            taken = completed.findAll("tr", {"class" :["takenCourse"]})
+                            iplist = completed.findAll("tr", {"class" :["ip"]})
+                            # add each course we completed to the taken dictionary
+                            k = 0
+                            for ip in iplist:
+                                key = "inProgressCourse_" + str(k)
+                                crn = ip.find("td", {"class":"course"}).text
+                                print(crn)
+                                ipDict[key] = crn
+                                k += 1
+                            subDict["CoursesInProgress"] = ipDict
+
         else:
             pass
         reqDict["subrequirements"] = subreqDict
         # only add a req if it has title and has requirments. This gets rid of empty formatting artifacts. 
-        if (len(reqDict["Title"]) > 1) and  (len(reqDict["subrequirements"]) > 1):
+        if (len(reqDict["Title"]) > 1) and  (len(reqDict["subrequirements"])>0):
             jsonObj.append(reqDict)
 
         
     print ("lenght of list is ",len( jsonObj))
-    return jsonObj
+    returnObj = []
+    # the last two items in the req list we dont care about, this should hold true for everyone
+    appendlen = len( jsonObj) -3
+    for x in range(appendlen):
+        returnObj.append(jsonObj[x])
+    return returnObj
 
 if __name__ == "__main__":
     print(scrapeReqs("", ""))
