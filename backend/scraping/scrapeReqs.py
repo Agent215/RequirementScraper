@@ -9,6 +9,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options  
 from scraping.darsLogin import darsLogin
+from flask import jsonify
+import json
 
  
 
@@ -131,6 +133,8 @@ def scrapeReqs(tuid, passW):
     for x in range(appendlen):
         returnObj.append(jsonObj[x])
     
+    var = json.dumps(returnObj, sort_keys=True,indent=4, separators=(',', ': '))
+    print(var)
     return returnObj
 
 if __name__ == "__main__":

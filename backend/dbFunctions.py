@@ -7,6 +7,7 @@ from Crypto.Cipher import AES
 from base64 import b64encode, b64decode
 from Crypto.Random import get_random_bytes
 from scraping.getAllCourses import getCIScourses
+from scraping.scrapeReqs import scrapeReqs
 import json
 
 import sys
@@ -226,54 +227,51 @@ def hasRequirment(web_id):
     return False
 
 #this function will insert the requirement of a user into a requirement table
-def insertRequirement(web_id, tuID, password):
+def insertRequirement(web_id):
+    error = None
     cur = mysql.connection.cursor()
-    requiredList = jsonify(scrapeReqs(tuID, password))
-    #pickle_out = open('req', 'wb')
-    #pickle.dump(requiredList, pickle_out)
-    #pickle_out.close()
-    #binaryFile = convertToBinary('req')
-    #s =  json.dumps(requiredList)
-    #loaded = json.loads(s)
+    keyFile = open("encryptedKey.bin", "rb")
+    # get password and decrpyt
+    key = keyFile.read()
+    keyFile.close()
+    cur.execute("SELECT * FROM Users WHERE web_user_Id = %s " , [web_id])
+    result = cur.fetchone()
+    Tu_id = result.get("TU_ID")
+    passW = result.get("password")
+    nonce = result.get('nonce')
+    tag = result.get('tag')
+    cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
+    pw = cipher.decrypt_and_verify(passW, tag).decode('utf8')
+    # end encryption  stuff
+    requiredList = scrapeReqs(Tu_id,pw)
+    data =  json.dumps(requiredList, sort_keys=True,indent=4, separators=(',', ': '))
+    print("attempting to insert data: ",requiredList)
     try:
         insert_query = '''Insert into Requirement (Req_data, ProgramCode, web_user_id) VALUES (%s, %s, %s) '''
-        insert_data = (requiredList, 1, web_id)
+        # programCode is 1 for everyone for now, we need to scrape that and insert to db for each user
+        insert_data = (data, 1, web_id)
         cur.execute(insert_query, insert_data)
         mysql.connection.commit()
-        print('Inserted Successfuly')
+        print('Inserted requirement Successfuly')
         cur.close()
-        return 'It worked!'
+        return data
     except IOError as error:
         print(error)
-        return 'oopsie poopsie'
-    finally:
-        cur.close()
-    print('****************************************')
-    #print(type(binaryFile))
-    print('****************************************')
-    return 'Hello';
+        return error
+    cur.close()
+
+    return error
+
 #this function will read the data from the requirement table and return the data
 def readRequirement(web_id):
     cur = mysql.connection.cursor()
     getQuery = 'Select * from Requirement where web_user_id = %s'
     cur.execute(getQuery, [web_id])
-    rows = cur.fetchall()
-    print(rows[0])
+    result = cur.fetchone()
+    data = result.get("Req_data")
+    print(data)
     cur.close()
-    return 'dont mind me!'
-	
-	
-def convertToBinary(fileName):
-    with open(fileName, 'rb') as file:
-        binaryData = file.read()
-    return binaryData
-
-
-
-	
-
-if __name__ == "__main__":
-    print(insertUser())
+    return data
 
 
 if __name__ == "__main__":

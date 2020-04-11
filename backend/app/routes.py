@@ -18,8 +18,8 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/index')
 def index():  # for now this justs runs the testing script
     return "GRAV BACKEND"
-    
-    
+   
+   
     
      
 # take user credentials and check them in the database or insert if they're not in the database
@@ -44,7 +44,7 @@ def delete_user(user):
 #take user and get course requrirements
 @app.route('/api/user/<user>/requirements')
 def get_user_requirements(user):
-      return "getRequirements content coming soon"
+    return "an unexpected error has occured"
 
 #take user and get course requrirements
 @app.route('/api/user/<user>/courses')
