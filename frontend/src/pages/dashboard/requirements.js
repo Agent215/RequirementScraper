@@ -66,12 +66,12 @@ class RequirementComponent extends React.Component {
             <ThemedCard>
                 <div className="card-header" id={headerId}>
                     <h2 className="mb-0">
-                        <button className={"btn btn-link " + textColor} type="button" data-toggle="collapse" data-target={"#" + id} aria-expanded="true" aria-controls={id}>
+                        <button className={"btn btn-link " + textColor} type="button" data-toggle="collapse" data-target={"#" + id} aria-expanded="false" aria-controls={id}>
                             { this.props.title }
                         </button>
                     </h2>
                 </div>
-                <div id={id} className="collapse show" aria-labelledby={headerId}>
+                <div id={id} className="collapse" aria-labelledby={headerId}>
                     <div className="card-body">
                         { Object.entries(this.props.subrequirements).map(([key, data]) => <Subrequirement key={key} id={`${this.props.id}_${key}`} data={data}  />) }
                     </div>
