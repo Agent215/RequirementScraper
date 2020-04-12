@@ -14,6 +14,7 @@ class Course extends React.Component {
 
 class Subrequirement extends React.Component {
     render() {
+        if (!this.props.data.subrequirement) return null;
         const id = "requirement_" + this.props.id;
         const headerId = "req_header_" + this.props.id;
         const completed = !this.props.data.hasOwnProperty("Needs");
