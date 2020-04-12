@@ -5,6 +5,7 @@ import {Alert, Container, Jumbotron, Spinner} from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import BootstrapTable from "react-bootstrap-table-next";
 import filterFactory, {numberFilter, textFilter} from "react-bootstrap-table2-filter";
+import LoadingState from "../../reducers/loadingState";
 
 const termMap = {
   SP: .1, S1: .2, S2: .3, FL: .4
@@ -61,34 +62,25 @@ const columns = [
 ];
 
 class Courses extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            loading: false
-        }
-    }
-
 
     componentDidMount() {
-        if (!this.props.courses.loaded) {
+        if (this.props.courses.loaded === LoadingState.NOT_LOADED)
             this.props.fetchCompleted(this.props.user.user_id);
-            this.setState({ loading: true });
-        }
     }
 
     render() {
-        if (this.state.loading && this.props.courses.loaded) this.setState({ loading: false });
-
-        return <div>
-            { this.props.courses.error !== null ? this.error() : (this.state.loading ? this.loading() : this.loaded()) }
-        </div>
+        if (this.props.courses.loaded === LoadingState.NOT_LOADED) return this.loading();
+        if (this.props.courses.loaded === LoadingState.LOADING) return this.loading();
+        if (this.props.courses.loaded === LoadingState.LOADED) return this.loaded();
+        if (this.props.courses.loaded === LoadingState.ERRORED) return this.error();
     }
 
     loading() {
-        return <div className="text-center">
-            <Spinner animation="border" />
-            <h2>Fetching your courses...</h2>
+        return <div id="loading">
+            <div id="loading-inner" className="text-center">
+                <Spinner id="spinner" animation="border" />
+                <h2>Fetching your courses...</h2>
+            </div>
         </div>
     }
 

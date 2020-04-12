@@ -1,7 +1,14 @@
-import {FETCH_REQUIREMENTS_DONE, FETCH_REQUIREMENTS_ERROR, FETCH_REQUIREMENTS_START, SET_REQUIREMENTS} from "./types";
+import {
+    CLEAR_REQUIREMENTS,
+    FETCH_REQUIREMENTS_DONE,
+    FETCH_REQUIREMENTS_ERROR,
+    FETCH_REQUIREMENTS_START,
+    SET_REQUIREMENTS
+} from "./types";
 import {getRequirements} from "../api";
 
 export const setRequirements = (required) => ({type: SET_REQUIREMENTS, required});
+export const clearRequirements = () => ({ type: CLEAR_REQUIREMENTS });
 export const fetchRequirementsStart = () => ({type: FETCH_REQUIREMENTS_START});
 export const fetchRequirementsDone = () => ({type: FETCH_REQUIREMENTS_DONE});
 export const fetchRequirementsError = (error) => ({type: FETCH_REQUIREMENTS_ERROR, error});
