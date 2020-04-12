@@ -28,7 +28,10 @@ def scrapeReqs(tuid, passW):
         table = req.find("div", {"class": ["reqHeaderTable"]})
         text = table.find("div", {"class": ["reqText"]})
         # get requirement title
-        title = text.find("div", {"class": ["reqTitle"]}).text 
+        title = text.find("div", {"class": ["reqTitle"]}).text
+        # get req status
+        # Status_OK Status_NO Status_IP
+        # reqStatus = ...
         reqDict["Title"]  = title.strip()
         print(title)
         body = req.find("div", {"class": ["reqBody"]}) 
@@ -51,11 +54,14 @@ def scrapeReqs(tuid, passW):
                 # get subreq titles
                 if subreq is not None:
                     key = "subreq_" + str(i)
+                    subDict = {}
+                    subreqDict[key] = subDict
+                    # subReqStatus = reqStatus
                     if subreq.select_one('.subreqTitle'):
                         sub = subreq.select_one('.subreqTitle').text
-                        subDict = {}
                         subDict["subrequirement"] = sub
-                        subreqDict[key] = subDict
+                        # grab sub req status from title classes
+                        # subReqStatus = ...
                         i += 1
                         print(sub)
                     # for each subreq check if it is satisfied
