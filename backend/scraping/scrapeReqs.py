@@ -25,14 +25,22 @@ def scrapeReqs(tuid, passW):
     requirements = page_soup.findAll("div", {"class": ["requirement"]})
     for req in requirements:
         reqDict = {}
+        status = None
         table = req.find("div", {"class": ["reqHeaderTable"]})
         text = table.find("div", {"class": ["reqText"]})
         # get requirement title
         title = text.find("div", {"class": ["reqTitle"]}).text
         # get req status
-        # Status_OK Status_NO Status_IP
-        # reqStatus = ...
+        if "Status_NONE" in req["class"] :
+            status = "NONE"
+        if "Status_NO" in req["class"] :
+             status = "INCOMPLETE"
+        if "Status_IP"  in req["class"] :
+             status = "IN PROGRESS"
+        if "Status_OK" in req["class"] :
+             status = "COMPLETE"
         reqDict["Title"]  = title.strip()
+        reqDict["Status"] = status
         print(title)
         body = req.find("div", {"class": ["reqBody"]}) 
         reqTable = body.find("table",{"class" : "requirementTotals"})
