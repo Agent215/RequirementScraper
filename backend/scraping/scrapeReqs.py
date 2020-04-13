@@ -76,8 +76,6 @@ def scrapeReqs(tuid, passW):
                             status = "COMPLETE"
                         subDict["subrequirement"] = sub.text
                         subDict["Status"] = status
-                        # grab sub req status from title classes
-                        # subReqStatus = ...
                         i += 1
                         print(sub)
                     # for each subreq check if it is satisfied
@@ -145,18 +143,28 @@ def scrapeReqs(tuid, passW):
                             # add each course we completed to the taken dictionary
                             k = 0
                             for ip in iplist:
-                                key = "inProgressCourse_" + str(k)
-                                crn = ip.find("td", {"class":"course"}).text
-                                print(crn)
-                                ipDict[key] = crn
+                                if "takenCourse" in ip["class"]:
+                                    key = "inProgressCourse_" + str(k)
+                                    crn = ip.find("td", {"class":"course"}).text
+                                    print(crn)
+                                    ipDict[key] = crn
+                                else:
+                                    key = "takenCourse" + str(k)
+                                    crn = ip.find("td", {"class":"course"}).text
+                                    print(crn)
+                                    takenDict[key] = crn
                                 k += 1
                             subDict["CoursesInProgress"] = ipDict
+                            if len(takenDict) >0:
+                                subDict["Taken Courses"] = takenDict
 
         else:
             pass
         reqDict["subrequirements"] = subreqDict
         # only add a req if it has title and has requirments. This gets rid of empty formatting artifacts. 
-        if (len(reqDict["Title"]) > 1) and  (len(reqDict["subrequirements"])>0):
+        if (reqDict["Status"] == "NONE" or reqDict["Status"] == None):
+            pass
+        else:
             jsonObj.append(reqDict)
 
         
