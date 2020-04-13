@@ -58,4 +58,5 @@ def CourseScrape(tuid, passW):
 	#close page connection
 	
 	return removedList
+   
 

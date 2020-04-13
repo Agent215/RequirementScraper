@@ -8,6 +8,7 @@ from base64 import b64encode, b64decode
 from Crypto.Random import get_random_bytes
 from scraping.getAllCourses import getCIScourses
 from scraping.scrapeReqs import scrapeReqs
+from scraping.scrapeProgramCode import scrapeProgramCode
 import json
 
 import sys
@@ -34,6 +35,7 @@ def insertUser():
     nonce = cipher.nonce
 	#get a list of current user in the database
     web_user_Id = None
+    #programCode = scrapeProgramCode(TU_ID, passW)
     try:
         cur.execute("SELECT COUNT(*) AS count FROM Users WHERE TU_ID = %s", [TU_ID]) # Select the amount of users that match web_user_Id = %s
         if cur.fetchone().get("count"):
@@ -242,11 +244,14 @@ def insertRequirement(web_id):
     # end encryption  stuff
     requiredList = scrapeReqs(Tu_id,pw)
     data =  json.dumps(requiredList, sort_keys = True,indent=4, separators=(',', ': '))
+    #Get the program code for user
+    programCode = scrapeProgramCode(Tu_id, pw)
+    #######
     print("attempting to insert data: ",requiredList)
     try:
-        insert_query = '''Insert into Requirement (Req_data, ProgramCode, web_user_id) VALUES (%s, %s, %s) '''
+        insert_query = '''Insert into Requirement (Req_data, web_user_id, ProgramCode) VALUES (%s, %s, %s) '''
         # programCode is 1 for everyone for now, we need to scrape that and insert to db for each user
-        insert_data = (data, 1, web_id)
+        insert_data = (data, web_id, programCode)
         cur.execute(insert_query, insert_data)
         mysql.connection.commit()
         print('Inserted requirement Successfuly')
@@ -287,7 +292,6 @@ def hasRequirement(web_id):
         return True
 	
     return False
-
 
 if __name__ == "__main__":
     print(insertUser())
