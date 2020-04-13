@@ -65,21 +65,23 @@ def scrapeReqs(tuid, passW):
                     subDict = {}
                     subreqDict[key] = subDict
                     # subReqStatus = reqStatus
+                    SubStatus = None
                     if subreq.select_one('.subreqTitle'):
-                        status = None
                         sub = subreq.select_one('.subreqTitle')
                         if "srTitle_substatusNO" in sub["class"] :
-                            status = "INCOMPLETE"
+                            SubStatus = "INCOMPLETE"
                         if "srTitle_substatusIP"  in sub["class"] :
-                            status = "IN PROGRESS"
+                            SubStatus = "IN PROGRESS"
                         if "srTitle_substatusOK" in sub["class"] :
-                            status = "COMPLETE"
+                            SubStatus = "COMPLETE"
                         subDict["subrequirement"] = sub.text
-                        subDict["Status"] = status
+                        subDict["Status"] = SubStatus
                         i += 1
                         print(sub)
+                    else:
+                        SubStatus = "NONE"
                     # for each subreq check if it is satisfied
-                    if subreq.find("span", {"class": ["srTitle_substatusOK"]}):
+                    if  SubStatus == "COMPLETE":
                         print("we have completed this subreq")
                         takenDict = {}
                         # if it is satistfied then add a dictionary of completed courses
@@ -97,7 +99,7 @@ def scrapeReqs(tuid, passW):
                                 k += 1 
                             subDict["CoursesTaken"] = takenDict
                     # if we have not completed the sub req then lets get our needs
-                    if subreq.find("span", {"class": ["srTitle_substatusNO"]}):
+                    if SubStatus == "INCOMPLETE":
                         print("we have not completed this subreq")
                         needs = 0  # count of course/ credits needs
                         needs = subreq.find("table", {"class" :["subreqNeeds"]})
@@ -130,7 +132,7 @@ def scrapeReqs(tuid, passW):
                             subDict["Needs"] = reqNeed
                         subDict["SelectFrom"] = fromDict
                     #check if we are in progress for a req
-                    if subreq.find("span", {"class": ["srTitle_substatusIP"]}):
+                    if SubStatus == "IN PROGRESS":
                         print("this subreq is in progress")
                         takenDict = {}
                         ipDict = {}
@@ -139,24 +141,49 @@ def scrapeReqs(tuid, passW):
                         if completed is not None:
                             # check if there are any courses to add
                             taken = completed.findAll("tr", {"class" :["takenCourse"]})
-                            iplist = completed.findAll("tr", {"class" :["ip"]})
                             # add each course we completed to the taken dictionary
                             k = 0
-                            for ip in iplist:
-                                if "takenCourse" in ip["class"]:
+                            for took in taken:
+                                if "ip" in took["class"]:
                                     key = "inProgressCourse_" + str(k)
-                                    crn = ip.find("td", {"class":"course"}).text
+                                    crn = took.find("td", {"class":"course"}).text
                                     print(crn)
                                     ipDict[key] = crn
                                 else:
                                     key = "takenCourse" + str(k)
-                                    crn = ip.find("td", {"class":"course"}).text
+                                    crn = took.find("td", {"class":"course"}).text
                                     print(crn)
                                     takenDict[key] = crn
                                 k += 1
                             subDict["CoursesInProgress"] = ipDict
                             if len(takenDict) >0:
-                                subDict["Taken Courses"] = takenDict
+                                subDict["TakenCourses"] = takenDict
+                    if SubStatus == "NONE":
+                        print("this subreq has no status")
+                        takenDict = {}
+                        ipDict = {}
+                        # if it is satistfied then add a dictionary of completed courses
+                        completed = subreq.find("table", {"class" :["completedCourses"]})
+                        if completed is not None:
+                            # check if there are any courses to add
+                            taken = completed.findAll("tr", {"class" :["takenCourse"]})
+                            # add each course we completed to the taken dictionary
+                            k = 0
+                            for took in taken:
+                                if "ip" in took["class"]:
+                                    key = "inProgressCourse_" + str(k)
+                                    crn = took.find("td", {"class":"course"}).text
+                                    print(crn)
+                                    ipDict[key] = crn
+                                else:
+                                    key = "takenCourse" + str(k)
+                                    crn = took.find("td", {"class":"course"}).text
+                                    print(crn)
+                                    takenDict[key] = crn
+                                k += 1
+                            subDict["CoursesInProgress"] = ipDict
+                            if len(takenDict) >0:
+                                subDict["TakenCourses"] = takenDict            
 
         else:
             pass
