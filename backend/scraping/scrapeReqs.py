@@ -168,10 +168,10 @@ def scrapeReqs(tuid, passW):
             jsonObj.append(reqDict)
 
         
-    print ("lenght of list is ",len( jsonObj))
     returnObj = []
-    # the last two items in the req list we dont care about, this should hold true for everyone
-    appendlen = len( jsonObj) -3  # need to get rid of this magic number
+    appendlen = len(jsonObj)   
+    print ("lenght of list is ",appendlen)
+
     for x in range(appendlen):
         returnObj.append(jsonObj[x])
     
