@@ -17,6 +17,7 @@ html {
 
 body {
   margin-bottom: calc(#{$footer-height} + 1em); /* Margin bottom by footer height plus a small gap */
+  height: 100%;
 }
 
 footer {
@@ -69,5 +70,21 @@ footer {
 
   .alert {
     max-width: 90vw;
+  }
+}
+
+#loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20vh;
+
+  #spinner {
+    width: 100px;
+    height: 100px;
+  }
+
+  #loading-inner {
+    max-width: 1000px;
   }
 }

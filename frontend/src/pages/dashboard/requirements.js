@@ -4,6 +4,7 @@ import {fetchRequirements} from "../../actions/requirements";
 import {Alert, ButtonGroup, Spinner, Jumbotron} from "react-bootstrap";
 import ThemedCard from "../../components/card";
 import ThemedButton from "../../components/button";
+import LoadingState from "../../reducers/loadingState";
 
 class Course extends React.Component {
     render() {
@@ -13,6 +14,7 @@ class Course extends React.Component {
 
 class Subrequirement extends React.Component {
     render() {
+        if (!this.props.data.subrequirement) return null;
         const id = "requirement_" + this.props.id;
         const headerId = "req_header_" + this.props.id;
         const completed = !this.props.data.hasOwnProperty("Needs");
@@ -64,12 +66,12 @@ class RequirementComponent extends React.Component {
             <ThemedCard>
                 <div className="card-header" id={headerId}>
                     <h2 className="mb-0">
-                        <button className={"btn btn-link " + textColor} type="button" data-toggle="collapse" data-target={"#" + id} aria-expanded="true" aria-controls={id}>
+                        <button className={"btn btn-link " + textColor} type="button" data-toggle="collapse" data-target={"#" + id} aria-expanded="false" aria-controls={id}>
                             { this.props.title }
                         </button>
                     </h2>
                 </div>
-                <div id={id} className="collapse show" aria-labelledby={headerId}>
+                <div id={id} className="collapse" aria-labelledby={headerId}>
                     <div className="card-body">
                         { Object.entries(this.props.subrequirements).map(([key, data]) => <Subrequirement key={key} id={`${this.props.id}_${key}`} data={data}  />) }
                     </div>
@@ -81,19 +83,9 @@ class RequirementComponent extends React.Component {
 const Requirement = connect(({ theme }) => ({theme}), null)(RequirementComponent);
 
 class Requirements extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            loading: false
-        }
-    }
-
     componentDidMount() {
-        if (!this.props.requirements.loaded) {
+        if (this.props.requirements.loaded !== LoadingState.LOADED)
             this.props.fetchRequirements(this.props.user.user_id);
-            this.setState({ loading: true });
-        }
     }
 
     expandAll() {
@@ -109,23 +101,24 @@ class Requirements extends React.Component {
     }
 
     render() {
-        if (this.state.loading && this.props.requirements.loaded) this.setState({ loading: false });
-
-        return <div>
-            { this.props.requirements.error !== null ? this.error() : (this.state.loading ? this.loading() : this.loaded()) }
-        </div>
+        if (this.props.requirements.loaded === LoadingState.NOT_LOADED) return this.loading();
+        if (this.props.requirements.loaded === LoadingState.LOADING) return this.loading();
+        if (this.props.requirements.loaded === LoadingState.LOADED) return this.loaded();
+        if (this.props.requirements.loaded === LoadingState.ERRORED) return this.error();
     }
 
     loading() {
-        return <div className="text-center">
-            <Spinner animation="border" />
-            <h2>Fetching your requirements...</h2>
+        return <div id="loading">
+            <div id="loading-inner" className="text-center">
+                <Spinner id="spinner" animation="border" />
+                <h2>Fetching your requirements...</h2>
+            </div>
         </div>
     }
 
     loaded() {
         const bg = this.props.theme.dark ? "bg-secondary" : "bg-gray";
-        return <>
+        return <div>
             <Jumbotron className={bg}>
                 <h1>Requirements</h1>
                 <p>
@@ -145,7 +138,7 @@ class Requirements extends React.Component {
 
                 { this.props.requirements.requirements.map(({Title, subrequirements}, i) => <Requirement key={i} id={i} title={Title} subrequirements={subrequirements} />) }
             </div>
-        </>
+        </div>
     }
 
     error() {

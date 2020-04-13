@@ -17,8 +17,14 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
+<<<<<<< HEAD
     return 'Backend Grav'
     #return deleteUser(85, False)
+=======
+    return 'GRAV BACKEND'
+   
+    
+>>>>>>> 7f3ca41cc92835cc838d0a75258d233b7ff7a0d5
      
 # take user credentials and check them in the database or insert if they're not in the database
 @app.route('/api/login', methods=['POST'])
