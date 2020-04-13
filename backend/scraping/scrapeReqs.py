@@ -66,8 +66,16 @@ def scrapeReqs(tuid, passW):
                     subreqDict[key] = subDict
                     # subReqStatus = reqStatus
                     if subreq.select_one('.subreqTitle'):
-                        sub = subreq.select_one('.subreqTitle').text
-                        subDict["subrequirement"] = sub
+                        status = None
+                        sub = subreq.select_one('.subreqTitle')
+                        if "srTitle_substatusNO" in sub["class"] :
+                            status = "INCOMPLETE"
+                        if "srTitle_substatusIP"  in sub["class"] :
+                            status = "IN PROGRESS"
+                        if "srTitle_substatusOK" in sub["class"] :
+                            status = "COMPLETE"
+                        subDict["subrequirement"] = sub.text
+                        subDict["Status"] = status
                         # grab sub req status from title classes
                         # subReqStatus = ...
                         i += 1
