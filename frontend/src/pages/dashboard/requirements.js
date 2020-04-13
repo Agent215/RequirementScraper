@@ -99,14 +99,13 @@ class RequirementComponent extends React.Component {
     render() {
         const id = "requirement_" + this.props.id;
         const headerId = "req_header_" + this.props.id;
-        const textColor = this.props.theme.dark ? "text-light" : "text-dark";
         const headerBg = "bg-" + getPrimaryFromStatus(this.props.data.Status);
 
         return <div className={"requirement my-2 " + normalizeStatus(this.props.data.Status)}>
             <ThemedCard>
                 <div className={["card-header", headerBg].join(" ")} id={headerId}>
                     <h2 className="mb-0">
-                        <button className={"btn btn-link " + textColor} type="button" data-toggle="collapse" data-target={"#" + id} aria-expanded="false" aria-controls={id}>
+                        <button className="btn btn-link text-light" type="button" data-toggle="collapse" data-target={"#" + id} aria-expanded="false" aria-controls={id}>
                             { this.props.data.Title }
                         </button>
                     </h2>
