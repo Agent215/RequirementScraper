@@ -169,6 +169,8 @@ class Requirements extends React.Component {
                     Each requirement is divided up as subrequirements, although some only have one "subrequirement".
                     When the subrequirement's header is <span className="text-danger">red</span> you have not completed the
                     subrequirement, and when it is <span className="text-success">green</span> you have completed it.
+                    When the header is <span className="text-info">blue</span> it is in progress, which means you're
+                    already registered for the correct amount of classes but haven't completed those courses.
                     To view more info about a requirement or subrequirement, click it's title.
                 </p>
             </Jumbotron>
