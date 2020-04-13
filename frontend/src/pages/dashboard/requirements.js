@@ -5,6 +5,24 @@ import {Alert, ButtonGroup, Spinner, Jumbotron} from "react-bootstrap";
 import ThemedCard from "../../components/card";
 import ThemedButton from "../../components/button";
 import LoadingState from "../../reducers/loadingState";
+import {Status} from "../../reducers/requirements";
+
+function getPrimaryFromStatus(status) {
+    switch (status) {
+        case Status.Completed:
+            return "success";
+        case Status.InProgress:
+            return "info";
+        case Status.Incomplete:
+            return "danger";
+        default:
+            return "secondary"
+    }
+}
+
+function normalizeStatus(status) {
+    return status.toLowerCase().replace(/\s+/g, '');
+}
 
 class Course extends React.Component {
     render() {
@@ -14,22 +32,23 @@ class Course extends React.Component {
 
 class Subrequirement extends React.Component {
     render() {
-        if (!this.props.data.subrequirement) return null;
+        const title = this.props.data.subrequirement ? this.props.data.subrequirement : "";
         const id = "requirement_" + this.props.id;
         const headerId = "req_header_" + this.props.id;
-        const completed = !this.props.data.hasOwnProperty("Needs");
-        const courses = completed ? this.props.data.CoursesTaken : this.props.data.SelectFrom;
-        const expanded = this.props.data.subrequirement.length < 1;
-        const collapseClasses = expanded ? [] : ["collapse"];
-        const headerBg = completed ? "bg-success" : "bg-danger";
 
-        return <div className="subrequirement my-2">
+        const status = this.props.data.Status || this.props.reqStatus;
+
+        const expanded = title.length < 1;
+        const collapseClasses = expanded ? "" : ["collapse", "subreq-collapse"].join(" ");
+        const headerBg = "bg-" + getPrimaryFromStatus(status);
+
+        return <div className={"subrequirement my-2 " + normalizeStatus(status)}>
             <ThemedCard>
                 <div className={["card-header", headerBg].join(" ")} id={headerId}>
                     <h2 className="mb-0">
                         {
                             expanded ? "" : <button className="btn btn-link text-light" type="button" data-toggle="collapse" data-target={"#" + id} aria-expanded={expanded ? "true" : "false"} aria-controls={id}>
-                                { this.props.data.subrequirement }
+                                { title }
                             </button>
                         }
                     </h2>
@@ -37,23 +56,42 @@ class Subrequirement extends React.Component {
                 <div id={id} className={collapseClasses} aria-labelledby={headerId}>
                     <div className="card-body">
                         <p><strong>
-                            {
-                                completed ? "You have completed this requirement, satisfied by the following courses" :
-                                    `You need ${this.props.data.Needs} of the following courses to fulfill this requirement`
-                            }
+                            { status === Status.Incomplete ? `You need ${this.props.data.Needs} to fulfill this requirement` : "" }
+                            { status === Status.InProgress ? "You are currently registered for courses that will fulfill this requirement" : "" }
+                            { status === Status.Completed ? "You have completed all the courses necessary to fulfill this requirement" : "" }
                         </strong></p>
-                        { this.showCourses(courses) }
+                        { this.showCourses() }
                     </div>
                 </div>
             </ThemedCard>
         </div>
     }
 
-    showCourses(courses) {
-        if (courses === null || courses === undefined) return "Could not find courses";
-        return <p>
-            {Object.entries(courses).map(([key, course]) => <Course key={key} course={course} />)}
-        </p>
+    showCourses() {
+        const taken = Object.entries(this.props.data.CoursesTaken || this.props.data.TakenCourses || {});
+        const select = Object.entries(this.props.data.SelectFrom || {});
+        const inProgress = Object.entries(this.props.data.CoursesInProgress || {});
+
+        return <>
+            {
+                inProgress.length > 0 ? <p>
+                    In progress courses:
+                    { inProgress.map(([ key, course ]) => <Course key={key} course={course} />)   }
+                </p> : ""
+            }
+            {
+                taken.length > 0 ? <p>
+                    Completed courses:
+                    { taken.map(([ key, course ]) => <Course key={key} course={course} />)   }
+                </p> : ""
+            }
+            {
+                select.length > 0 ? <p>
+                    Select from:
+                    { select.map(([ key, course ]) => <Course key={key} course={course} />)   }
+                </p> : ""
+            }
+        </>;
     }
 }
 
@@ -62,18 +100,20 @@ class RequirementComponent extends React.Component {
         const id = "requirement_" + this.props.id;
         const headerId = "req_header_" + this.props.id;
         const textColor = this.props.theme.dark ? "text-light" : "text-dark";
-        return <div className="requirement my-2">
+        const headerBg = "bg-" + getPrimaryFromStatus(this.props.data.Status);
+
+        return <div className={"requirement my-2 " + normalizeStatus(this.props.data.Status)}>
             <ThemedCard>
-                <div className="card-header" id={headerId}>
+                <div className={["card-header", headerBg].join(" ")} id={headerId}>
                     <h2 className="mb-0">
                         <button className={"btn btn-link " + textColor} type="button" data-toggle="collapse" data-target={"#" + id} aria-expanded="false" aria-controls={id}>
-                            { this.props.title }
+                            { this.props.data.Title }
                         </button>
                     </h2>
                 </div>
-                <div id={id} className="collapse" aria-labelledby={headerId}>
+                <div id={id} className="collapse req-collapse" aria-labelledby={headerId}>
                     <div className="card-body">
-                        { Object.entries(this.props.subrequirements).map(([key, data]) => <Subrequirement key={key} id={`${this.props.id}_${key}`} data={data}  />) }
+                        { Object.entries(this.props.data.subrequirements).map(([key, data]) => <Subrequirement key={key} id={`${this.props.id}_${key}`} data={data} reqStatus={this.props.data.Status}  />) }
                     </div>
                 </div>
             </ThemedCard>
@@ -93,11 +133,15 @@ class Requirements extends React.Component {
     }
 
     collapseSubreqs() {
-        window.$(".subrequirement .collapse").collapse('hide');
+        window.$(".subreq-collapse").collapse('hide');
     }
 
     collapseAll() {
         window.$(".requirement .collapse").collapse('hide');
+    }
+
+    expandIncomplete() {
+        window.$(".requirement.incomplete .req-collapse, .subrequirement.incomplete .subreq-collapse").collapse('show');
     }
 
     render() {
@@ -134,9 +178,10 @@ class Requirements extends React.Component {
                     <ThemedButton onClick={this.collapseSubreqs}>Collapse Subrequirements</ThemedButton>
                     <ThemedButton onClick={this.collapseAll}>Collapse All</ThemedButton>
                     <ThemedButton onClick={this.expandAll}>Expand All</ThemedButton>
+                    <ThemedButton onClick={this.expandIncomplete}>Expand Incomplete</ThemedButton>
                 </ButtonGroup>
 
-                { this.props.requirements.requirements.map(({Title, subrequirements}, i) => <Requirement key={i} id={i} title={Title} subrequirements={subrequirements} />) }
+                { this.props.requirements.requirements.map((data, i) => <Requirement key={i} id={i} data={data} />) }
             </div>
         </div>
     }

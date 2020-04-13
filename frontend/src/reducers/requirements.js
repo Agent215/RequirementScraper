@@ -7,6 +7,10 @@ import {
 } from "../actions/types";
 import LoadingState from "./loadingState";
 
+export const Status = {
+    Incomplete: "INCOMPLETE", InProgress: "IN PROGRESS", Completed: "COMPLETE"
+};
+
 const initialState = {
     requirements: [],
     loaded: LoadingState.NOT_LOADED,

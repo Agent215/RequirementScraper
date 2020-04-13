@@ -6,10 +6,14 @@ import {addMessage} from "../actions/messages";
 import {faBell} from "@fortawesome/free-solid-svg-icons";
 import CompletedCourses from "../img/completed_courses.png";
 import {Themes} from "../reducers/theme";
-import ReqsDarkDef from "../img/reqs_dark_default.png";
-import ReqsDarkCont from "../img/reqs_dark_contrast.png";
-import ReqsLightDef from "../img/reqs_light_default.png";
-import ReqsLightCont from "../img/reqs_light_contrast.png";
+import ReqsDarkDef from "../img/reqs_dark-def.png";
+import ReqsDarkCont from "../img/reqs_dark-cont.png";
+import ReqsLightDef from "../img/reqs_light-def.png";
+import ReqsLightCont from "../img/reqs_light-cont.png";
+import CoursesDarkDef from "../img/courses_dark-def.png";
+import CoursesDarkCont from "../img/courses_dark-cont.png";
+import CoursesLightDef from "../img/courses_light-def.png";
+import CoursesLightCont from "../img/courses_light-cont.png";
 import ThemedScreenshot from "../components/screenshot";
 
 const requirements_screenshots = [
@@ -17,6 +21,13 @@ const requirements_screenshots = [
     { primary: Themes.Contrast, dark: true, src: ReqsDarkCont },
     { primary: Themes.Cherry, dark: false, src: ReqsLightDef },
     { primary: Themes.Contrast, dark: false, src: ReqsLightCont }
+];
+
+const courses_screenshots = [
+    { primary: Themes.Cherry, dark: true, src: CoursesDarkDef },
+    { primary: Themes.Contrast, dark: true, src: CoursesDarkCont },
+    { primary: Themes.Cherry, dark: false, src: CoursesLightDef },
+    { primary: Themes.Contrast, dark: false, src: CoursesLightCont }
 ];
 
 class Home extends React.Component {
@@ -50,7 +61,7 @@ class Home extends React.Component {
                     </Col>
                     <Col className="mb-3 mb-md-0">
                         <Card className={bg}>
-                            <Card.Img variant="top" src={CompletedCourses} />
+                            <ThemedScreenshot formats={courses_screenshots} />
                             <Card.Body>
                                 <Card.Title>Completed Courses</Card.Title>
                                 <Card.Text>
