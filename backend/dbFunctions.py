@@ -288,6 +288,5 @@ def hasRequirement(web_id):
 	
     return False
 
-
 if __name__ == "__main__":
     print(insertUser())

@@ -5,6 +5,7 @@ from flask import request
 from scraping.getAllCourses import getCIScourses
 from scraping.CourseScrape import CourseScrape
 from scraping.scrapeReqs import scrapeReqs
+from scraping.scrapeProgramCode import scrapeProgramCode
 from dbFunctions import *
 
 app.config['MYSQL_USER'] = 'sql9329694'
@@ -17,14 +18,10 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-<<<<<<< HEAD
-    return 'Backend Grav'
-    #return deleteUser(85, False)
-=======
+
     return 'GRAV BACKEND'
    
     
->>>>>>> 7f3ca41cc92835cc838d0a75258d233b7ff7a0d5
      
 # take user credentials and check them in the database or insert if they're not in the database
 @app.route('/api/login', methods=['POST'])
