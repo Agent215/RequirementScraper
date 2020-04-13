@@ -164,10 +164,11 @@ def deleteUser(web_id, deleteUser): #deleteUser is a boolean
         if(web_id not in web_id_list):
             return 'User not in the database'
         try:
+            cur.execute('DELETE FROM Requirement WHERE web_user_id = %s', [web_id])
             cur.execute("DELETE FROM Takes WHERE web_user_id = %s", [web_id])
             mysql.connection.commit()
             cur.close()
-            return 'Delete all taken courses from users'
+            return 'Delete all taken courses and requirement from users'
         except IOError as e:
             print(e)
 			
