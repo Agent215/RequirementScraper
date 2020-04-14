@@ -12,9 +12,8 @@ from selenium.webdriver.chrome.options import Options
 from scraping.darsLogin import darsLogin
 
 # scrape all courses taken by given userd
-def CourseScrape(tuid, passW):
+def CourseScrape(tuid, passW ,source):
 
-	source = darsLogin(tuid,passW)
 	page_soup = soup(source,"html.parser")
 	# grab all rows of all courses taken, there are duplicates here
 	# im thinking one way we could do this is remove duplicates then compare against reqs
@@ -58,5 +57,4 @@ def CourseScrape(tuid, passW):
 	#close page connection
 	
 	return removedList
-   
 

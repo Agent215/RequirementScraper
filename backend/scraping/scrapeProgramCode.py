@@ -11,9 +11,8 @@ from selenium.webdriver.chrome.options import Options
 from scraping.darsLogin import darsLogin
 
 
-def scrapeProgramCode(tu_id, passW):
-    pageSource = darsLogin(tu_id, passW)
-    soupPage = soup(pageSource, 'html.parser' )
+def scrapeProgramCode(tu_id, passW, source):
+    soupPage = soup(source, 'html.parser' )
     table = soupPage.find('table', class_ = 'verticalListing auditHeaderTable')
     rows = table.find_all('tr')
     programCode = ''

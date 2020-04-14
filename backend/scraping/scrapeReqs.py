@@ -14,10 +14,9 @@ import json
 
  
 
-def scrapeReqs(tuid, passW):
+def scrapeReqs(tuid, passW ,source):
 
-    # get Dars html code
-    source = darsLogin(tuid,passW)
+
     page_soup = soup(source,"html.parser")
     jsonObj = []
     e = None
@@ -207,5 +206,5 @@ def scrapeReqs(tuid, passW):
     return returnObj
 
 if __name__ == "__main__":
-    print(scrapeReqs("", ""))
+    print(scrapeReqs("", "" ,""))
 

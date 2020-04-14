@@ -10,13 +10,9 @@ from scraping.getAllCourses import getCIScourses
 from scraping.scrapeReqs import scrapeReqs
 from scraping.scrapeProgramCode import scrapeProgramCode
 import json
-
 import sys
 
-
 mysql = MySQL(app)
-
-
 
 def insertUser():
 
@@ -35,7 +31,6 @@ def insertUser():
     nonce = cipher.nonce
 	#get a list of current user in the database
     web_user_Id = None
-    #programCode = scrapeProgramCode(TU_ID, passW)
     try:
         cur.execute("SELECT COUNT(*) AS count FROM Users WHERE TU_ID = %s", [TU_ID]) # Select the amount of users that match web_user_Id = %s
         if cur.fetchone().get("count"):
@@ -55,7 +50,7 @@ def insertUser():
     return jsonify({ "user_id": web_user_Id, "error": e })
 
 # function to insert courses to database
-def insertCourses(web_user_id):
+def insertCourses(web_user_id , sourceHtml):
     e = None  # hold errors 
     courseList = None
     TU_ID = None
@@ -82,7 +77,7 @@ def insertCourses(web_user_id):
             TU_ID = results.get('TU_ID')
 
             #scrape courses using credentials gathered from above
-            courseList = CourseScrape(TU_ID,pw)
+            courseList = CourseScrape(TU_ID,pw,sourceHtml)
             #for each course returned insert into databse associate with user
             for course in courseList:
                 cur.execute("INSERT INTO Takes(web_user_id,CRN,grade,term,name,credits) VALUES (%s, %s, %s, %s , %s, %s)" \
@@ -226,7 +221,7 @@ def updatePassword(user,passw):
     return "password changed"
 
 #this function will insert the requirement of a user into a requirement table
-def insertRequirement(web_id):
+def insertRequirement(web_id, sourceHtml, proCode):
     error = None
     cur = mysql.connection.cursor()
     keyFile = open("encryptedKey.bin", "rb")
@@ -242,16 +237,15 @@ def insertRequirement(web_id):
     cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
     pw = cipher.decrypt_and_verify(passW, tag).decode('utf8')
     # end encryption  stuff
-    requiredList = scrapeReqs(Tu_id,pw)
+    requiredList = scrapeReqs(Tu_id,pw,sourceHtml)
     data =  json.dumps(requiredList, sort_keys = True,indent=4, separators=(',', ': '))
     #Get the program code for user
-    programCode = scrapeProgramCode(Tu_id, pw)
     #######
     print("attempting to insert data: ",requiredList)
     try:
         insert_query = '''Insert into Requirement (Req_data, web_user_id, ProgramCode) VALUES (%s, %s, %s) '''
         # programCode is 1 for everyone for now, we need to scrape that and insert to db for each user
-        insert_data = (data, web_id, programCode)
+        insert_data = (data, web_id, proCode)
         cur.execute(insert_query, insert_data)
         mysql.connection.commit()
         print('Inserted requirement Successfuly')
@@ -292,6 +286,39 @@ def hasRequirement(web_id):
         return True
 	
     return False
+
+def getCredentials(web_id):
+    e = None  # hold errors 
+    TU_ID = None
+    pw = None
+    credentials = []
+    # get encryption key
+    keyFile = open("encryptedKey.bin", "rb")
+    key = keyFile.read()
+    keyFile.close()
+    cur = mysql.connection.cursor()
+    # if the user does have courses then we should not use this function, instead we should use the readcourses function
+    # that function reads and outputs the data as json
+    try:# check if user exists
+        cur.execute("SELECT COUNT(*) AS count FROM Users WHERE web_user_Id = %s", [web_id]) # Select the amount of users that match web_user_Id = %s
+        if cur.fetchone().get("count"):
+            print("Users in db exists")
+            cur.execute("SELECT * FROM Users WHERE web_user_Id = %s " , [web_id]) # look for user password
+            results = cur.fetchone()
+            # grab the userid and password
+            # decrypt password
+            ciphertext = results.get('password')
+            nonce = results.get('nonce')
+            tag = results.get('tag')
+            cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)
+            pw = cipher.decrypt_and_verify(ciphertext, tag).decode('utf8')
+            TU_ID = results.get('TU_ID')
+            credentials.append(TU_ID)
+            credentials.append(pw)
+    except IOError as e:
+        return e
+    return credentials
+    
 
 if __name__ == "__main__":
     print(insertUser())
