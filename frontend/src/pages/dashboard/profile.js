@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Card, Button, ButtonGroup, Spinner} from "react-bootstrap";
+import {Button, ButtonGroup, Card, Container, Spinner} from "react-bootstrap";
 import ThemedCard from "../../components/card";
 import LoginForm from "../../components/loginForm";
 import {connect} from "react-redux";

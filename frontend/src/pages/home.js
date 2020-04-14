@@ -4,7 +4,6 @@ import {Card, Col, Container, Jumbotron, Row} from "react-bootstrap";
 import ThemedButton from "../components/button";
 import {addMessage} from "../actions/messages";
 import {faBell} from "@fortawesome/free-solid-svg-icons";
-import CompletedCourses from "../img/completed_courses.png";
 import {Themes} from "../reducers/theme";
 import ReqsDarkDef from "../img/reqs_dark-def.png";
 import ReqsDarkCont from "../img/reqs_dark-cont.png";
