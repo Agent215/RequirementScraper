@@ -17,11 +17,13 @@ from scraping.scrapeReqs import scrapeReqs
 from dbFunctions import getCredentials, insertRequirement , insertCourses
 import sys
 
+# function to run all scraping functions 
+# here we have only one login to dars for all the data we want to scrape
+# the dars login returns the users Dars audit page.
 def runAudit(user):
 
     credentials = []
-    courses = None
-    reqs = None
+
     credentials = getCredentials(user)
 	#get tuid and pass word for user
     try:
@@ -46,4 +48,4 @@ def runAudit(user):
     return("audit completed")
 
 if __name__ == "__main__":
-    print(runAudit("81"))
+    print(runAudit(0))

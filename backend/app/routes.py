@@ -7,6 +7,7 @@ from scraping.CourseScrape import CourseScrape
 from scraping.scrapeReqs import scrapeReqs
 from scraping.scrapeProgramCode import scrapeProgramCode
 from runAudit import runAudit
+from stats.allReqsDone import allReqsDone
 from dbFunctions import *
 
 app.config['MYSQL_USER'] = 'sql9329694'
@@ -20,7 +21,7 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/index')
 def index():  # for now this justs runs the testing script
     return 'GRAV BACKEND'
-    #return jsonify(runAudit(81))
+   
           
 # take user credentials and check them in the database or insert if they're not in the database
 @app.route('/api/login', methods=['POST'])
