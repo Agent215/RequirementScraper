@@ -14,6 +14,7 @@ from scraping.darsLogin import darsLogin
 from scraping.CourseScrape import CourseScrape
 from scraping.scrapeProgramCode import scrapeProgramCode
 from scraping.scrapeReqs import scrapeReqs
+from scraping.scrapeGPA import scrapeGPA
 from dbFunctions import getCredentials, insertRequirement , insertCourses
 import sys
 
@@ -28,21 +29,25 @@ def runAudit(user):
 	#get tuid and pass word for user
     try:
         source = darsLogin(credentials[0],credentials[1])
-    except:
-        print("error logging in")
+    except IOError as e:
+        print("error logging in :" , e)
     try:
-        proCode = scrapeProgramCode(credentials[0],credentials[1],source)
-    except:
-        print("error scraping program code ")
+        proCode = scrapeProgramCode(source)
+    except IOError as e:
+        print("error scraping program code :", e)
+    try:
+        gpa = scrapeGPA(source)
+    except IOError as e:
+        print("problem scraping user gpa : ", e)
     try:
         courses = insertCourses(user, source)
-    except:
-        print("error inserting courses")
+    except IOError as e:
+        print("error inserting courses :" , e)
 	#change insert functions to take source as arg
     try:
-        reqs = insertRequirement(user, source, proCode)
-    except:
-        print("error inserting requirments")
+        reqs = insertRequirement(user, source, proCode, gpa)
+    except IOError as e:
+        print("error inserting requirments : " ,e)
     
   
     return("audit completed")

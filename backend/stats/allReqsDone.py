@@ -12,10 +12,7 @@ def allReqsDone(dataIn):
     reqCount = 0
     reqsDone = 0
     data = json.loads(dataIn)
-    print("parsed json", data)
-    print("object 1 ", data[0]["Status"])
     for req in data:
-        print(req["Status"])
         if req["Status"] == "COMPLETE":
             reqsDone += 1
         reqCount += 1

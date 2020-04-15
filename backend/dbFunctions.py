@@ -221,7 +221,7 @@ def updatePassword(user,passw):
     return "password changed"
 
 #this function will insert the requirement of a user into a requirement table
-def insertRequirement(web_id, sourceHtml, proCode):
+def insertRequirement(web_id, sourceHtml, proCode , gpa):
     error = None
     cur = mysql.connection.cursor()
     keyFile = open("encryptedKey.bin", "rb")
@@ -243,9 +243,9 @@ def insertRequirement(web_id, sourceHtml, proCode):
     #######
     print("attempting to insert data: ",requiredList)
     try:
-        insert_query = '''Insert into Requirement (Req_data, web_user_id, ProgramCode) VALUES (%s, %s, %s) '''
+        insert_query = '''Insert into Requirement (Req_data, web_user_id, ProgramCode ,GPA) VALUES (%s, %s, %s, %s) '''
         # programCode is 1 for everyone for now, we need to scrape that and insert to db for each user
-        insert_data = (data, web_id, proCode)
+        insert_data = (data, web_id, proCode, gpa)
         cur.execute(insert_query, insert_data)
         mysql.connection.commit()
         print('Inserted requirement Successfuly')
@@ -319,6 +319,22 @@ def getCredentials(web_id):
         return e
     return credentials
     
+
+def readGPA(user):
+    gpa = None
+    cur = mysql.connection.cursor()
+    try:# check if user has requirement data
+        cur.execute("SELECT COUNT(*) AS count FROM Requirement WHERE web_user_Id = %s", [user]) # Select the amount of users that match web_user_Id = %s
+        if cur.fetchone().get("count"):
+            print("Users in db exists")
+            cur.execute("SELECT * FROM Requirement WHERE web_user_Id = %s " , [user]) # look for user password
+            results = cur.fetchone()
+            gpa = results.get("GPA")
+    except IOError as e:
+        print(e)
+    return gpa
+        
+
 
 if __name__ == "__main__":
     print(insertUser())

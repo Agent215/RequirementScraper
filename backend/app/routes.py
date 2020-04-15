@@ -8,7 +8,6 @@ from scraping.scrapeReqs import scrapeReqs
 from scraping.scrapeProgramCode import scrapeProgramCode
 from runAudit import runAudit
 from stats.getAllStats import getAllStats
-
 from dbFunctions import *
 
 app.config['MYSQL_USER'] = 'sql9329694'
@@ -21,7 +20,7 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    return 'GRAV BACKEND'
+    return 'GRAV BACKEND' 
    
           
 # take user credentials and check them in the database or insert if they're not in the database
