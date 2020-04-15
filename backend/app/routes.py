@@ -5,7 +5,7 @@ from flask import request
 from scraping.getAllCourses import getCIScourses
 from scraping.CourseScrape import CourseScrape
 from scraping.scrapeReqs import scrapeReqs
-from scraping.scrapeProgramCode import scrapeProgramCode, scrapeTotalCredit, scrapeGPA
+from scraping.scrapeProgramCode import scrapeProgramCode
 from runAudit import runAudit
 from stats.getAllStats import getAllStats
 from dbFunctions import *
