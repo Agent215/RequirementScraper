@@ -32,4 +32,16 @@ def scrapeTotalCredit(Tu_id, password, source):
     getEarn = earnTable.find('span', class_ = 'hours number')
     #print (int((float(getEarn.text.strip()))))
     return (int((float(getEarn.text.strip()))))
+	
+#this function will return the current GPA of the user; GPA will be a float
+def scrapeGPA(Tu_id, password, source):
+    #page = darsLogin(Tu_id, password)
+    soupPage = soup(page, 'html.parser')
+    table = soupPage.find_all('tr', class_ = 'reqEarned')
+    gpaTable = soup(str(table[2]), 'html.parser')
+    getGPA = gpaTable.find('td', class_ = 'gpa number')
+    #print(getGPA.text.strip())
+    GPA  = float(getGPA.text.strip())
+    print(GPA)
+    return GPA
     
