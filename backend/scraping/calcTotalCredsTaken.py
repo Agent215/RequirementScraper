@@ -10,6 +10,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 
+##TESTING FILE , FUNCTION CAN BE FOUND IN dbFunctions.py , method name is named getTotalCredits();
+
 #sauce = urllib.request.urlopen('https://prd-dars.temple.edu/selfservice/audit/read.html?id=JobQueueRun!!!!ISEhIWludFNlcU5vPTM2OTg0NjI=').read()
 #soup = bs.BeautifulSoup(sauce, 'lxml')
 #print(soup)
@@ -20,4 +22,4 @@ from selenium.webdriver.chrome.options import Options
 
 #call method
 
-print("hello mac")
+#print("hello mac")

@@ -336,34 +336,35 @@ def readGPA(user):
 
 #This dababase function makes a database SQL command with the users ID to get the columns of the grade recieve (which can be A,B,...,F,W,RG) where W is withdrawal and RG is registered, and the other column of credits it is worth. It will then iterate through each 'row' consisting of the two columns, it will then check the text of the grade column, if it is 'RG' then add it to credits for registered, otherwise add it to the total. This function will then return a jsonify version of a python list consisting of two elements, list[total, registered].
 #
-def getTotalCredits(web_id):
+def getTotalCredits():
 
-cur = mysql.connection.cursor() #SQL set up
+    cur = mysql.connection.cursor() #SQL set up
 
-totalCredits = 0 #data
-registeredCredits = 0 #data
-totalAndRegisterCredits[] # data array to hold EX: [94,15] total and registered credits
+    totalCredits = 0 #data
+    registeredCredits = 0 #data
+    totalAndRegisterCredits = [] # data array to hold EX: [94,15] total and registered credits
 
-try:
-    select_query = 'select grade, credits from sql9329694.Takes where web_user_id = %s' #my WebID is 84
-    cur.execute(select_query, [web_id])
-    row = cur.fetchall()
+    try:
+        select_query = 'SELECT grade, credits FROM sql9329694.Takes WHERE web_user_id = 84' #my WebID is 84
+        cur.execute(select_query)
+        rows = cur.fetchall()
     
-     #iterate through all rows checking logic using if and else
-    for row in rows:
+        #iterate through all rows checking logic using if and else
+        for row in rows:
     
-        if row.get('grade') == 'RG': # if this specific row is listed as registered
-            registeredCredits = registeredCredits + row.get('credits') #add total to registered
-        else:
-            totalCredits = totalCredits + row.get('credits') # else add to total credits
-    cur.close()
-except IOError as e:
-    print(e)
+            if row.get('grade') == 'RG': # if this specific row is listed as registered
+                registeredCredits = registeredCredits + row.get('credits') #add total to registered
+            else:
+                totalCredits = totalCredits + row.get('credits') # else add to total credits
+            print("data",row.get('grade'), row.get('credits'))
+        cur.close()
+    except IOError as e:
+        print(e)
 
-totalAndRegisterCredits.append(totalCredits) #append totals to list
-totalAndRegisterCredits.append(registeredCredits) #append totals to list
+    totalAndRegisterCredits.append(totalCredits) #append totals to list
+    totalAndRegisterCredits.append(registeredCredits) #append totals to list
 
-return jsonify(totalAndRegisterCredits)
+    return jsonify(totalAndRegisterCredits)
 
 
 if __name__ == "__main__":
