@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {fetchRequirements} from "../../actions/requirements";
-import {Alert, ButtonGroup, Spinner, Jumbotron} from "react-bootstrap";
+import {Alert, ButtonGroup, Jumbotron, Spinner} from "react-bootstrap";
 import ThemedCard from "../../components/card";
 import ThemedButton from "../../components/button";
 import LoadingState from "../../reducers/loadingState";

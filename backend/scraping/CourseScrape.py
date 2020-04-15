@@ -25,7 +25,7 @@ def CourseScrape(tuid, passW ,source):
 	for table in tableRows:
 		courseDict = {}
 		#scrape course info
-		name = table.find("td", {"class":"description"}).text
+		name = table.find("td", {"class":"descLine"}).text
 		crn = table.find("td", {"class": "course"}).text
 		term = table.find("td", {"class": "term"}).text
 		credit = table.find("td", {"class": "credit"}).text

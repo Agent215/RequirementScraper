@@ -1,4 +1,5 @@
 import {LOG_IN, LOG_OUT, LOGGING_IN} from "../actions/types";
+
 export const LoggedInState = {
     LOGGED_OUT: 1 << 0,
     LOGGING_IN: 1 << 1,

@@ -1,9 +1,9 @@
 import {
+    CLEAR_COMPLETED,
     FETCH_COMPLETED_DONE,
-    FETCH_COMPLETED_START,
     FETCH_COMPLETED_ERROR,
-    SET_COMPLETED,
-    CLEAR_COMPLETED
+    FETCH_COMPLETED_START,
+    SET_COMPLETED
 } from "../actions/types";
 import LoadingState from "./loadingState";
 

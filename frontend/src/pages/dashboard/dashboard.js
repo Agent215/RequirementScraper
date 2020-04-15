@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Switch, Route, Redirect, withRouter} from "react-router-dom";
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import Courses from "./courses";
 import Profile from "./profile";
 import Requirements from "./requirements";
