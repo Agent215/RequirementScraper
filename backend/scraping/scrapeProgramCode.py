@@ -22,14 +22,14 @@ def scrapeProgramCode(tu_id, passW, source):
     return programCode
 
 #this function will scrape the earned total credits for this user, assuming every users has the same requirementTotal table html structure
-#return a string for earned credits, need convert to int
-def scrapeTotalCredit(Tu_id, password, source):
-    #page = darsLogin(Tu_id, password) uncomment to test in index
+#now return an int for total earned credits
+def scrapeTotalCredit(Tu_id, password, source): 
+    #page = darsLogin(Tu_id, password)
     soupPage = soup(source, 'html.parser')
     table = soupPage.find_all('tr', class_ = 'reqEarned')
     #print(table[2])
     earnTable = soup(str(table[2]), 'html.parser')
     getEarn = earnTable.find('span', class_ = 'hours number')
-    #print(getEarn.text.strip())
-    return getEarn.text.strip()
+    #print (int((float(getEarn.text.strip()))))
+    return (int((float(getEarn.text.strip()))))
     
