@@ -36,7 +36,7 @@ def scrapeTotalCredit(Tu_id, password, source):
 #this function will return the current GPA of the user; GPA will be a float
 def scrapeGPA(Tu_id, password, source):
     #page = darsLogin(Tu_id, password)
-    soupPage = soup(page, 'html.parser')
+    soupPage = soup(source, 'html.parser')
     table = soupPage.find_all('tr', class_ = 'reqEarned')
     gpaTable = soup(str(table[2]), 'html.parser')
     getGPA = gpaTable.find('td', class_ = 'gpa number')
