@@ -7,7 +7,8 @@ from scraping.CourseScrape import CourseScrape
 from scraping.scrapeReqs import scrapeReqs
 from scraping.scrapeProgramCode import scrapeProgramCode
 from runAudit import runAudit
-from stats.allReqsDone import allReqsDone
+from stats.getAllStats import getAllStats
+
 from dbFunctions import *
 
 app.config['MYSQL_USER'] = 'sql9329694'
@@ -52,7 +53,7 @@ def get_user_requirements(user):
         runAudit(user)
         return readRequirement(user)
 
-#take user and get course requrirements
+#take user and get user courses 
 @app.route('/api/user/<user>/courses')
 def get_user_courses(user):
 
@@ -62,5 +63,9 @@ def get_user_courses(user):
     else:
         runAudit(user)
         return read_Courses(int(user))
+
+@app.route('/api/user/<user>/stats')
+def get_user_stats(user):
+    return jsonify(getAllStats(user))
 
         
