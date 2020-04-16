@@ -336,17 +336,17 @@ def readGPA(user):
 
 #This dababase function makes a database SQL command with the users ID to get the columns of the grade recieve (which can be A,B,...,F,W,RG) where W is withdrawal and RG is registered, and the other column of credits it is worth. It will then iterate through each 'row' consisting of the two columns, it will then check the text of the grade column, if it is 'RG' then add it to credits for registered, otherwise add it to the total. This function will then return a jsonify version of a python list consisting of two elements, list[total, registered].
 #
-def getTotalCredits():
+def getTotalCredits(web_id):
 
     cur = mysql.connection.cursor() #SQL set up
 
     totalCredits = 0 #data
     registeredCredits = 0 #data
-    totalAndRegisterCredits = [] # data array to hold EX: [94,15] total and registered credits
+    totalAndRegisterCredits = {} # dictionary to hold EX: [94,15] total and registered credits
 
     try:
-        select_query = 'SELECT grade, credits FROM sql9329694.Takes WHERE web_user_id = 84' #my WebID is 84
-        cur.execute(select_query)
+        select_query = 'SELECT grade, credits FROM sql9329694.Takes WHERE web_user_id = %s' #my WebID is 84
+        cur.execute(select_query, [web_id])
         rows = cur.fetchall()
     
         #iterate through all rows checking logic using if and else
@@ -361,10 +361,10 @@ def getTotalCredits():
     except IOError as e:
         print(e)
 
-    totalAndRegisterCredits.append(totalCredits) #append totals to list
-    totalAndRegisterCredits.append(registeredCredits) #append totals to list
+    totalAndRegisterCredits["totalCredits"] = totalCredits #append totals to list
+    totalAndRegisterCredits["registeredCredits"] = registeredCredits #append totals to list
 
-    return jsonify(totalAndRegisterCredits)
+    return totalAndRegisterCredits
 
 
 if __name__ == "__main__":

@@ -17,8 +17,7 @@ def darsLogin(tuid, passW):
     chrome_options = Options()  
     chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(chrome_options=chrome_options)
-
-    
+    #driver = webdriver.Chrome(ChromeDriverManager().install()) ##Keep for Rath, keep commented out
     driver.get("http://dars.temple.edu")
 
 	# wait for elements to load
