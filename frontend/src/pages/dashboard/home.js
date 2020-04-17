@@ -108,7 +108,7 @@ class Courses extends React.Component {
                             maxValue={4}
                             labelSkipWidth={12}
                             labelSkipHeight={12}
-                            labelTextColor="#333333"
+                            labelTextColor="#ffffff"
                             animate={true}
                             motionStiffness={90}
                             motionDamping={15}
