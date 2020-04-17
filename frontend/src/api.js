@@ -5,6 +5,11 @@ export function login(username, password) {
         .then(response => response.data);
 }
 
+export function getStatistics(user_id) {
+    return axios.get(`/api/user/${user_id}/stats`)
+        .then(response => response.data);
+}
+
 export function getCompletedCourses(user_id) {
     return axios.get(`/api/user/${user_id}/courses`)
         .then(response => response.data);

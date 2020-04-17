@@ -17,5 +17,8 @@ export const fetchRequirements = (user_id) => (dispatch) => {
     getRequirements(user_id)
         .then(data => dispatch(setRequirements(data)))
         .then(() => dispatch(fetchRequirementsDone()))
-        .catch(err => dispatch(fetchRequirementsError(err)));
+        .catch(err => {
+            console.error(err);
+            dispatch(fetchRequirementsError(err));
+        });
 };

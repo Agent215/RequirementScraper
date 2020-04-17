@@ -5,6 +5,7 @@ import {deleteFailed, deleteSuccessful, deleting, resetDeleting} from "./deletin
 import {successMessage} from "./messages";
 import {clearCompleted} from "./courses";
 import {clearRequirements} from "./requirements";
+import {clearStatistics} from "./statistics";
 
 export const setUser = (user_id, username, password) => ({ type: SET_USER, user_id, username, password });
 export const clearUser = () => ({ type: CLEAR_USER });
@@ -37,6 +38,7 @@ export const deleteUserData = (user_id) => (dispatch) => {
         .then(() => dispatch(deleteSuccessful()))
         .then(() => dispatch(clearCompleted()))
         .then(() => dispatch(clearRequirements()))
+        .then(() => dispatch(clearStatistics()))
         .then(() => dispatch(successMessage("Deleted your user data")))
         .catch(err => {
             dispatch(deleteFailed());

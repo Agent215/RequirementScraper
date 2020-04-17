@@ -81,6 +81,11 @@ class Courses extends React.Component {
             <div id="loading-inner" className="text-center">
                 <Spinner id="spinner" animation="border" />
                 <h2>Fetching your courses...</h2>
+                <p>
+                    If you have two factor authentication enabled on your Temple account, you may either get
+                    a push notification, phone call, or text message. Make sure to complete this verification step
+                    or else we cannot retrieve your data.
+                </p>
             </div>
         </div>
     }
