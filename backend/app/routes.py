@@ -20,9 +20,9 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    return 'GRAV BACKEND'
-   
-          
+    #return 'GRAV BACKEND'
+    return jsonify(getAllStats(81))
+       
 # take user credentials and check them in the database or insert if they're not in the database
 @app.route('/api/login', methods=['POST'])
 def login():

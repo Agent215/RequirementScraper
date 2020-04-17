@@ -363,12 +363,7 @@ def getTotalCredits(web_id):
 
     totalAndRegisterCredits["totalCredits"] = totalCredits #append totals to list
     totalAndRegisterCredits["registeredCredits"] = registeredCredits #append totals to list
-    totalAndRegisterCredits["'%'ofCreditsDoneOutof123"] = round(totalCredits/123,3)
-    allCredits = round((totalCredits+registeredCredits)/123,3)
-    if allCredits > 1:
-        allCredits = 1.00
-    totalAndRegisterCredits["'%'TotalCreditsOutof123"] = round(allCredits)
-
+  
     return totalAndRegisterCredits
 
 

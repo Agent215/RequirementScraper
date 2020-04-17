@@ -8,25 +8,24 @@ from dbFunctions import readRequirement, readGPA, read_Courses, getTotalCredits
 def getAllStats(user):
 
     ReqData = readRequirement(user)
-    resultSet = []
+    resultSet = {}
     temp = None
 
     try:
         temp = allReqsDone(ReqData)
-        resultSet.append(temp)
+        resultSet["requirements"] = temp
     except IOError as e:
         print("problem reading percentage of requirements done: " , e)
     try:
-        GPA = {}
+    
         temp =readGPA(user)
-        GPA["GPA"] = temp
-        resultSet.append(GPA)
+        resultSet["GPA"] = temp
+      
     except IOError as e:
         print("problem with reading GPA", e)
     try:
         temp = getTotalCredits(user) #return a dictionary
-        resultSet.append(temp)
-        
+        resultSet["totalCredits"] = temp
     except IOError as e:
         print("problem from getAllStats and getTotalCredits db function", e)
         

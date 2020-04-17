@@ -18,12 +18,7 @@ def allReqsDone(dataIn):
         if req["Status"] == "IN PROGRESS":
             reqsIP += 1
         reqCount += 1
-    percentageDone = float(reqsDone/reqCount)
-    percentageIP = float(reqsIP/reqCount)
-    print("percentage done " ,percentageDone)
-    print("percentage of sub reqs  done " ,percentageIP)
+    returnData["requirementCount"] = reqCount
     returnData["requirementsDone"] = reqsDone
-    returnData["percentOfReqsDone"] = round(percentageDone,3)
     returnData["requirementsIP"] = reqsIP
-    returnData["percentOfReqsIP"] = round(percentageIP,3)
     return returnData
