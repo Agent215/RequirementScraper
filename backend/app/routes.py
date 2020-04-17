@@ -65,6 +65,12 @@ def get_user_courses(user):
 
 @app.route('/api/user/<user>/stats')
 def get_user_stats(user):
-    return jsonify(getAllStats(user))
+    takenCourses = hasCourses(int(user))
+    hasReq = hasRequirement(user)
+    if takenCourses and hasReq:
+        return jsonify(getAllStats(user))
+    else:
+        runAudit(user)
+        return jsonify(getAllStats(user))
 
         
