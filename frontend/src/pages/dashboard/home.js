@@ -226,7 +226,7 @@ class Courses extends React.Component {
                         />
                     </Col>
                     <Col style={{height: 500}}>
-                        <h5 className="text-center">Credits received</h5>
+                        <h5 className="text-center">Credits earned</h5>
                         <ResponsivePie
                             data={statistics.credits}
                             margin={{top: 40, right: 80, bottom: 80, left: 80}}
