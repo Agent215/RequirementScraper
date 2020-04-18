@@ -54,7 +54,7 @@ class Courses extends React.Component {
             </Jumbotron>
             <Container fluid>
                 <Row>
-                    <Col style={{height: 500}}>
+                    <Col md className={"my-2 my-sm-0"} style={{height: 500}}>
                         <h5 className="text-center">GPA</h5>
                         <ResponsiveBar
                             data={statistics.gpa}
@@ -115,7 +115,7 @@ class Courses extends React.Component {
                             motionDamping={15}
                         />
                     </Col>
-                    <Col style={{height: 500}}>
+                    <Col md className={"my-2 my-sm-0"} style={{height: 500}}>
                         <h5 className="text-center">Requirements completed</h5>
                         <ResponsivePie
                             data={statistics.requirements}
@@ -225,7 +225,7 @@ class Courses extends React.Component {
                             ]}
                         />
                     </Col>
-                    <Col style={{height: 500}}>
+                    <Col md className={"my-4 my-sm-0"} style={{height: 500}}>
                         <h5 className="text-center">Credits earned</h5>
                         <ResponsivePie
                             data={statistics.credits}
