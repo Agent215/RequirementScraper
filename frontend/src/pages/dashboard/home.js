@@ -55,6 +55,7 @@ class Courses extends React.Component {
             <Container fluid>
                 <Row>
                     <Col style={{height: 500}}>
+                        <h5 className="text-center">GPA</h5>
                         <ResponsiveBar
                             data={statistics.gpa}
                             indexBy={"index"}
@@ -115,6 +116,7 @@ class Courses extends React.Component {
                         />
                     </Col>
                     <Col style={{height: 500}}>
+                        <h5 className="text-center">Requirements completed</h5>
                         <ResponsivePie
                             data={statistics.requirements}
                             margin={{top: 40, right: 80, bottom: 80, left: 80}}
@@ -224,6 +226,7 @@ class Courses extends React.Component {
                         />
                     </Col>
                     <Col style={{height: 500}}>
+                        <h5 className="text-center">Credits received</h5>
                         <ResponsivePie
                             data={statistics.credits}
                             margin={{top: 40, right: 80, bottom: 80, left: 80}}
