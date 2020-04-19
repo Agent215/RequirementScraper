@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {fetchStatistics} from "../../actions/statistics";
 import {ResponsivePie} from "@nivo/pie";
 import {ResponsiveBar} from "@nivo/bar";
+import {Themes} from "../../reducers/theme";
 
 class Courses extends React.Component {
 
@@ -39,6 +40,7 @@ class Courses extends React.Component {
         const statistics = this.props.statistics.statistics;
         const textColor = this.props.theme.dark ? "#EEEEEE" : "#333333";
         const background = this.props.theme.dark ? "#333333" : "#EEEEEE";
+        const color = this.props.theme.primary === Themes.Cherry ? "#9e1b34" : "#006270";
         return <>
             <Jumbotron className={bg}>
                 <h1>Dashboard</h1>
@@ -52,14 +54,15 @@ class Courses extends React.Component {
             </Jumbotron>
             <Container fluid>
                 <Row>
-                    <Col style={{height: 500}}>
+                    <Col md className={"my-2 my-sm-0"} style={{height: 500}}>
+                        <h5 className="text-center">GPA</h5>
                         <ResponsiveBar
                             data={statistics.gpa}
                             indexBy={"index"}
                             keys={['GPA']}
                             margin={{top: 50, right: 130, bottom: 50, left: 60}}
                             padding={0.3}
-                            colors={{scheme: 'nivo'}}
+                            colors={[color]}
                             borderColor={{from: 'color', modifiers: [['darker', 1.6]]}}
                             axisTop={null}
                             axisRight={null}
@@ -106,13 +109,14 @@ class Courses extends React.Component {
                             maxValue={4}
                             labelSkipWidth={12}
                             labelSkipHeight={12}
-                            labelTextColor="#333333"
+                            labelTextColor="#ffffff"
                             animate={true}
                             motionStiffness={90}
                             motionDamping={15}
                         />
                     </Col>
-                    <Col style={{height: 500}}>
+                    <Col md className={"my-2 my-sm-0"} style={{height: 500}}>
+                        <h5 className="text-center">Requirements completed</h5>
                         <ResponsivePie
                             data={statistics.requirements}
                             margin={{top: 40, right: 80, bottom: 80, left: 80}}
@@ -221,7 +225,8 @@ class Courses extends React.Component {
                             ]}
                         />
                     </Col>
-                    <Col style={{height: 500}}>
+                    <Col md className={"my-4 my-sm-0"} style={{height: 500}}>
+                        <h5 className="text-center">Credits earned</h5>
                         <ResponsivePie
                             data={statistics.credits}
                             margin={{top: 40, right: 80, bottom: 80, left: 80}}
