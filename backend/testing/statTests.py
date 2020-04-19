@@ -21,14 +21,30 @@ def allReqsDone_count():
     assert 1==1
     msg = "allReqsDone_count test passed"
     return msg
+    
+#testing values for Rathanank to see if method returns correct values to credits taken and regiestered
+def return94and15credits():
+    user = 95 #tuk86465
+    totalAndRegisterCredits = {} #dictionary to hold test data
+    totalAndRegisterCredits = getTotalCredits(95) #call db function and assign values to dictionary
+    msg = "return94and15credits Passed"
 
+    assert totalAndRegisterCredits["totalCredits"] == 96, "return94and15credits Failed"
+    assert totalAndRegisterCredits["registeredCredits"] == 25 , "return94and15credits Failed"
+    
+    return msg
 
 def runAllTests():
     msg = []
     msg.append(allReqsDone_count())
     msg.append(AllReqsDone_length())
+    msg.append(return94and15credits())
     return jsonify(msg)
 
+
+    
+    
+    
 
 if __name__ == '__main__':
     runAllTests()
