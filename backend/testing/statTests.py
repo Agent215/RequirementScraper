@@ -1,5 +1,6 @@
 from dbFunctions import *
 from stats.allReqsDone import allReqsDone
+from scraping.darsLogin import *
 
 # test a user data from database.
 
@@ -44,6 +45,17 @@ def returnCorrectGPA():
     assert myGPA == 3.25, "returnCorrectGPA failed" #REMARK: MY current GPA for tuk86465 is 3.25
                                                     #REMARK 2: assert will fail and print failed message if !=
     return msg #prints only if assert is true
+
+#testing that the given creditional will not log you into Temple with the incorrect information. Will try to log in, when fails, returns the print message instead.
+def returnIncorrectLogin():
+
+    user = "tuk86465" #my userID
+    pw = "notTheRightPassWord1234" #my incorrect password
+    
+    try:
+        assert darsLogin(user, pw) #returns numm if correct password is given
+    except:
+        return "returnIncorrectLogin Passed" #return this message if falso info is given
     
 def runAllTests():
     msg = []
@@ -51,6 +63,7 @@ def runAllTests():
     msg.append(AllReqsDone_length())
     msg.append(return94and25credits())
     msg.append(returnCorrectGPA())
+    msg.append(returnIncorrectLogin())
     return jsonify(msg)
 
 
