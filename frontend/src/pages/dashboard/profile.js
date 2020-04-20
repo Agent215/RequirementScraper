@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Card, Button, ButtonGroup, Spinner} from "react-bootstrap";
+import {Button, ButtonGroup, Card, Container, Spinner} from "react-bootstrap";
 import ThemedCard from "../../components/card";
 import LoginForm from "../../components/loginForm";
 import {connect} from "react-redux";
@@ -20,7 +20,7 @@ class Profile extends React.Component {
         return <Container>
             <ThemedCard className={[ "my-5", "p-5" ]}><Card.Body>
                 <h1 className="mb-5">Edit your AccessNet credentials</h1>
-                <LoginForm onSubmit={this.props.editUserData.bind(this, this.props.user.user_id)} loading={false}/>
+                <LoginForm onSubmit={this.props.editUserData.bind(this, this.props.user.user_id)} loading={false} disableUsername={true}/>
 
                 <ButtonGroup className="mt-5">
                     <Button variant={this.props.theme.dark ? "light" : "secondary"} onClick={() => this.props.deleteUserData(this.props.user.user_id)} disabled={deletingInProgress}>Delete user data</Button>

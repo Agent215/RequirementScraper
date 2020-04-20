@@ -1,4 +1,4 @@
-import {TOGGLE_DARK, SET_THEME} from "../actions/types";
+import {SET_THEME, TOGGLE_DARK} from "../actions/types";
 
 export const Themes = {
     Cherry: "cherry",

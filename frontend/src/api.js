@@ -5,6 +5,11 @@ export function login(username, password) {
         .then(response => response.data);
 }
 
+export function getStatistics(user_id) {
+    return axios.get(`/api/user/${user_id}/stats`)
+        .then(response => response.data);
+}
+
 export function getCompletedCourses(user_id) {
     return axios.get(`/api/user/${user_id}/courses`)
         .then(response => response.data);
@@ -24,6 +29,6 @@ export function deleteAllUserData(user_id) {
     return axios.delete(`/api/user/${user_id}?deleteUser=true`);
 }
 
-export function editUser(user_id, username, password) {
-    return axios.patch(`/api/user/${user_id}`, {username, password});
+export function editUser(user_id, password) {
+    return axios.patch(`/api/user/${user_id}`, {password});
 }

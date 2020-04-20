@@ -1,5 +1,5 @@
 import React from "react";
-import {toggleDark, setTheme} from "../actions/theme";
+import {setTheme, toggleDark} from "../actions/theme";
 import {connect} from "react-redux";
 import {Button, Form} from "react-bootstrap";
 import {Themes} from "../reducers/theme";

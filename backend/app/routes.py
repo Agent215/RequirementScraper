@@ -2,14 +2,14 @@ from app import app
 from flask import jsonify
 from flask import Flask
 from flask import request
-
-from testScrape import testScrape
-from getAllCourses import getCIScourses
-from DarsScrape import DarsScrape
-
-from insertUser import insertUser, insertCourses ,insertALLCourses, deleteUser, read_Courses, hasCourses
-
-
+from scraping.getAllCourses import getCIScourses
+from scraping.CourseScrape import CourseScrape
+from scraping.scrapeReqs import scrapeReqs
+from scraping.scrapeProgramCode import scrapeProgramCode
+from runAudit import runAudit
+from stats.getAllStats import getAllStats
+from testing.statTests import *
+from dbFunctions import *
 
 app.config['MYSQL_USER'] = 'sql9329694'
 app.config['MYSQL_PASSWORD'] = '9lDUwG3eJI'
@@ -21,36 +21,39 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 @app.route('/')
 @app.route('/index')
 def index():  # for now this justs runs the testing script
-    return "GRAV BACKEND"
+    return runAllTests()
     
-
+       
 # take user credentials and check them in the database or insert if they're not in the database
 @app.route('/api/login', methods=['POST'])
 def login():
     return insertUser()
 
+#this should call a function that takes a user ID and updates assoicated user password
 @app.route('/api/user/<user>', methods=['PATCH'])
 def update_user(user):
-    username = request.json["username"]
     password = request.json["password"]
-    return "Update user content coming soon"
+    return updatePassword(user, password)
 
 @app.route('/api/user/<user>', methods=['DELETE'])
 def delete_user(user):
     # Whether to delete the user credentials or just their course information
     # if deleteUser is True, delete everything related to the user including their credentials
     # if deleteUser if False, only delete the courses the user has taken
-
     doDeleteUser = request.args["deleteUser"] if "deleteUser" in request.args else False
     return deleteUser(int(user), doDeleteUser)
-
 
 #take user and get course requrirements
 @app.route('/api/user/<user>/requirements')
 def get_user_requirements(user):
-      return "getRequirements content coming soon"
+    hasReq = hasRequirement(user)
+    if(hasReq == True):
+        return readRequirement(user)
+    else:
+        runAudit(user)
+        return readRequirement(user)
 
-#take user and get course requrirements
+#take user and get user courses 
 @app.route('/api/user/<user>/courses')
 def get_user_courses(user):
 
@@ -58,7 +61,17 @@ def get_user_courses(user):
     if takenCourses:
        return read_Courses(int(user))
     else:
-        return insertCourses(int(user))
-    return "an unexpected error has occured"
+        runAudit(user)
+        return read_Courses(int(user))
+
+@app.route('/api/user/<user>/stats')
+def get_user_stats(user):
+    takenCourses = hasCourses(int(user))
+    hasReq = hasRequirement(user)
+    if takenCourses and hasReq:
+        return jsonify(getAllStats(user))
+    else:
+        runAudit(user)
+        return jsonify(getAllStats(user))
 
         
