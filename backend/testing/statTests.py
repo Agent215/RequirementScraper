@@ -1,6 +1,7 @@
 from dbFunctions import *
 from stats.allReqsDone import allReqsDone
 from scraping.darsLogin import *
+import dbFunctions
 
 # test a user data from database.
 
@@ -73,6 +74,15 @@ def returnIncorrectLogin():
         assert darsLogin(user, pw) #returns numm if correct password is given
     except:
         return "returnIncorrectLogin Passed" #return this message if falso info is given
+
+#testing to see when data gets scraped and put into database, that it returns that i have completed 29 courses with id 95 in database
+def return29completedCourse():
+
+    msg = "return29completedCourses Passed"
+    
+    returnSpecificRows(95) == 29, "failed 29courses"
+    
+    return msg #prints only if assert is true
     
 def runAllTests():
     msg = []
@@ -81,6 +91,7 @@ def runAllTests():
     msg.append(return94and25credits())
     msg.append(returnCorrectGPA())
     msg.append(returnIncorrectLogin())
+    msg.append(return29completedCourse())
     return jsonify(msg)
 
 if __name__ == '__main__':
