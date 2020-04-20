@@ -11,17 +11,34 @@ def AllReqsDone_length():
     #get reqsDone data from test user
     #there should only be key value pairs in this list
     reqsDone = allReqsDone(testData)
-    assert  len(reqsDone) == 3
-    msg = "AllReqsDone_length test passed"
-    return msg
-    print("AllReqsDone_length test passed")
+    try:
+        assert  len(reqsDone) == 3 
+        msg = "AllReqsDone_length test passed"
+        print("AllReqsDone_length test passed")
+        return msg
+    except:
+        msg = "AllReqsDone_length test failed: lenght of data = " ,len(reqsDone) ," expected 3"
+        return msg
+    
 
 #function to test if the inprogress count + complete count  = total count
 def allReqsDone_count():
-  
-    assert 1==1
-    msg = "allReqsDone_count test passed"
-    return msg
+    user = 81
+    testData = readRequirement(user)
+    #get reqsDone data from test user
+    #there should only be key value pairs in this list
+    reqsDone = allReqsDone(testData)
+    try:
+        assert reqsDone["requirementCount"]==6
+        assert reqsDone["requirementsDone"]==0
+        assert reqsDone["requirementsIP"]==5
+        msg = "allReqsDone_count test passed"
+        return msg
+    except:
+        msg = "allReqsDone_count test failed: requirementCount = " ,reqsDone["requirementCount"] ,\
+        " expected 6   requirementsDone = " , reqsDone["requirementsDone"] , " expected 0" \
+        ,"requirementsIP =",  reqsDone["requirementsIP"]==5, "expected 5"
+        return msg
     
 #testing values for Rathanank to see if method returns correct values to credits taken and regiestered
 def return94and25credits():
@@ -65,11 +82,6 @@ def runAllTests():
     msg.append(returnCorrectGPA())
     msg.append(returnIncorrectLogin())
     return jsonify(msg)
-
-
-    
-    
-    
 
 if __name__ == '__main__':
     runAllTests()
