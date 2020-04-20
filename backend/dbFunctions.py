@@ -80,10 +80,13 @@ def insertCourses(web_user_id , sourceHtml):
             courseList = CourseScrape(TU_ID,pw,sourceHtml)
             #for each course returned insert into databse associate with user
             for course in courseList:
-                cur.execute("INSERT INTO Takes(web_user_id,CRN,grade,term,name,credits) VALUES (%s, %s, %s, %s , %s, %s)" \
-                    , ( int(web_user_id),str(course["CRN"]), str(course["Grade"]),str(course["Term"]) \
-                    ,str(course["Name"]),str(course["Credit"]))) 
-                mysql.connection.commit()
+                try:
+                    cur.execute("INSERT INTO Takes(web_user_id,CRN,grade,term,name,credits) VALUES (%s, %s, %s, %s , %s, %s)" \
+                        , ( int(web_user_id),str(course["CRN"]), str(course["Grade"]),str(course["Term"]) \
+                        ,str(course["Name"]),str(course["Credit"]))) 
+                    mysql.connection.commit()
+                except IOError as e:
+                    print(e)
             cur.close()
     except IOError as e:
         print(e)
