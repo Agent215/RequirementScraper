@@ -367,5 +367,21 @@ def getTotalCredits(web_id):
     return totalAndRegisterCredits
 
 
+def returnSpecificRows(web_id):
+    cur = mysql.connection.cursor()
+    count = 0
+    
+    try:
+        select_query = 'select * from sql9329694.Takes where web_user_id = %s AND grade <> "RG" AND grade <> "W"'
+        cur.execute(select_query, [web_id])
+        rows = cur.fetchall()
+        
+        for row in rows:
+            count = count + 1
+        cur.close
+    except IOError as e:
+        print(e)
+    
+    return count
 if __name__ == "__main__":
     print(insertUser())
