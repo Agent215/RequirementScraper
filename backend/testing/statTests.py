@@ -21,6 +21,28 @@ def AllReqsDone_length():
         msg = "AllReqsDone_length test failed: lenght of data = " ,len(reqsDone) ," expected 3"
         return msg
     
+def returnMyProgramCode():
+
+    message = "returnMyProgramCode Passed" #message for successful test
+
+    cur = mysql.connection.cursor() #set up mySPL connection
+
+    try:
+        #execute query to return program code that was scraped
+        getQuery = 'SELECT * FROM sql9329694.Requirement WHERE ProgramCode = "ST-CSCI-BS" and web_user_id = %s'
+
+        cur.execute(getQuery, [95]) #hard code pass my user ID for test
+
+        rows = cur.fetchall() #gets the 1 one that gets return
+
+        for row in rows:
+            assert row.get('ProgramCode') == 'ST-CSCI-BS' , "failed to return program code!!!" #prints this if program code is incorrect, go ahead change 'ST-CSCI-BS' to xxx and run it
+        cur.close() #close connection with MySQL
+
+    except IOError as e:
+        print(e)
+
+    return message #prints this only if above didnt give error
 
 #function to test if the inprogress count + complete count  = total count
 def allReqsDone_count():
@@ -87,6 +109,7 @@ def return29completedCourse():
 def runAllTests():
     msg = []
     msg.append(allReqsDone_count())
+    msg.append(returnMyProgramCode())
     msg.append(AllReqsDone_length())
     msg.append(return94and25credits())
     msg.append(returnCorrectGPA())
