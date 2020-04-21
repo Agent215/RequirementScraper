@@ -11,6 +11,10 @@ import CoursesDarkDef from "../img/courses_dark-def.png";
 import CoursesDarkCont from "../img/courses_dark-cont.png";
 import CoursesLightDef from "../img/courses_light-def.png";
 import CoursesLightCont from "../img/courses_light-cont.png";
+import StatsDarkDef from "../img/stats_dark-def.png";
+import StatsDarkCont from "../img/stats_dark-cont.png";
+import StatsLightDef from "../img/stats_light-def.png";
+import StatsLightCont from "../img/stats_light-cont.png";
 import ThemedScreenshot from "../components/screenshot";
 
 const requirements_screenshots = [
@@ -25,6 +29,13 @@ const courses_screenshots = [
     { primary: Themes.Contrast, dark: true, src: CoursesDarkCont },
     { primary: Themes.Cherry, dark: false, src: CoursesLightDef },
     { primary: Themes.Contrast, dark: false, src: CoursesLightCont }
+];
+
+const stats_screenshots = [
+    { primary: Themes.Cherry, dark: true, src: StatsDarkDef },
+    { primary: Themes.Contrast, dark: true, src: StatsDarkCont },
+    { primary: Themes.Cherry, dark: false, src: StatsLightDef },
+    { primary: Themes.Contrast, dark: false, src: StatsLightCont }
 ];
 
 class Home extends React.Component {
@@ -69,7 +80,7 @@ class Home extends React.Component {
                     </Col>
                     <Col className="mb-3 mb-md-0">
                         <Card className={bg}>
-                            <Card.Img variant="top" src="https://picsum.photos/1920/1080" />
+                            <ThemedScreenshot formats={stats_screenshots} />
                             <Card.Body>
                                 <Card.Title>Pie Graphs</Card.Title>
                                 <Card.Text>
