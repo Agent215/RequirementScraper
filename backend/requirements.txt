@@ -20,4 +20,4 @@ selenium==3.141.0
 soupsieve==2.0
 urllib3==1.26.5
 webdriver-manager==2.3.0
-Werkzeug==1.0.1
+Werkzeug==2.2.3
